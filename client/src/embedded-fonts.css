@@ -1,0 +1,38 @@
+/* Font imports with fallback */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Override all text elements */
+html, body, div, span, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Override headings specifically */
+h1, h2, h3, h4, h5, h6, 
+.text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Hero section specific overrides */
+#ana-sayfa h1,
+#ana-sayfa .text-5xl,
+#ana-sayfa .text-6xl {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+  font-weight: 800 !important;
+}
+
+#ana-sayfa p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+/* Navigation specific */
+nav span {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* Button text */
+button, .btn, [type="button"] {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+  font-weight: 500 !important;
+}
