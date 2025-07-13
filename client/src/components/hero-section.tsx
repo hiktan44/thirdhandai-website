@@ -14,12 +14,12 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
           <div className="animate-slide-up">
-            <h1 className="text-5xl lg:text-6xl font-poppins font-bold text-slate-800 leading-tight mb-6" style={{fontFamily: "'Poppins', sans-serif"}}>
+            <h1 className="text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               <span className="text-primary">Yapay Zeka</span>
               <br />ile
               <br />İşinizi İleriye Taşıyın
             </h1>
-            <p className="text-xl font-inter text-slate-600 mb-8 leading-relaxed" style={{fontFamily: "'Inter', sans-serif"}}>
+            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
               Third Hand AI Agency olarak şirketinize özel, terzi usulü AI çözümleri ve otomasyonları ile rekabette öne geçmenizi sağlıyoruz.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -51,7 +51,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-white text-center">
-                <h3 className="text-2xl font-bold mb-2" style={{fontFamily: "'Poppins', sans-serif"}}>Third Hand</h3>
+                <h3 className="text-2xl font-bold mb-2">Third Hand</h3>
                 <p className="text-blue-400 text-lg font-medium">AI Agency</p>
               </div>
             </div>
