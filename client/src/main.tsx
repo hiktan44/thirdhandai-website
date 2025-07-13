@@ -1,10 +1,10 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import "./fonts.css";
-import { loadFonts } from "./loadFonts";
+import "./simple-fonts.css";
+import { loadWebFonts } from "./webfontloader";
 
 // Load fonts dynamically
-loadFonts();
+loadWebFonts();
 
 createRoot(document.getElementById("root")!).render(<App />);
