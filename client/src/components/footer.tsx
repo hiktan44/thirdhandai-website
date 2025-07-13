@@ -7,7 +7,7 @@ export default function Footer() {
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-3">
               <span className="text-white font-bold text-lg">3</span>
             </div>
-            <span className="text-xl font-bold">Third Hand AI Agency</span>
+            <span className="text-xl font-heading font-bold">Third Hand AI Agency</span>
           </div>
           <p className="text-slate-400 mb-4">
             Yapay zeka teknolojileri ile geleceği şekillendiriyoruz.

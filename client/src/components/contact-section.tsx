@@ -113,14 +113,14 @@ export default function ContactSection() {
     <section id="iletisim" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">İletişime Geçin</h2>
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">İletişime Geçin</h2>
           <p className="text-xl text-slate-600">Projeniz hakkında konuşmak veya daha fazla bilgi almak için bize ulaşın.</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-2xl font-bold text-slate-800 mb-8">İletişim Bilgileri</h3>
+            <h3 className="text-2xl font-heading font-bold text-slate-800 mb-8">İletişim Bilgileri</h3>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
@@ -129,7 +129,7 @@ export default function ContactSection() {
                     <info.icon className={`w-6 h-6 ${info.iconColor}`} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-800 mb-1">{info.title}</h4>
+                    <h4 className="font-heading font-semibold text-slate-800 mb-1">{info.title}</h4>
                     <div className="text-slate-600">
                       {info.content.map((line, lineIndex) => (
                         <p key={lineIndex}>{line}</p>
@@ -142,7 +142,7 @@ export default function ContactSection() {
 
             {/* Social Media */}
             <div className="mt-8">
-              <h4 className="font-semibold text-slate-800 mb-4">Bizi Takip Edin</h4>
+              <h4 className="font-heading font-semibold text-slate-800 mb-4">Bizi Takip Edin</h4>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <a
@@ -160,7 +160,7 @@ export default function ContactSection() {
           {/* Contact Form */}
           <Card className="bg-slate-50">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-slate-800 mb-6">Mesaj Gönderin</h3>
+              <h3 className="text-2xl font-heading font-bold text-slate-800 mb-6">Mesaj Gönderin</h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">

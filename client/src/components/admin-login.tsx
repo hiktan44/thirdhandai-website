@@ -61,7 +61,7 @@ export default function AdminLogin() {
       <div className="max-w-md mx-auto">
         <Card className="shadow-lg">
           <CardContent className="p-8">
-            <h3 className="text-xl font-bold text-slate-800 mb-6 text-center">Admin Girişi</h3>
+            <h3 className="text-xl font-heading font-bold text-slate-800 mb-6 text-center">Admin Girişi</h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

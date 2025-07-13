@@ -42,7 +42,7 @@ export default function VideoProjectsSection() {
     <section id="video-projeler" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">Video Projelerimiz</h2>
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Video Projelerimiz</h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Yapay zeka ve teknoloji projelerimizin tanıtım videolarını inceleyebilirsiniz. AI çözümlerimizin nasıl çalıştığını ve iş süreçlerinize nasıl entegre olduğunu görebilirsiniz.
           </p>
@@ -58,7 +58,7 @@ export default function VideoProjectsSection() {
                 </div>
               </div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">{video.title}</h3>
+                <h3 className="text-xl font-heading font-semibold text-slate-800 mb-2">{video.title}</h3>
                 <p className="text-slate-600 text-sm">{video.description}</p>
               </CardContent>
             </Card>

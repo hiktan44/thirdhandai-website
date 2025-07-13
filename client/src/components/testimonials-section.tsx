@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
     <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">Müşteri Görüşleri</h2>
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Müşteri Görüşleri</h2>
           <p className="text-xl text-slate-600">Müşterilerimizin AI çözümlerimiz hakkındaki düşünceleri</p>
         </div>
 
@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
                     <User className={`w-6 h-6 ${testimonial.iconColor}`} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-800">{testimonial.name}</h4>
+                    <h4 className="font-heading font-semibold text-slate-800">{testimonial.name}</h4>
                     <p className="text-sm text-slate-600">{testimonial.position}</p>
                   </div>
                 </div>

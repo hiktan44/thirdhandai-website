@@ -34,7 +34,7 @@ export default function Navigation() {
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-lg">3</span>
               </div>
-              <span className="text-xl font-bold text-slate-800">Third Hand AI Agency</span>
+              <span className="text-xl font-heading font-bold text-slate-800">Third Hand AI Agency</span>
             </div>
           </div>
 

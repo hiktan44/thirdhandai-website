@@ -12,7 +12,7 @@ export default function CTASection() {
   return (
     <section className="py-20 bg-gradient-to-r from-primary to-purple-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl font-bold text-white mb-6">İşinizi Dönüştürmeye Hazır mısınız?</h2>
+        <h2 className="text-4xl font-heading font-bold text-white mb-6">İşinizi Dönüştürmeye Hazır mısınız?</h2>
         <p className="text-xl text-blue-100 mb-8 leading-relaxed">
           Yapay zeka teknolojileri ile işinizi geliştirmek, verimliliğinizi artırmak ve rekabette öne geçmek için hemen iletişime geçin.
         </p>
