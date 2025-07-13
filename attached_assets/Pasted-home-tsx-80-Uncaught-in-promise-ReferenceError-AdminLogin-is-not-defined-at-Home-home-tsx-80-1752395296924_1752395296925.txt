@@ -1,0 +1,26 @@
+home.tsx:80 Uncaught (in promise) ReferenceError: AdminLogin is not defined
+    at Home (home.tsx:80:28)
+    at renderWithHooks (chunk-RPCDYKBN.js:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js:14582:28)
+    at beginWork (chunk-RPCDYKBN.js:15924:22)
+    at beginWork$1 (chunk-RPCDYKBN.js:19753:22)
+    at performUnitOfWork (chunk-RPCDYKBN.js:19198:20)
+    at workLoopSync (chunk-RPCDYKBN.js:19137:13)
+    at renderRootSync (chunk-RPCDYKBN.js:19116:15)
+    at recoverFromConcurrentError (chunk-RPCDYKBN.js:18736:28)
+    at performSyncWorkOnRoot (chunk-RPCDYKBN.js:18879:28)
+159f2689-1796-426a-8…ev/@vite/client:602 
+ GET https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/src/components/admin-login.tsx?t=1752395085995 net::ERR_ABORTED 502 (Bad Gateway)
+159f2689-1796-426a-8…da/3.2.3/eruda.js:2 [hmr] Failed to reload /src/components/admin-login.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+159f2689-1796-426a-8…ev/@vite/client:602 
+ GET https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/src/index.css?t=1752395085995&v=a8Ud9RBVgpO9iaQPsVHfu net::ERR_ABORTED 502 (Bad Gateway)
+159f2689-1796-426a-8…da/3.2.3/eruda.js:2 [hmr] Failed to reload /src/index.css?v=a8Ud9RBVgpO9iaQPsVHfu. This could be due to syntax errors or importing non-existent modules. (see errors above)
+framework-a205c70e200f4467.js:1 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+workspace_iframe.html:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+thirdhandkopya:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+﻿
+
