@@ -24,7 +24,7 @@ export default function VideoProjectsSection() {
   ];
 
   return (
-    <section id="video-projeler" className="py-20 bg-white">
+    <section id="video-projeler" className="py-20 bg-white/95 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Video Projelerimiz</h2>

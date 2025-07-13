@@ -8,23 +8,26 @@ import AboutSection from "@/components/about-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import CTASection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
-
 import Footer from "@/components/footer";
+import AnimatedBackground from "@/components/animated-background";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-      <HeroSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <VideoProjectsSection />
-      <WorkProcessSection />
-      <AboutSection />
-      <TestimonialsSection />
-      <CTASection />
-      <ContactSection />
-      <Footer />
+    <div className="min-h-screen bg-white relative">
+      <AnimatedBackground />
+      <div className="relative z-10">
+        <Navigation />
+        <HeroSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <VideoProjectsSection />
+        <WorkProcessSection />
+        <AboutSection />
+        <TestimonialsSection />
+        <CTASection />
+        <ContactSection />
+        <Footer />
+      </div>
     </div>
   );
 }

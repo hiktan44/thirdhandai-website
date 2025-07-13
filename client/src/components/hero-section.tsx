@@ -10,7 +10,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="ana-sayfa" className="pt-16 min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <section id="ana-sayfa" className="pt-16 min-h-screen bg-gradient-to-br from-slate-50/95 to-blue-50/95 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
           <div className="animate-slide-up">
