@@ -128,7 +128,9 @@ export default function ServicesSection() {
       features: [
         "Sesli komut ve yanıt sistemi",
         "Görüntü tanıma ve işleme",
-        "Video konferans desteği",
+        "Görüntülü AI asistan hizmetleri",
+        "Ürün ve hizmetlerinizi tanıtan yapay zeka",
+        "Müşteri sorularına anında yanıt",
         "1-2 günde hızlı teslimat",
         "7/24 müşteri desteği"
       ],
