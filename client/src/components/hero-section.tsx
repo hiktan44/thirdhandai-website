@@ -51,7 +51,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-white text-center">
-                <h3 className="text-2xl font-bold mb-2">Third Hand</h3>
+                <h3 className="text-2xl font-bold mb-2" style={{fontFamily: "'Poppins', sans-serif"}}>Third Hand</h3>
                 <p className="text-blue-400 text-lg font-medium">AI Agency</p>
               </div>
             </div>
