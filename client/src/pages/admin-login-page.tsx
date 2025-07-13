@@ -2,6 +2,7 @@ import AdminLogin from "@/components/admin-login";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
+import Logo from "@/components/logo";
 
 export default function AdminLoginPage() {
   return (
@@ -15,10 +16,8 @@ export default function AdminLoginPage() {
         </Link>
       </div>
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">3</span>
-          </div>
+        <div className="flex flex-col items-center mb-8">
+          <Logo showText={false} className="[&_svg]:w-20 [&_svg]:h-20 mb-4" />
           <h1 className="text-3xl font-bold text-gray-900">Third Hand AI Agency</h1>
           <p className="text-gray-600 mt-2">Yönetim Paneli Girişi</p>
         </div>

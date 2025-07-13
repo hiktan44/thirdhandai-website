@@ -1,13 +1,12 @@
+import Logo from "@/components/logo";
+
 export default function Footer() {
   return (
     <footer className="bg-slate-800 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-3">
-              <span className="text-white font-bold text-lg">3</span>
-            </div>
-            <span className="text-xl font-heading font-bold">Third Hand AI Agency</span>
+          <div className="flex justify-center mb-6">
+            <Logo className="[&_svg]:w-16 [&_svg]:h-16 [&_span]:text-white [&_.text-slate-600]:text-slate-400" />
           </div>
           <p className="text-slate-400 mb-4">
             Yapay zeka teknolojileri ile geleceği şekillendiriyoruz.

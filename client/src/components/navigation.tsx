@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import LanguageToggle from "@/components/ui/language-toggle";
 import { Menu, User } from "lucide-react";
 import { Link } from "wouter";
+import Logo from "@/components/logo";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +32,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-lg">3</span>
-              </div>
-              <span className="text-xl font-bold text-slate-800">Third Hand AI Agency</span>
-            </div>
+            <Logo />
           </div>
 
           {/* Desktop Menu */}
