@@ -1,0 +1,36 @@
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+1 kare daha göster
+5
+Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+159f2689-1796-426a-8…ev/@vite/client:582 
+ GET https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/ 500 (Internal Server Error)
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+159f2689-1796-426a-8…neway.replit.dev/:1 Refused to load the script 'https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js' because it violates the following Content Security Policy directive: "default-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'default-src' is used as a fallback.
+159f2689-1796-426a-8…neway.replit.dev/:1 Refused to load the script 'https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/__replco/static/devtools/injected.js' because it violates the following Content Security Policy directive: "default-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'default-src' is used as a fallback.
+159f2689-1796-426a-8…neway.replit.dev/:1 Refused to execute inline event handler because it violates the following Content Security Policy directive: "default-src 'none'". Either the 'unsafe-inline' keyword, a hash ('sha256-...'), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. Note also that 'script-src' was not explicitly set, so 'default-src' is used as a fallback.
+workspace_iframe.html:142 Refused to load the script 'https://replit.com/public/js/beacon.js' because it violates the following Content Security Policy directive: "default-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'default-src' is used as a fallback.
+3
+thirdhandkopya:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+thirdhandkopya:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.google.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.google.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.google.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+workspace_iframe.htm…F&id=%3Ar1th%3A:151 
+ GET https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev/ 503 (Service Unavailable)
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+﻿
+
