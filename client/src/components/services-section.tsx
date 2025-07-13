@@ -1,8 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Loader2, Image, LineChart } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import * as Icons from "lucide-react";
+import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles } from "lucide-react";
 
 export default function ServicesSection() {
   const scrollToSection = (sectionId: string) => {
@@ -12,9 +10,7 @@ export default function ServicesSection() {
     }
   };
 
-  const { data: aiModels = [], isLoading } = useQuery({
-    queryKey: ["/api/ai-models"],
-  });
+
 
   const defaultServices = [
     {
@@ -68,18 +64,66 @@ export default function ServicesSection() {
       bgColor: "bg-orange-100",
       iconColor: "text-orange-600",
       hoverBg: "group-hover:bg-orange-600"
+    },
+    {
+      icon: Camera,
+      title: "AI Ürün Görselleri",
+      description: "Ürünleriniz için yapay zeka destekli profesyonel görsel ve video içerikler üretiyoruz. E-ticaret ve pazarlama için özel çözümler.",
+      features: [
+        "AI ile ürün fotoğrafı üretimi",
+        "360 derece ürün görüntüleri",
+        "Arka plan değiştirme ve düzenleme",
+        "Toplu görsel işleme"
+      ],
+      bgColor: "bg-pink-100",
+      iconColor: "text-pink-600",
+      hoverBg: "group-hover:bg-pink-600"
+    },
+    {
+      icon: Video,
+      title: "AI Video Prodüksiyon",
+      description: "Markanız için AI destekli etkileyici video içerikler hazırlıyoruz. Reklam, tanıtım ve sosyal medya için özel efektli videolar.",
+      features: [
+        "AI destekli video düzenleme",
+        "Otomatik altyazı ve dublaj",
+        "Özel efekt ve animasyonlar",
+        "Sosyal medya formatları"
+      ],
+      bgColor: "bg-indigo-100",
+      iconColor: "text-indigo-600",
+      hoverBg: "group-hover:bg-indigo-600"
+    },
+    {
+      icon: Sparkles,
+      title: "AI Reklam Çözümleri",
+      description: "Yapay zeka ile hedef kitlenize özel, yüksek dönüşümlü reklam kampanyaları oluşturuyoruz.",
+      features: [
+        "AI destekli reklam metni yazımı",
+        "Görsel ve video reklam üretimi",
+        "A/B test otomasyonu",
+        "Performans analizi ve optimizasyon"
+      ],
+      bgColor: "bg-yellow-100",
+      iconColor: "text-yellow-600",
+      hoverBg: "group-hover:bg-yellow-600"
+    },
+    {
+      icon: Brain,
+      title: "GPT-4 Entegrasyonu",
+      description: "OpenAI'nin en gelişmiş dil modeli GPT-4 ile güçlendirilmiş akıllı asistan çözümleri. Doğal dil işleme, metin üretimi ve analiz yetenekleri.",
+      features: [
+        "Gelişmiş doğal dil anlama",
+        "Çok dilli destek",
+        "Kod üretimi ve analizi",
+        "Yaratıcı içerik oluşturma"
+      ],
+      bgColor: "bg-emerald-100",
+      iconColor: "text-emerald-600",
+      hoverBg: "group-hover:bg-emerald-600"
     }
   ];
 
-  const getIconComponent = (iconName?: string | null) => {
-    if (!iconName) return Brain;
-    const IconComponent = (Icons as any)[iconName];
-    return IconComponent || Brain;
-  };
 
-  const bgColors = ["bg-blue-100", "bg-green-100", "bg-purple-100", "bg-orange-100"];
-  const iconColors = ["text-blue-600", "text-green-600", "text-purple-600", "text-orange-600"];
-  const hoverBgs = ["group-hover:bg-blue-600", "group-hover:bg-green-600", "group-hover:bg-purple-600", "group-hover:bg-orange-600"];
 
   return (
     <section id="hizmetler" className="py-20 bg-white">
@@ -120,46 +164,7 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        {/* AI Models Section */}
-        {aiModels.length > 0 && (
-          <div className="mt-16">
-            <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">AI Modellerimiz</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {aiModels.map((model, index) => {
-                const IconComponent = getIconComponent(model.icon);
-                const colorIndex = index % bgColors.length;
-                return (
-                  <Card key={model.id} className="border border-slate-200 hover:shadow-xl transition-all hover:border-blue-200 group cursor-pointer">
-                    <CardContent className="p-8">
-                      <div className={`w-16 h-16 ${bgColors[colorIndex]} rounded-xl flex items-center justify-center mb-6 ${hoverBgs[colorIndex]} transition-colors`}>
-                        <IconComponent className={`w-8 h-8 ${iconColors[colorIndex]} group-hover:text-white transition-colors`} />
-                      </div>
-                      <h3 className="text-xl font-semibold text-slate-800 mb-4">{model.name}</h3>
-                      <p className="text-slate-600 mb-6">{model.description}</p>
-                      {model.features && model.features.length > 0 && (
-                        <ul className="space-y-2 text-sm text-slate-600 mb-6">
-                          {model.features.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-center">
-                              <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      <Button 
-                        variant="link" 
-                        className="text-primary font-semibold hover:text-primary/80 p-0"
-                        onClick={() => scrollToSection("iletisim")}
-                      >
-                        Detaylı Bilgi <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        )}
+
       </div>
     </section>
   );
