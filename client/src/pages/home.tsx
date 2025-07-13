@@ -8,7 +8,7 @@ import AboutSection from "@/components/about-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import CTASection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
-import AdminLogin from "@/components/admin-login";
+
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -24,7 +24,6 @@ export default function Home() {
       <TestimonialsSection />
       <CTASection />
       <ContactSection />
-      <AdminLogin />
       <Footer />
     </div>
   );

@@ -27,7 +27,8 @@ export default function AdminLogin() {
         title: "Başarılı!",
         description: data.message,
       });
-      // Here you would typically redirect to admin dashboard
+      // Redirect to admin dashboard
+      window.location.href = "/admin/dashboard";
     },
     onError: () => {
       toast({
@@ -57,7 +58,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <section id="admin-giris" className="py-12 bg-slate-100">
+    <div>
       <div className="max-w-md mx-auto">
         <Card className="shadow-lg">
           <CardContent className="p-8">
@@ -108,6 +109,6 @@ export default function AdminLogin() {
           </CardContent>
         </Card>
       </div>
-    </section>
+    </div>
   );
 }
