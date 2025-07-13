@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2, LogOut, Mail, Calendar, Eye } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Loader2, LogOut, Mail, Calendar, Eye, Home, Users, Briefcase, Video, Brain, MessageSquare, Settings, Menu, Plus, Edit, Trash2, GripVertical } from "lucide-react";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
+import { useLocation } from "wouter";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -19,15 +23,23 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { useLocation } from "wouter";
+import { apiRequest } from "@/lib/queryClient";
+import type { Project, Video as VideoType, AiModel, ContactMessage } from "../../../shared/schema";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const [selectedMessage, setSelectedMessage] = useState<any>(null);
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editingVideo, setEditingVideo] = useState<VideoType | null>(null);
+  const [editingAiModel, setEditingAiModel] = useState<AiModel | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Check if user is authenticated
   const { data: user, isLoading: userLoading } = useQuery({
@@ -35,9 +47,24 @@ export default function AdminDashboard() {
     retry: false,
   });
 
-  // Get contact messages
-  const { data: messages, isLoading: messagesLoading } = useQuery({
+  // Get all data
+  const { data: messages = [] } = useQuery({
     queryKey: ["/api/admin/messages"],
+    enabled: !!user,
+  });
+
+  const { data: projects = [] } = useQuery({
+    queryKey: ["/api/projects"],
+    enabled: !!user,
+  });
+
+  const { data: videos = [] } = useQuery({
+    queryKey: ["/api/videos"],
+    enabled: !!user,
+  });
+
+  const { data: aiModels = [] } = useQuery({
+    queryKey: ["/api/ai-models"],
     enabled: !!user,
   });
 
@@ -51,6 +78,113 @@ export default function AdminDashboard() {
       setLocation("/admin");
     }
   }, [user, userLoading, toast, setLocation]);
+
+  // Mutations
+  const createProjectMutation = useMutation({
+    mutationFn: (data: any) => apiRequest("/api/admin/projects", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      toast({ title: "Başarılı", description: "Proje eklendi." });
+      setEditingProject(null);
+    },
+  });
+
+  const updateProjectMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => 
+      apiRequest(`/api/admin/projects/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      toast({ title: "Başarılı", description: "Proje güncellendi." });
+      setEditingProject(null);
+    },
+  });
+
+  const deleteProjectMutation = useMutation({
+    mutationFn: (id: number) => apiRequest(`/api/admin/projects/${id}`, {
+      method: "DELETE",
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      toast({ title: "Başarılı", description: "Proje silindi." });
+    },
+  });
+
+  // Similar mutations for videos and AI models
+  const createVideoMutation = useMutation({
+    mutationFn: (data: any) => apiRequest("/api/admin/videos", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/videos"] });
+      toast({ title: "Başarılı", description: "Video eklendi." });
+      setEditingVideo(null);
+    },
+  });
+
+  const updateVideoMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => 
+      apiRequest(`/api/admin/videos/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/videos"] });
+      toast({ title: "Başarılı", description: "Video güncellendi." });
+      setEditingVideo(null);
+    },
+  });
+
+  const deleteVideoMutation = useMutation({
+    mutationFn: (id: number) => apiRequest(`/api/admin/videos/${id}`, {
+      method: "DELETE",
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/videos"] });
+      toast({ title: "Başarılı", description: "Video silindi." });
+    },
+  });
+
+  const createAiModelMutation = useMutation({
+    mutationFn: (data: any) => apiRequest("/api/admin/ai-models", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/ai-models"] });
+      toast({ title: "Başarılı", description: "AI modeli eklendi." });
+      setEditingAiModel(null);
+    },
+  });
+
+  const updateAiModelMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => 
+      apiRequest(`/api/admin/ai-models/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/ai-models"] });
+      toast({ title: "Başarılı", description: "AI modeli güncellendi." });
+      setEditingAiModel(null);
+    },
+  });
+
+  const deleteAiModelMutation = useMutation({
+    mutationFn: (id: number) => apiRequest(`/api/admin/ai-models/${id}`, {
+      method: "DELETE",
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/ai-models"] });
+      toast({ title: "Başarılı", description: "AI modeli silindi." });
+    },
+  });
 
   const handleLogout = async () => {
     try {
@@ -75,7 +209,63 @@ export default function AdminDashboard() {
     }
   };
 
-  if (userLoading || messagesLoading) {
+  const handleProjectSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      link: formData.get("link") as string || null,
+      image: formData.get("image") as string || null,
+      category: formData.get("category") as string,
+      orderIndex: parseInt(formData.get("orderIndex") as string || "0"),
+    };
+
+    if (editingProject?.id) {
+      updateProjectMutation.mutate({ id: editingProject.id, data });
+    } else {
+      createProjectMutation.mutate(data);
+    }
+  };
+
+  const handleVideoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string || null,
+      videoUrl: formData.get("videoUrl") as string,
+      thumbnail: formData.get("thumbnail") as string || null,
+      orderIndex: parseInt(formData.get("orderIndex") as string || "0"),
+    };
+
+    if (editingVideo?.id) {
+      updateVideoMutation.mutate({ id: editingVideo.id, data });
+    } else {
+      createVideoMutation.mutate(data);
+    }
+  };
+
+  const handleAiModelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const features = (formData.get("features") as string || "").split("\n").filter(f => f.trim());
+    const data = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      features: features,
+      icon: formData.get("icon") as string || null,
+      orderIndex: parseInt(formData.get("orderIndex") as string || "0"),
+    };
+
+    if (editingAiModel?.id) {
+      updateAiModelMutation.mutate({ id: editingAiModel.id, data });
+    } else {
+      createAiModelMutation.mutate(data);
+    }
+  };
+
+  if (userLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -87,120 +277,355 @@ export default function AdminDashboard() {
     return null;
   }
 
+  const menuItems = [
+    { id: "dashboard", label: "Dashboard", icon: Home },
+    { id: "messages", label: "Mesajlar", icon: MessageSquare },
+    { id: "projects", label: "Projeler", icon: Briefcase },
+    { id: "videos", label: "Video Yönetimi", icon: Video },
+    { id: "ai-models", label: "AI Modelleri", icon: Brain },
+    { id: "settings", label: "Ayarlar", icon: Settings },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">3</span>
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Panel</h1>
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <div className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-blue-700 text-white transition-all duration-300 flex flex-col`}>
+        <div className="p-4 flex items-center justify-between">
+          <div className={`flex items-center space-x-3 ${!sidebarOpen && 'justify-center'}`}>
+            <div className="w-10 h-10 bg-white text-blue-700 rounded-lg flex items-center justify-center font-bold text-lg">
+              3
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Hoş geldiniz, {user.username}</span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                className="flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Çıkış Yap
-              </Button>
-            </div>
+            {sidebarOpen && (
+              <>
+                <div>
+                  <h2 className="font-bold">Third Hand</h2>
+                  <p className="text-xs text-blue-200">Admin Panel</p>
+                </div>
+              </>
+            )}
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="text-white hover:bg-blue-600"
+          >
+            <Menu className="w-5 h-5" />
+          </Button>
+        </div>
+
+        <nav className="flex-1 p-4">
+          <ul className="space-y-2">
+            {menuItems.map((item) => (
+              <li key={item.id}>
+                <button
+                  onClick={() => setActiveTab(item.id)}
+                  className={`w-full flex items-center ${sidebarOpen ? 'space-x-3' : 'justify-center'} px-3 py-2 rounded-lg transition-colors ${
+                    activeTab === item.id
+                      ? 'bg-blue-600 text-white'
+                      : 'text-blue-200 hover:bg-blue-600 hover:text-white'
+                  }`}
+                >
+                  <item.icon className="w-5 h-5" />
+                  {sidebarOpen && <span>{item.label}</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="p-4 border-t border-blue-600">
+          <Button
+            variant="ghost"
+            onClick={handleLogout}
+            className={`w-full text-blue-200 hover:text-white hover:bg-blue-600 ${!sidebarOpen && 'px-0'}`}
+          >
+            <LogOut className="w-5 h-5" />
+            {sidebarOpen && <span className="ml-3">Çıkış Yap</span>}
+          </Button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Toplam Mesaj</CardTitle>
-              <Mail className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{messages?.length || 0}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Bu Ay</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {messages?.filter((m: any) => {
-                  const messageDate = new Date(m.created_at);
-                  const now = new Date();
-                  return messageDate.getMonth() === now.getMonth() && 
-                         messageDate.getFullYear() === now.getFullYear();
-                }).length || 0}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Okunmamış</CardTitle>
-              <Eye className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-            </CardContent>
-          </Card>
-        </div>
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto">
+        <div className="p-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              {menuItems.find(item => item.id === activeTab)?.label || 'Dashboard'}
+            </h1>
+            <p className="text-gray-600">
+              Hoş geldiniz! Buradan web sitenizi yönetebilirsiniz.
+            </p>
+          </div>
 
-        {/* Messages Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>İletişim Mesajları</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {messages && messages.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Ad Soyad</TableHead>
-                    <TableHead>E-posta</TableHead>
-                    <TableHead>Konu</TableHead>
-                    <TableHead>Tarih</TableHead>
-                    <TableHead>İşlem</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {messages.map((message: any) => (
-                    <TableRow key={message.id}>
-                      <TableCell className="font-medium">{message.name}</TableCell>
-                      <TableCell>{message.email}</TableCell>
-                      <TableCell>{message.subject}</TableCell>
-                      <TableCell>
-                        {format(new Date(message.created_at), "dd MMM yyyy HH:mm", { locale: tr })}
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => setSelectedMessage(message)}
-                        >
-                          Görüntüle
-                        </Button>
-                      </TableCell>
+          {/* Dashboard Tab */}
+          {activeTab === "dashboard" && (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Toplam Mesaj</CardTitle>
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{messages.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Projeler</CardTitle>
+                  <Briefcase className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{projects.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Videolar</CardTitle>
+                  <Video className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{videos.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">AI Modelleri</CardTitle>
+                  <Brain className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{aiModels.length}</div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Messages Tab */}
+          {activeTab === "messages" && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Gelen Mesajlar</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Ad Soyad</TableHead>
+                      <TableHead>E-posta</TableHead>
+                      <TableHead>Konu</TableHead>
+                      <TableHead>Tarih</TableHead>
+                      <TableHead>İşlem</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                Henüz mesaj bulunmamaktadır.
+                  </TableHeader>
+                  <TableBody>
+                    {messages.map((message) => (
+                      <TableRow key={message.id}>
+                        <TableCell className="font-medium">{message.name}</TableCell>
+                        <TableCell>{message.email}</TableCell>
+                        <TableCell>{message.subject}</TableCell>
+                        <TableCell>
+                          {format(new Date(message.createdAt || ''), "dd MMMM yyyy", { locale: tr })}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedMessage(message)}
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Projects Tab */}
+          {activeTab === "projects" && (
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">Projeler</h2>
+                <Button onClick={() => setEditingProject({} as Project)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Yeni Proje Ekle
+                </Button>
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <Card>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-12">Sıra</TableHead>
+                        <TableHead>Başlık</TableHead>
+                        <TableHead>Kategori</TableHead>
+                        <TableHead>Link</TableHead>
+                        <TableHead className="text-right">İşlemler</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {projects.map((project) => (
+                        <TableRow key={project.id}>
+                          <TableCell>
+                            <div className="flex items-center">
+                              <GripVertical className="w-4 h-4 text-gray-400" />
+                              <span className="ml-2">{project.orderIndex}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-medium">{project.title}</TableCell>
+                          <TableCell>{project.category}</TableCell>
+                          <TableCell>
+                            {project.link ? (
+                              <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                                Linki Görüntüle
+                              </a>
+                            ) : '-'}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setEditingProject(project)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => deleteProjectMutation.mutate(project.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Videos Tab */}
+          {activeTab === "videos" && (
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">Videolar</h2>
+                <Button onClick={() => setEditingVideo({} as VideoType)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Yeni Video Ekle
+                </Button>
+              </div>
+              <Card>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-12">Sıra</TableHead>
+                        <TableHead>Başlık</TableHead>
+                        <TableHead>Video URL</TableHead>
+                        <TableHead className="text-right">İşlemler</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {videos.map((video) => (
+                        <TableRow key={video.id}>
+                          <TableCell>
+                            <div className="flex items-center">
+                              <GripVertical className="w-4 h-4 text-gray-400" />
+                              <span className="ml-2">{video.orderIndex}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-medium">{video.title}</TableCell>
+                          <TableCell>
+                            <a href={video.videoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                              Videoyu Görüntüle
+                            </a>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setEditingVideo(video)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => deleteVideoMutation.mutate(video.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* AI Models Tab */}
+          {activeTab === "ai-models" && (
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">AI Modelleri</h2>
+                <Button onClick={() => setEditingAiModel({} as AiModel)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Yeni Model Ekle
+                </Button>
+              </div>
+              <Card>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-12">Sıra</TableHead>
+                        <TableHead>Model Adı</TableHead>
+                        <TableHead>Özellik Sayısı</TableHead>
+                        <TableHead className="text-right">İşlemler</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {aiModels.map((model) => (
+                        <TableRow key={model.id}>
+                          <TableCell>
+                            <div className="flex items-center">
+                              <GripVertical className="w-4 h-4 text-gray-400" />
+                              <span className="ml-2">{model.orderIndex}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-medium">{model.name}</TableCell>
+                          <TableCell>{(model.features as string[]).length} özellik</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setEditingAiModel(model)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => deleteAiModelMutation.mutate(model.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Message Detail Dialog */}
@@ -211,40 +636,252 @@ export default function AdminDashboard() {
           </DialogHeader>
           {selectedMessage && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Ad Soyad</p>
-                  <p className="font-medium">{selectedMessage.name}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">E-posta</p>
-                  <p className="font-medium">{selectedMessage.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Konu</p>
-                  <p className="font-medium">{selectedMessage.subject}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Tarih</p>
-                  <p className="font-medium">
-                    {format(new Date(selectedMessage.created_at), "dd MMMM yyyy HH:mm", { locale: tr })}
-                  </p>
-                </div>
+              <div>
+                <Label>Ad Soyad</Label>
+                <p className="text-sm text-gray-700">{selectedMessage.name}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 mb-1">Mesaj</p>
-                <ScrollArea className="h-48 w-full rounded-md border p-4">
-                  <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
-                </ScrollArea>
+                <Label>E-posta</Label>
+                <p className="text-sm text-gray-700">{selectedMessage.email}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <p className="text-sm text-gray-500">Gizlilik Politikası:</p>
-                <Badge variant={selectedMessage.privacy_accepted ? "default" : "secondary"}>
-                  {selectedMessage.privacy_accepted ? "Kabul Edildi" : "Kabul Edilmedi"}
+              <div>
+                <Label>Konu</Label>
+                <p className="text-sm text-gray-700">{selectedMessage.subject}</p>
+              </div>
+              <div>
+                <Label>Mesaj</Label>
+                <p className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMessage.message}</p>
+              </div>
+              <div>
+                <Label>Tarih</Label>
+                <p className="text-sm text-gray-700">
+                  {format(new Date(selectedMessage.createdAt || ''), "dd MMMM yyyy HH:mm", { locale: tr })}
+                </p>
+              </div>
+              {selectedMessage.privacyAccepted && (
+                <Badge variant="outline" className="mt-2">
+                  Gizlilik sözleşmesi kabul edildi
                 </Badge>
-              </div>
+              )}
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Project Edit Dialog */}
+      <Dialog open={!!editingProject} onOpenChange={() => setEditingProject(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{editingProject?.id ? 'Proje Düzenle' : 'Yeni Proje Ekle'}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleProjectSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="title">Başlık</Label>
+              <Input
+                id="title"
+                name="title"
+                defaultValue={editingProject?.title}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="description">Açıklama</Label>
+              <Textarea
+                id="description"
+                name="description"
+                defaultValue={editingProject?.description}
+                required
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label htmlFor="category">Kategori</Label>
+              <Input
+                id="category"
+                name="category"
+                defaultValue={editingProject?.category}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="link">Link (Opsiyonel)</Label>
+              <Input
+                id="link"
+                name="link"
+                type="url"
+                defaultValue={editingProject?.link || ''}
+              />
+            </div>
+            <div>
+              <Label htmlFor="image">Resim URL (Opsiyonel)</Label>
+              <Input
+                id="image"
+                name="image"
+                type="url"
+                defaultValue={editingProject?.image || ''}
+              />
+            </div>
+            <div>
+              <Label htmlFor="orderIndex">Sıralama</Label>
+              <Input
+                id="orderIndex"
+                name="orderIndex"
+                type="number"
+                defaultValue={editingProject?.orderIndex || 0}
+                required
+              />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditingProject(null)}>
+                İptal
+              </Button>
+              <Button type="submit" disabled={createProjectMutation.isPending || updateProjectMutation.isPending}>
+                {(createProjectMutation.isPending || updateProjectMutation.isPending) && (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                )}
+                {editingProject?.id ? 'Güncelle' : 'Ekle'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Video Edit Dialog */}
+      <Dialog open={!!editingVideo} onOpenChange={() => setEditingVideo(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{editingVideo?.id ? 'Video Düzenle' : 'Yeni Video Ekle'}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleVideoSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="title">Başlık</Label>
+              <Input
+                id="title"
+                name="title"
+                defaultValue={editingVideo?.title}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="description">Açıklama (Opsiyonel)</Label>
+              <Textarea
+                id="description"
+                name="description"
+                defaultValue={editingVideo?.description || ''}
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label htmlFor="videoUrl">Video URL</Label>
+              <Input
+                id="videoUrl"
+                name="videoUrl"
+                type="url"
+                defaultValue={editingVideo?.videoUrl}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="thumbnail">Thumbnail URL (Opsiyonel)</Label>
+              <Input
+                id="thumbnail"
+                name="thumbnail"
+                type="url"
+                defaultValue={editingVideo?.thumbnail || ''}
+              />
+            </div>
+            <div>
+              <Label htmlFor="orderIndex">Sıralama</Label>
+              <Input
+                id="orderIndex"
+                name="orderIndex"
+                type="number"
+                defaultValue={editingVideo?.orderIndex || 0}
+                required
+              />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditingVideo(null)}>
+                İptal
+              </Button>
+              <Button type="submit" disabled={createVideoMutation.isPending || updateVideoMutation.isPending}>
+                {(createVideoMutation.isPending || updateVideoMutation.isPending) && (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                )}
+                {editingVideo?.id ? 'Güncelle' : 'Ekle'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* AI Model Edit Dialog */}
+      <Dialog open={!!editingAiModel} onOpenChange={() => setEditingAiModel(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{editingAiModel?.id ? 'AI Modeli Düzenle' : 'Yeni AI Modeli Ekle'}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAiModelSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="name">Model Adı</Label>
+              <Input
+                id="name"
+                name="name"
+                defaultValue={editingAiModel?.name}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="description">Açıklama</Label>
+              <Textarea
+                id="description"
+                name="description"
+                defaultValue={editingAiModel?.description}
+                required
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label htmlFor="features">Özellikler (Her satıra bir özellik)</Label>
+              <Textarea
+                id="features"
+                name="features"
+                defaultValue={editingAiModel?.features ? (editingAiModel.features as string[]).join('\n') : ''}
+                rows={5}
+                placeholder="Özellik 1&#10;Özellik 2&#10;Özellik 3"
+              />
+            </div>
+            <div>
+              <Label htmlFor="icon">İkon (Opsiyonel)</Label>
+              <Input
+                id="icon"
+                name="icon"
+                defaultValue={editingAiModel?.icon || ''}
+                placeholder="lucide-react icon adı (örn: Brain)"
+              />
+            </div>
+            <div>
+              <Label htmlFor="orderIndex">Sıralama</Label>
+              <Input
+                id="orderIndex"
+                name="orderIndex"
+                type="number"
+                defaultValue={editingAiModel?.orderIndex || 0}
+                required
+              />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditingAiModel(null)}>
+                İptal
+              </Button>
+              <Button type="submit" disabled={createAiModelMutation.isPending || updateAiModelMutation.isPending}>
+                {(createAiModelMutation.isPending || updateAiModelMutation.isPending) && (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                )}
+                {editingAiModel?.id ? 'Güncelle' : 'Ekle'}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
