@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import LanguageToggle from "@/components/ui/language-toggle";
 import { Menu, User } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,13 +57,12 @@ export default function Navigation() {
           {/* Language & Admin */}
           <div className="flex items-center space-x-4">
             <LanguageToggle />
-            <Button 
-              className="bg-primary text-white hover:bg-primary/90"
-              onClick={() => scrollToSection("admin-giris")}
-            >
-              <User className="w-4 h-4 mr-2" />
-              Admin Giriş
-            </Button>
+            <Link href="/admin">
+              <Button className="bg-primary text-white hover:bg-primary/90">
+                <User className="w-4 h-4 mr-2" />
+                Admin Giriş
+              </Button>
+            </Link>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
