@@ -69,8 +69,8 @@ export default function ServicesSection() {
     <section id="hizmetler" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Hizmetlerimiz</h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-poppins font-bold text-slate-800 mb-4">Hizmetlerimiz</h2>
+          <p className="text-xl font-inter text-slate-600 max-w-3xl mx-auto">
             İşletmenizin ihtiyaçlarına özel, modern yapay zeka çözümleri sunuyoruz. İster küçük bir işletme olun, ister kurumsal bir firma - size uygun AI çözümlerimiz var.
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function ServicesSection() {
                 <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 ${service.hoverBg} transition-colors`}>
                   <service.icon className={`w-8 h-8 ${service.iconColor} group-hover:text-white transition-colors`} />
                 </div>
-                <h3 className="text-xl font-heading font-semibold text-slate-800 mb-4">{service.title}</h3>
+                <h3 className="text-xl font-poppins font-semibold text-slate-800 mb-4">{service.title}</h3>
                 <p className="text-slate-600 mb-6">{service.description}</p>
                 <ul className="space-y-2 text-sm text-slate-600 mb-6">
                   {service.features.map((feature, featureIndex) => (
