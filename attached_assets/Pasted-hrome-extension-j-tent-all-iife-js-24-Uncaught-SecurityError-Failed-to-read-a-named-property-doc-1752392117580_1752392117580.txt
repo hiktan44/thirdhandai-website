@@ -1,0 +1,40 @@
+hrome-extension://j…tent/all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://js.stripe.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.googletagmanager.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://js.stripe.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://m.stripe.network" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+19Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+WebsiteMaker:1 Unchecked runtime.lastError: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+2WebsiteMaker:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+chrome-extension://j…tent/all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://td.doubleclick.net" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://extension-3d28c542-4e39-4490-ae8d-b1af85e3affb.replit.app" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+10RemoteFileSaver:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+12RemoteFileSaver:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+3RemoteFileSaver:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.google.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+6RemoteFileSaver:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+5RemoteFileSaver:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received

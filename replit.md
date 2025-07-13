@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack web application for Third Hand AI Agency, a company that provides custom AI solutions and automation services. The application is built as a modern single-page application with a React frontend and Express.js backend, showcasing the agency's services and allowing potential clients to contact them.
+This is a full-stack web application for Third Hand AI Agency, a company that provides custom AI solutions and automation services. The application is built as a modern single-page application with a React frontend and Express.js backend, showcasing the agency's services and allowing potential clients to contact them. The website features a bilingual interface (Turkish/English) with professional typography using Inter font for body text and Poppins font for headings.
 
 ## User Preferences
 
@@ -45,9 +45,19 @@ Preferred communication style: Simple, everyday language.
 - **Storage Layer**: Abstracted storage interface supporting both in-memory and database implementations
 - **Error Handling**: Centralized error handling with appropriate HTTP status codes
 
-### Database Schema
+### Database Schema (PostgreSQL)
 - **Users Table**: Admin user management (id, username, password)
 - **Contact Messages Table**: Client inquiries (id, name, email, subject, message, privacy_accepted, created_at)
+
+### Recent Updates (January 13, 2025)
+- **Database Integration**: Migrated from in-memory storage to PostgreSQL database
+- **Font Implementation**: Attempted to implement Inter and Poppins fonts via multiple methods:
+  - Google Fonts CDN links in HTML head
+  - CSS @import statements
+  - Dynamic JavaScript font loading with loadFonts.ts
+  - CSS variables for font families
+  - Inline styles with font-family declarations
+- **Font Loading Issue**: Despite successful font loading confirmed in console, visual font changes may not be apparent in some environments
 
 ## Data Flow
 
