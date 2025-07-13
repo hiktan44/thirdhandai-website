@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles } from "lucide-react";
+import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles, MessageSquare } from "lucide-react";
 
 export default function ServicesSection() {
   const scrollToSection = (sectionId: string) => {
@@ -120,6 +120,21 @@ export default function ServicesSection() {
       bgColor: "bg-emerald-100",
       iconColor: "text-emerald-600",
       hoverBg: "group-hover:bg-emerald-600"
+    },
+    {
+      icon: MessageSquare,
+      title: "AI Sesli & Görüntülü Chatbot",
+      description: "İşletmeniz için 1-2 gün içinde hazır! Sesli komutları anlayan, görüntü işleyebilen ve video desteği olan akıllı chatbot çözümleri.",
+      features: [
+        "Sesli komut ve yanıt sistemi",
+        "Görüntü tanıma ve işleme",
+        "Video konferans desteği",
+        "1-2 günde hızlı teslimat",
+        "7/24 müşteri desteği"
+      ],
+      bgColor: "bg-cyan-100",
+      iconColor: "text-cyan-600",
+      hoverBg: "group-hover:bg-cyan-600"
     }
   ];
 
