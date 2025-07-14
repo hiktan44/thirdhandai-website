@@ -30,8 +30,8 @@ export default function TestimonialsSection() {
     <section className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Müşteri Görüşleri</h2>
-          <p className="text-xl text-slate-700">Müşterilerimizin AI çözümlerimiz hakkındaki düşünceleri</p>
+          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">Müşteri Görüşleri</h2>
+          <p className="text-xl text-slate-800 font-medium">Müşterilerimizin AI çözümlerimiz hakkındaki düşünceleri</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -44,15 +44,15 @@ export default function TestimonialsSection() {
                       <Star key={i} className="w-5 h-5 fill-current" />
                     ))}
                   </div>
-                  <p className="text-slate-600 italic">"{testimonial.text}"</p>
+                  <p className="text-slate-700 font-medium italic">"{testimonial.text}"</p>
                 </div>
                 <div className="flex items-center">
                   <div className={`w-12 h-12 ${testimonial.iconBg} rounded-full flex items-center justify-center mr-4`}>
                     <User className={`w-6 h-6 ${testimonial.iconColor}`} />
                   </div>
                   <div>
-                    <h4 className="font-heading font-semibold text-slate-800">{testimonial.name}</h4>
-                    <p className="text-sm text-slate-600">{testimonial.position}</p>
+                    <h4 className="font-heading font-bold text-slate-900">{testimonial.name}</h4>
+                    <p className="text-sm text-slate-700 font-medium">{testimonial.position}</p>
                   </div>
                 </div>
               </CardContent>

@@ -62,21 +62,21 @@ export default function AboutSection() {
                   <div className="w-12 h-12 border-2 border-white rounded-lg mx-auto"></div>
                 </div>
               </div>
-              <h3 className="text-2xl font-heading font-bold text-slate-800 mb-2">Third Hand</h3>
-              <p className="text-blue-600 text-lg font-medium">AI Agency</p>
+              <h3 className="text-2xl font-heading font-bold text-slate-900 mb-2">Third Hand</h3>
+              <p className="text-blue-700 text-lg font-bold">AI Agency</p>
               <div className="mt-4">
-                <span className="text-3xl font-bold text-blue-600">5+</span>
-                <p className="text-slate-600">Yıl Deneyim</p>
+                <span className="text-3xl font-bold text-blue-700">5+</span>
+                <p className="text-slate-700 font-medium">Yıl Deneyim</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h2 className="text-4xl font-heading font-bold text-slate-800 mb-6">Hakkımızda</h2>
-            <p className="text-xl text-slate-700 mb-8 leading-relaxed">
+            <h2 className="text-4xl font-heading font-bold text-slate-900 mb-6">Hakkımızda</h2>
+            <p className="text-xl text-slate-800 font-medium mb-8 leading-relaxed">
               Third Hand AI Agency olarak 5 yılı aşkın süredir yapay zeka teknolojileri konusunda uzmanlaşmış, yenilikçi çözümler sunan bir teknoloji şirketiyiz.
             </p>
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-slate-700 font-medium mb-8 leading-relaxed">
               Misyonumuz, şirketlerin yapay zeka teknolojilerinden en verimli şekilde faydalanmasını sağlamak ve rekabet avantajı elde etmelerine yardımcı olmaktır.
             </p>
 
@@ -86,8 +86,8 @@ export default function AboutSection() {
                   <div className={`w-12 h-12 ${feature.iconBg} rounded-lg flex items-center justify-center mx-auto mb-4`}>
                     <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
                   </div>
-                  <h4 className="font-heading font-semibold text-slate-800 mb-2">{feature.title}</h4>
-                  <p className="text-sm text-slate-600">{feature.description}</p>
+                  <h4 className="font-heading font-bold text-slate-900 mb-2">{feature.title}</h4>
+                  <p className="text-sm text-slate-700 font-medium">{feature.description}</p>
                 </div>
               ))}
             </div>
