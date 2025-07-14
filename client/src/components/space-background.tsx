@@ -74,28 +74,28 @@ export default function SpaceBackground() {
       
       // Blue orb
       const blueGradient = ctx.createRadialGradient(
-        canvas.width * 0.25 + Math.sin(time * 0.5) * 50,
-        canvas.height * 0.25 + Math.cos(time * 0.5) * 50,
+        canvas.width * 0.25 + Math.sin(time * 0.8) * 100,
+        canvas.height * 0.25 + Math.cos(time * 0.8) * 100,
         0,
-        canvas.width * 0.25 + Math.sin(time * 0.5) * 50,
-        canvas.height * 0.25 + Math.cos(time * 0.5) * 50,
-        200
+        canvas.width * 0.25 + Math.sin(time * 0.8) * 100,
+        canvas.height * 0.25 + Math.cos(time * 0.8) * 100,
+        250
       );
-      blueGradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
+      blueGradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
       blueGradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
       ctx.fillStyle = blueGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Purple orb
       const purpleGradient = ctx.createRadialGradient(
-        canvas.width * 0.75 + Math.sin(time * 0.3) * 30,
-        canvas.height * 0.75 + Math.cos(time * 0.3) * 30,
+        canvas.width * 0.75 + Math.sin(time * 0.6) * 80,
+        canvas.height * 0.75 + Math.cos(time * 0.6) * 80,
         0,
-        canvas.width * 0.75 + Math.sin(time * 0.3) * 30,
-        canvas.height * 0.75 + Math.cos(time * 0.3) * 30,
-        200
+        canvas.width * 0.75 + Math.sin(time * 0.6) * 80,
+        canvas.height * 0.75 + Math.cos(time * 0.6) * 80,
+        250
       );
-      purpleGradient.addColorStop(0, 'rgba(147, 51, 234, 0.3)');
+      purpleGradient.addColorStop(0, 'rgba(147, 51, 234, 0.5)');
       purpleGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
       ctx.fillStyle = purpleGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);

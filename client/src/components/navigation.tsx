@@ -5,9 +5,11 @@ import LanguageToggle from "@/components/ui/language-toggle";
 import { Menu, User } from "lucide-react";
 import { Link } from "wouter";
 import Logo from "@/components/logo";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -18,12 +20,12 @@ export default function Navigation() {
   };
 
   const navItems = [
-    { id: "ana-sayfa", label: "Ana Sayfa" },
-    { id: "hizmetler", label: "Hizmetler" },
-    { id: "projeler", label: "Örnek Projeler" },
-    { id: "video-projeler", label: "Video Projeler" },
-    { id: "hakkimizda", label: "Hakkımızda" },
-    { id: "iletisim", label: "İletişim" },
+    { id: "ana-sayfa", label: t('nav.home') },
+    { id: "hizmetler", label: t('nav.services') },
+    { id: "projeler", label: t('nav.projects') },
+    { id: "video-projeler", label: t('nav.videos') },
+    { id: "hakkimizda", label: t('nav.about') },
+    { id: "iletisim", label: t('nav.contact') },
   ];
 
   return (
@@ -56,7 +58,7 @@ export default function Navigation() {
             <Link href="/admin">
               <Button className="bg-primary text-white hover:bg-primary/90">
                 <User className="w-4 h-4 mr-2" />
-                Admin Giriş
+                {t('nav.admin')}
               </Button>
             </Link>
 

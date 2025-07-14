@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Rocket, MessageCircle } from "lucide-react";
 import SpaceBackground from "./space-background";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -18,13 +20,13 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
           <div className="animate-slide-up">
-            <h1 className="text-5xl lg:text-6xl font-heading font-bold text-white leading-tight mb-6">
-              <span className="text-blue-400">Yapay Zeka</span>
-              <br />ile
-              <br />İşinizi İleriye Taşıyın
+            <h1 className="text-6xl lg:text-7xl font-heading font-bold text-white leading-tight mb-6">
+              <span className="text-blue-400">{t('hero.title1')}</span>
+              <br />{t('hero.title2')}
+              <br />{t('hero.title3')}
             </h1>
             <p className="text-xl font-sans text-slate-300 mb-8 leading-relaxed">
-              Third Hand AI Agency olarak şirketinize özel, terzi usulü AI çözümleri ve otomasyonları ile rekabette öne geçmenizi sağlıyoruz.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -33,7 +35,7 @@ export default function HeroSection() {
                 className="bg-primary text-white hover:bg-primary/90 transform hover:scale-105 transition-all"
               >
                 <Rocket className="w-4 h-4 mr-2" />
-                Hizmetlerimizi Keşfedin
+                {t('hero.cta1')}
               </Button>
               <Button 
                 variant="outline"
@@ -42,7 +44,7 @@ export default function HeroSection() {
                 className="border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
-                İletişime Geçin
+                {t('hero.cta2')}
               </Button>
             </div>
           </div>

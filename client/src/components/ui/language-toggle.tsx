@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LanguageToggle() {
-  const [language, setLanguage] = useState("TR");
+  const { language, setLanguage } = useLanguage();
 
   return (
     <div className="flex bg-slate-100 rounded-lg p-1">
