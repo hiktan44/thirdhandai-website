@@ -93,20 +93,7 @@ export default function ServicesSection() {
       iconColor: "text-indigo-600",
       hoverBg: "group-hover:bg-indigo-600"
     },
-    {
-      icon: Sparkles,
-      title: "AI Reklam Çözümleri",
-      description: "Yapay zeka ile hedef kitlenize özel, yüksek dönüşümlü reklam kampanyaları oluşturuyoruz.",
-      features: [
-        "AI destekli reklam metni yazımı",
-        "Görsel ve video reklam üretimi",
-        "A/B test otomasyonu",
-        "Performans analizi ve optimizasyon"
-      ],
-      bgColor: "bg-yellow-100",
-      iconColor: "text-yellow-600",
-      hoverBg: "group-hover:bg-yellow-600"
-    },
+
     {
       icon: Brain,
       title: "GPT-4 Entegrasyonu",

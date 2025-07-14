@@ -24,18 +24,18 @@ export default function VideoProjectsSection() {
   ];
 
   return (
-    <section id="video-projeler" className="py-20 bg-white/95 backdrop-blur-sm">
+    <section id="video-projeler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Video Projelerimiz</h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-heading font-bold text-white mb-4">Video Projelerimiz</h2>
+          <p className="text-xl text-white/90 max-w-3xl mx-auto">
             Yapay zeka ve teknoloji projelerimizin tanıtım videolarını inceleyebilirsiniz. AI çözümlerimizin nasıl çalıştığını ve iş süreçlerinize nasıl entegre olduğunu görebilirsiniz.
           </p>
         </div>
 
         {isLoading ? (
           <div className="flex justify-center items-center min-h-[400px]">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <Loader2 className="w-8 h-8 animate-spin text-white" />
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

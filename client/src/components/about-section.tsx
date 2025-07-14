@@ -51,43 +51,43 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="hakkimizda" className="py-20 bg-white/95 backdrop-blur-sm">
+    <section id="hakkimizda" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="text-center mb-8">
-              <div className="w-32 h-32 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <div className="text-white text-center">
                   <div className="text-4xl mb-2">🧠</div>
                   <div className="w-12 h-12 border-2 border-white rounded-lg mx-auto"></div>
                 </div>
               </div>
-              <h3 className="text-2xl font-heading font-bold text-slate-800 mb-2">Third Hand</h3>
-              <p className="text-blue-600 text-lg font-medium">AI Agency</p>
+              <h3 className="text-2xl font-heading font-bold text-white mb-2">Third Hand</h3>
+              <p className="text-blue-300 text-lg font-medium">AI Agency</p>
               <div className="mt-4">
-                <span className="text-3xl font-bold text-blue-600">5+</span>
-                <p className="text-slate-600">Yıl Deneyim</p>
+                <span className="text-3xl font-bold text-blue-300">5+</span>
+                <p className="text-white/80">Yıl Deneyim</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h2 className="text-4xl font-heading font-bold text-slate-800 mb-6">Hakkımızda</h2>
-            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+            <h2 className="text-4xl font-heading font-bold text-white mb-6">Hakkımızda</h2>
+            <p className="text-xl text-white/90 mb-8 leading-relaxed">
               Third Hand AI Agency olarak 5 yılı aşkın süredir yapay zeka teknolojileri konusunda uzmanlaşmış, yenilikçi çözümler sunan bir teknoloji şirketiyiz.
             </p>
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-white/80 mb-8 leading-relaxed">
               Misyonumuz, şirketlerin yapay zeka teknolojilerinden en verimli şekilde faydalanmasını sağlamak ve rekabet avantajı elde etmelerine yardımcı olmaktır.
             </p>
 
             <div className="grid grid-cols-2 gap-6">
               {features.map((feature, index) => (
-                <div key={index} className={`text-center p-6 ${feature.bgColor} rounded-xl`}>
+                <div key={index} className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl">
                   <div className={`w-12 h-12 ${feature.iconBg} rounded-lg flex items-center justify-center mx-auto mb-4`}>
                     <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
                   </div>
-                  <h4 className="font-heading font-semibold text-slate-800 mb-2">{feature.title}</h4>
-                  <p className="text-sm text-slate-600">{feature.description}</p>
+                  <h4 className="font-heading font-semibold text-white mb-2">{feature.title}</h4>
+                  <p className="text-sm text-white/80">{feature.description}</p>
                 </div>
               ))}
             </div>
