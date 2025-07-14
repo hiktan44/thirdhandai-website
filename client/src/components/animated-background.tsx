@@ -1,173 +1,61 @@
-import { useEffect, useRef } from 'react';
+import './animated-background.css';
 
 export default function AnimatedBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Generate random stars
+  const stars = Array.from({ length: 150 }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    size: Math.random() * 3 + 1,
+    animationDelay: `${Math.random() * 5}s`,
+    animationDuration: `${Math.random() * 3 + 2}s`
+  }));
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Particle system for stars
-    const stars: Array<{x: number, y: number, size: number, brightness: number}> = [];
-    const starCount = 300;
-
-    for (let i = 0; i < starCount; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 1,
-        brightness: Math.random() * 0.5 + 0.5
-      });
-    }
-
-    // Neural network nodes
-    const nodes: Array<{x: number, y: number, vx: number, vy: number, connections: number[]}> = [];
-    const nodeCount = 8;
-
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        connections: []
-      });
-    }
-
-    // Create connections
-    nodes.forEach((node, i) => {
-      const connectionCount = 2 + Math.floor(Math.random() * 2);
-      for (let j = 0; j < connectionCount; j++) {
-        const target = Math.floor(Math.random() * nodes.length);
-        if (target !== i && !node.connections.includes(target)) {
-          node.connections.push(target);
-        }
-      }
-    });
-
-    let animationId: number;
-    let time = 0;
-
-    const animate = () => {
-      // Clear canvas with dark background
-      ctx.fillStyle = 'rgba(2, 6, 23, 1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw stars
-      stars.forEach(star => {
-        const twinkle = Math.sin(time * 0.001 + star.brightness * 10) * 0.5 + 0.5;
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * twinkle})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Update and draw nodes
-      nodes.forEach((node, i) => {
-        // Update position
-        node.x += node.vx;
-        node.y += node.vy;
-
-        // Bounce off edges
-        if (node.x < 50 || node.x > canvas.width - 50) node.vx *= -1;
-        if (node.y < 50 || node.y > canvas.height - 50) node.vy *= -1;
-
-        // Draw connections
-        node.connections.forEach(targetIndex => {
-          const target = nodes[targetIndex];
-          const distance = Math.sqrt(
-            Math.pow(node.x - target.x, 2) + 
-            Math.pow(node.y - target.y, 2)
-          );
-
-          if (distance < 300) {
-            const opacity = (1 - distance / 300) * 0.5;
-            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(target.x, target.y);
-            ctx.stroke();
-          }
-        });
-
-        // Draw node
-        const pulse = Math.sin(time * 0.002 + i) * 0.5 + 0.5;
-        ctx.fillStyle = `rgba(59, 130, 246, ${0.6 + pulse * 0.2})`;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 4 + pulse * 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Draw glow
-        const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 20);
-        gradient.addColorStop(0, `rgba(59, 130, 246, ${0.3 * pulse})`);
-        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Draw geometric shapes
-      const shapeTime = time * 0.0005;
-      ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
-      ctx.lineWidth = 2;
-
-      // Floating triangles
-      for (let i = 0; i < 3; i++) {
-        ctx.save();
-        ctx.translate(
-          canvas.width * (0.2 + i * 0.3),
-          canvas.height * 0.5 + Math.sin(shapeTime + i * 2) * 100
-        );
-        ctx.rotate(shapeTime + i);
-        ctx.beginPath();
-        ctx.moveTo(0, -30);
-        ctx.lineTo(-26, 15);
-        ctx.lineTo(26, 15);
-        ctx.closePath();
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      time++;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
+  // Generate geometric shapes
+  const shapes = Array.from({ length: 5 }, (_, i) => ({
+    id: i,
+    left: `${20 + i * 15}%`,
+    top: `${20 + Math.random() * 60}%`,
+    animationDelay: `${i * 0.5}s`,
+    animationDuration: `${10 + Math.random() * 5}s`
+  }));
 
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none">
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          background: 'radial-gradient(ellipse at center, #020617 0%, #000 100%)'
-        }}
-      />
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          opacity: 1
-        }}
-      />
+    <div className="animated-background">
+      {/* AI Grid Pattern */}
+      <div className="ai-grid" />
+      
+      {/* Stars */}
+      <div className="stars">
+        {stars.map(star => (
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              left: star.left,
+              top: star.top,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              animationDelay: star.animationDelay,
+              animationDuration: star.animationDuration
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Geometric Shapes */}
+      {shapes.map(shape => (
+        <div
+          key={shape.id}
+          className="geometric-shape triangle"
+          style={{
+            left: shape.left,
+            top: shape.top,
+            animationDelay: shape.animationDelay,
+            animationDuration: shape.animationDuration
+          }}
+        />
+      ))}
     </div>
   );
 }

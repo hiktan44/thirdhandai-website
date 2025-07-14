@@ -1,0 +1,21 @@
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+1 kare daha göster
+workspace_iframe.html:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+VM96 content-all.js:1612 
+ POST https://api-edge.cognitive.microsofttranslator.com/translate?from=&to=tr&api-version=3.0 401 (Unauthorized)
+all-frames.js:99 
+ POST https://api-edge.cognitive.microsofttranslator.com/translate?from=&to=tr&api-version=3.0 401 (Unauthorized)
+framework-a205c70e200f4467.js:1 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+workspace_iframe.html:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://159f2689-1796-426a-8eb7-ecae0f3739f6-00-168cgtqbc3w1m.janeway.replit.dev" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+5
+thirdhandkopya:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+all.iife.js:24 Uncaught SecurityError: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://www.google.com" from accessing a cross-origin frame.
+    at all.iife.js:24:85130
+﻿
