@@ -113,8 +113,8 @@ export default function ContactSection() {
     <section id="iletisim" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-white mb-4">İletişime Geçin</h2>
-          <p className="text-xl text-white/90">Projeniz hakkında konuşmak veya daha fazla bilgi almak için bize ulaşın.</p>
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">İletişime Geçin</h2>
+          <p className="text-xl text-slate-700">Projeniz hakkında konuşmak veya daha fazla bilgi almak için bize ulaşın.</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">

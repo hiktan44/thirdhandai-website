@@ -133,22 +133,22 @@ export default function ServicesSection() {
     <section id="hizmetler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-white mb-4">Hizmetlerimiz</h2>
-          <p className="text-xl font-sans text-white/90 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Hizmetlerimiz</h2>
+          <p className="text-xl font-sans text-slate-700 max-w-3xl mx-auto">
             İşletmenizin ihtiyaçlarına özel, modern yapay zeka çözümleri sunuyoruz. İster küçük bir işletme olun, ister kurumsal bir firma - size uygun AI çözümlerimiz var.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {defaultServices.map((service, index) => (
-            <Card key={index} className="bg-white/10 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all hover:border-white/40 group cursor-pointer">
+            <Card key={index} className="bg-white/80 backdrop-blur-sm border border-slate-200 hover:shadow-xl transition-all hover:border-slate-300 group cursor-pointer">
               <CardContent className="p-8">
                 <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 ${service.hoverBg} transition-colors`}>
                   <service.icon className={`w-8 h-8 ${service.iconColor} group-hover:text-white transition-colors`} />
                 </div>
-                <h3 className="text-xl font-heading font-semibold text-white mb-4">{service.title}</h3>
-                <p className="font-sans text-white/90 mb-6">{service.description}</p>
-                <ul className="space-y-2 text-sm text-white/80 mb-6">
+                <h3 className="text-xl font-heading font-semibold text-slate-800 mb-4">{service.title}</h3>
+                <p className="font-sans text-slate-600 mb-6">{service.description}</p>
+                <ul className="space-y-2 text-sm text-slate-600 mb-6">
                   {service.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
                       <Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" />
@@ -158,7 +158,7 @@ export default function ServicesSection() {
                 </ul>
                 <Button 
                   variant="link" 
-                  className="text-white font-semibold hover:text-white/80 p-0"
+                  className="text-primary font-semibold hover:text-primary/80 p-0"
                   onClick={() => scrollToSection("iletisim")}
                 >
                   Detaylı Bilgi <ArrowRight className="w-4 h-4 ml-2" />

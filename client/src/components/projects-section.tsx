@@ -31,8 +31,8 @@ export default function ProjectsSection() {
     <section id="projeler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-white mb-4">Örnek Projeler</h2>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Örnek Projeler</h2>
+          <p className="text-xl text-slate-700 max-w-3xl mx-auto">
             Third Hand AI Agency olarak gerçekleştirdiğimiz başarılı projelerden bazı örnekler. Farklı sektörlere yönelik yapay zeka çözümlerimizi inceleyebilirsiniz.
           </p>
         </div>

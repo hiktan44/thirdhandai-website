@@ -27,8 +27,8 @@ export default function VideoProjectsSection() {
     <section id="video-projeler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-white mb-4">Video Projelerimiz</h2>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-heading font-bold text-slate-800 mb-4">Video Projelerimiz</h2>
+          <p className="text-xl text-slate-700 max-w-3xl mx-auto">
             Yapay zeka ve teknoloji projelerimizin tanıtım videolarını inceleyebilirsiniz. AI çözümlerimizin nasıl çalıştığını ve iş süreçlerinize nasıl entegre olduğunu görebilirsiniz.
           </p>
         </div>
