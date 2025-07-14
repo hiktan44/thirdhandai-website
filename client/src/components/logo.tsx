@@ -84,10 +84,10 @@ export default function Logo({ className, showText = true }: LogoProps) {
       {/* Logo Text */}
       {showText && (
         <div className="flex flex-col">
-          <span className="text-2xl font-bold text-slate-800">
+          <span className="text-2xl font-heading font-bold text-slate-800">
             Third<span className="text-primary">Hand</span>
           </span>
-          <span className="text-sm text-slate-600 -mt-1">AI Agency</span>
+          <span className="text-sm font-heading text-slate-600 -mt-1">AI Agency</span>
         </div>
       )}
     </div>
