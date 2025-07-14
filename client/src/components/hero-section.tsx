@@ -55,8 +55,8 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-white text-center">
-                <h3 className="text-2xl font-bold mb-2">Third Hand</h3>
-                <p className="text-blue-400 text-lg font-medium">AI Agency</p>
+                <h3 className="text-2xl font-heading font-bold mb-2">Third Hand</h3>
+                <p className="text-blue-400 text-lg font-heading font-medium">AI Agency</p>
               </div>
             </div>
           </div>

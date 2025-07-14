@@ -1,0 +1,58 @@
+/* Font face declarations for better control */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Force font application */
+html {
+  font-family: 'Inter', sans-serif !important;
+}
+
+body {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override Tailwind defaults */
+.font-sans {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.font-heading {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* All text elements should use Inter by default */
+p, span, div, a, button, input, textarea, select, li, td, th, label, small {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Headings should use Poppins */
+h1, h2, h3, h4, h5, h6,
+.heading,
+.title,
+[class*="heading"],
+[class*="title"] {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Specific weight classes */
+.font-light { font-weight: 300 !important; }
+.font-normal { font-weight: 400 !important; }
+.font-medium { font-weight: 500 !important; }
+.font-semibold { font-weight: 600 !important; }
+.font-bold { font-weight: 700 !important; }
+.font-extrabold { font-weight: 800 !important; }
+.font-black { font-weight: 900 !important; }
+
+/* Override any existing font declarations */
+* {
+  font-family: inherit !important;
+}
+
+/* Ensure proper font rendering */
+.text-xs, .text-sm, .text-base, .text-lg, .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl {
+  font-family: inherit !important;
+}
