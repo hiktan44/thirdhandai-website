@@ -1,4 +1,14 @@
+import { useEffect, useState } from 'react';
+
 export default function AnimatedBackground() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   // Generate random stars
   const stars = Array.from({ length: 150 }, (_, i) => ({
     id: i,
@@ -22,39 +32,13 @@ export default function AnimatedBackground() {
     <div 
       className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden"
       style={{
-        background: 'radial-gradient(ellipse at center, #020617 0%, #000 100%)'
+        background: 'radial-gradient(ellipse at center, #020617 0%, #000 100%)',
+        zIndex: 0
       }}
     >
-      {/* Add keyframe animations using style tag */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.1; }
-          50% { opacity: 0.3; }
-        }
-        .star-animation {
-          animation: twinkle var(--duration) infinite;
-          animation-delay: var(--delay);
-        }
-        .shape-animation {
-          animation: float var(--duration) infinite ease-in-out;
-          animation-delay: var(--delay);
-        }
-        .grid-animation {
-          animation: pulse 4s infinite;
-        }
-      ` }} />
-      
-      {/* AI Grid Pattern */}
+      {/* AI Grid Pattern with animation */}
       <div 
-        className="absolute inset-0 w-full h-full grid-animation"
+        className="absolute inset-0 w-full h-full animate-grid-pulse"
         style={{
           backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)',
           backgroundSize: '50px 50px'
@@ -66,15 +50,14 @@ export default function AnimatedBackground() {
         {stars.map(star => (
           <div
             key={star.id}
-            className="absolute bg-white rounded-full star-animation"
+            className="absolute bg-white rounded-full animate-twinkle"
             style={{
               left: `${star.left}%`,
               top: `${star.top}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              '--duration': `${star.duration}s`,
-              '--delay': `${star.delay}s`
-            } as React.CSSProperties}
+              animationDelay: `${star.delay}s`
+            }}
           />
         ))}
       </div>
@@ -83,7 +66,7 @@ export default function AnimatedBackground() {
       {shapes.map(shape => (
         <div
           key={shape.id}
-          className="absolute shape-animation"
+          className="absolute animate-float"
           style={{
             left: `${shape.left}%`,
             top: `${shape.top}%`,
@@ -92,9 +75,8 @@ export default function AnimatedBackground() {
             borderLeft: '25px solid transparent',
             borderRight: '25px solid transparent',
             borderBottom: '50px solid rgba(59, 130, 246, 0.2)',
-            '--duration': `${shape.duration}s`,
-            '--delay': `${shape.delay}s`
-          } as React.CSSProperties}
+            animationDelay: `${shape.delay}s`
+          }}
         />
       ))}
     </div>
