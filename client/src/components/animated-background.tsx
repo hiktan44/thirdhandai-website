@@ -20,14 +20,14 @@ export default function AnimatedBackground() {
 
     // Particle system for stars
     const stars: Array<{x: number, y: number, size: number, brightness: number}> = [];
-    const starCount = 150;
+    const starCount = 300;
 
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2,
-        brightness: Math.random()
+        size: Math.random() * 3 + 1,
+        brightness: Math.random() * 0.5 + 0.5
       });
     }
 
@@ -61,13 +61,13 @@ export default function AnimatedBackground() {
 
     const animate = () => {
       // Clear canvas with dark background
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.1)';
+      ctx.fillStyle = 'rgba(2, 6, 23, 1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw stars
       stars.forEach(star => {
         const twinkle = Math.sin(time * 0.001 + star.brightness * 10) * 0.5 + 0.5;
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * twinkle * 0.8})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * twinkle})`;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
@@ -92,9 +92,9 @@ export default function AnimatedBackground() {
           );
 
           if (distance < 300) {
-            const opacity = (1 - distance / 300) * 0.3;
+            const opacity = (1 - distance / 300) * 0.5;
             ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(target.x, target.y);
@@ -121,8 +121,8 @@ export default function AnimatedBackground() {
 
       // Draw geometric shapes
       const shapeTime = time * 0.0005;
-      ctx.strokeStyle = 'rgba(59, 130, 246, 0.1)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+      ctx.lineWidth = 2;
 
       // Floating triangles
       for (let i = 0; i < 3; i++) {
@@ -154,13 +154,20 @@ export default function AnimatedBackground() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ 
-        background: 'radial-gradient(ellipse at center, #020617 0%, #000 100%)',
-        opacity: 0.8
-      }}
-    />
+    <div className="fixed inset-0 w-full h-full pointer-events-none">
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          background: 'radial-gradient(ellipse at center, #020617 0%, #000 100%)'
+        }}
+      />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          opacity: 1
+        }}
+      />
+    </div>
   );
 }

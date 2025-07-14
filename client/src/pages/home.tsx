@@ -13,7 +13,7 @@ import AnimatedBackground from "@/components/animated-background";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="min-h-screen relative overflow-hidden">
       <AnimatedBackground />
       <div className="relative z-10">
         <Navigation />
