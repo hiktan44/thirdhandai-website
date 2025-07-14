@@ -9,12 +9,12 @@ import TestimonialsSection from "@/components/testimonials-section";
 import CTASection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
-import AnimatedBackground from "@/components/animated-background";
+import SimpleAnimatedBackground from "@/components/simple-animated-background";
 
 export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <AnimatedBackground />
+      <SimpleAnimatedBackground />
       <div className="relative z-10">
         <Navigation />
         <HeroSection />
