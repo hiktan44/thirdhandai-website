@@ -15,7 +15,7 @@ export default function Logo({ className, showText = true }: LogoProps) {
         viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-12 h-12"
+        className="w-14 h-14"
       >
         <defs>
           <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -84,10 +84,10 @@ export default function Logo({ className, showText = true }: LogoProps) {
       {/* Logo Text */}
       {showText && (
         <div className="flex flex-col">
-          <span className="text-2xl font-heading font-bold text-slate-800">
+          <span className="text-3xl font-heading font-bold text-slate-800">
             Third<span className="text-primary">Hand</span>
           </span>
-          <span className="text-sm font-heading text-slate-600 -mt-1">AI Agency</span>
+          <span className="text-base font-heading text-slate-600 -mt-1">AI Agency</span>
         </div>
       )}
     </div>
