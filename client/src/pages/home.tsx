@@ -18,11 +18,10 @@ export default function Home() {
       <div className="relative z-10">
         <Navigation />
         <HeroSection />
-        {/* Services section without gradient background */}
-        <ServicesSection />
         
-        {/* All sections after animated block with gradient background */}
+        {/* All sections with gradient background */}
         <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-700">
+          <ServicesSection />
           <ProjectsSection />
           <VideoProjectsSection />
           <WorkProcessSection />
