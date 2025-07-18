@@ -141,7 +141,7 @@ export default function ServicesSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {defaultServices.map((service, index) => (
-            <Card key={index} style={{background: 'linear-gradient(to bottom right, #fef3c7, #fed7aa)'}} className="backdrop-blur-sm border-2 border-orange-300 hover:shadow-xl transition-all hover:border-orange-400 group cursor-pointer">
+            <Card key={index} style={{background: 'linear-gradient(to bottom right, #fde68a, #fbbf24)'}} className="backdrop-blur-sm border-2 border-orange-400 hover:shadow-xl transition-all hover:border-orange-500 group cursor-pointer">
               <CardContent className="p-8">
                 <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 ${service.hoverBg} transition-colors`}>
                   <service.icon className={`w-8 h-8 ${service.iconColor} group-hover:text-white transition-colors`} />

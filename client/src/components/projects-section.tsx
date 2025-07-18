@@ -39,7 +39,7 @@ export default function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project) => (
-            <Card key={project.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-all">
+            <Card key={project.id} style={{background: 'linear-gradient(to bottom right, #fde68a, #fbbf24)'}} className="overflow-hidden shadow-lg hover:shadow-xl transition-all border-2 border-orange-400">
               {project.image && (
                 <img 
                   src={project.image} 
@@ -49,7 +49,7 @@ export default function ProjectsSection() {
               )}
               <CardContent className="p-8">
                 <h3 className="text-2xl font-heading font-bold text-slate-900 mb-4">{project.title}</h3>
-                <p className="text-slate-700 font-medium mb-6">{project.description}</p>
+                <p className="text-slate-800 font-semibold mb-6">{project.description}</p>
                 {project.link && (
                   <Button 
                     className="bg-primary text-white hover:bg-primary/90"

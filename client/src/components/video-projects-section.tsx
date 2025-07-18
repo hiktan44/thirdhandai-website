@@ -40,7 +40,7 @@ export default function VideoProjectsSection() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {videos.map((video, index) => (
-              <Card key={video.id} className="border border-slate-200 overflow-hidden hover:shadow-xl transition-all">
+              <Card key={video.id} style={{background: 'linear-gradient(to bottom right, #fde68a, #fbbf24)'}} className="border-2 border-orange-400 overflow-hidden hover:shadow-xl transition-all">
                 <div className={`aspect-video bg-gradient-to-br ${gradients[index % gradients.length]} flex items-center justify-center relative overflow-hidden`}>
                   {video.thumbnail ? (
                     <img 
@@ -67,7 +67,7 @@ export default function VideoProjectsSection() {
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-heading font-bold text-slate-900 mb-2">{video.title}</h3>
-                  <p className="text-slate-700 font-medium text-sm">{video.description || 'Video açıklaması'}</p>
+                  <p className="text-slate-800 font-semibold text-sm">{video.description || 'Video açıklaması'}</p>
                 </CardContent>
               </Card>
             ))}
