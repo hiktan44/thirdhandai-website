@@ -20,10 +20,10 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
           <div className="animate-slide-up">
-            <h1 className="text-6xl lg:text-7xl font-heading text-white leading-tight mb-6" style={{fontWeight: 900}}>
-              <span className="text-blue-400">{t('hero.title1')}</span>
-              <br />{t('hero.title2')}
-              <br />{t('hero.title3')}
+            <h1 className="text-7xl lg:text-8xl font-heading text-white mb-8" style={{fontWeight: 900, lineHeight: 1.1}}>
+              <span className="text-blue-400 block mb-2">{t('hero.title1')}</span>
+              <span className="text-5xl lg:text-6xl block mb-2">{t('hero.title2')}</span>
+              <span className="block">{t('hero.title3')}</span>
             </h1>
             <p className="text-xl font-sans text-slate-300 mb-8 leading-relaxed">
               {t('hero.subtitle')}
