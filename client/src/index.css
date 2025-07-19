@@ -65,29 +65,34 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 600;
   }
   
   /* Apply fonts globally */
   p, span, div, button, input, textarea, select, a, li, td, th {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 600;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
     font-weight: 700;
   }
   
   /* Specific class overrides */
   .font-sans {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 600;
   }
   
   .font-heading, .font-poppins {
-    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 700;
   }
   
   .font-inter {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 600;
   }
 
   .text-xl, .text-lg {
@@ -95,27 +100,51 @@
     letter-spacing: -0.01em;
   }
 
-  .text-5xl, .text-6xl {
+  .text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+    font-weight: 800;
+  }
+
+  .text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+    font-weight: 800;
+  }
+
+  .text-5xl {
+    font-size: 3rem;
     line-height: 1.1;
-    letter-spacing: -0.025em;
     font-weight: 800;
   }
 
   .text-4xl {
+    font-size: 2.25rem;
     line-height: 1.15;
-    letter-spacing: -0.02em;
     font-weight: 700;
   }
 
   .text-3xl {
+    font-size: 1.875rem;
     line-height: 1.2;
-    letter-spacing: -0.015em;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .text-2xl {
+    font-size: 1.5rem;
     line-height: 1.25;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+
+  .text-xl {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .text-lg {
+    font-size: 1.125rem;
+    line-height: 1.5;
     font-weight: 600;
   }
 }
