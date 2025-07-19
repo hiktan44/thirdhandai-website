@@ -135,7 +135,7 @@ export default function ServicesSection() {
     <section id="hizmetler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>Hizmetlerimiz</h2>
+          <h2 className="text-5xl font-extrabold text-slate-900 mb-6" style={{fontFamily: 'Inter', fontWeight: 900}}>Hizmetlerimiz</h2>
           <p className="text-xl font-sans text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
             İşletmenizin ihtiyaçlarına özel, modern yapay zeka çözümleri sunuyoruz. İster küçük bir işletme olun, ister kurumsal bir firma - size uygun AI çözümlerimiz var.
           </p>
