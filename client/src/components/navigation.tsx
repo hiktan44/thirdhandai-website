@@ -44,7 +44,7 @@ export default function Navigation() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-slate-700 hover:text-primary px-3 py-2 transition-colors font-sans font-medium"
+                  className="text-slate-700 hover:text-primary px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}
                 >
                   {item.label}
                 </button>
