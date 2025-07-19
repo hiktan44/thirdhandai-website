@@ -21,8 +21,8 @@ const translations = {
     
     // Hero Section
     'hero.title1': 'Yapay Zeka',
-    'hero.title2': 'ile',
-    'hero.title3': 'İşinizi İleriye Taşıyın',
+    'hero.title2': 'ile İşinizi',
+    'hero.title3': 'İleriye Taşıyın',
     'hero.subtitle': 'Third Hand AI Agency olarak şirketinize özel, terzi usulü AI çözümleri ve otomasyonları ile rekabette öne geçmenizi sağlıyoruz.',
     'hero.cta1': 'Hizmetlerimizi Keşfedin',
     'hero.cta2': 'İletişime Geçin',
@@ -150,8 +150,8 @@ const translations = {
     
     // Hero Section
     'hero.title1': 'Artificial Intelligence',
-    'hero.title2': 'to',
-    'hero.title3': 'Move Your Business Forward',
+    'hero.title2': 'to Move Your Business',
+    'hero.title3': 'Forward',
     'hero.subtitle': 'As Third Hand AI Agency, we help you get ahead of the competition with custom-tailored AI solutions and automations for your company.',
     'hero.cta1': 'Explore Our Services',
     'hero.cta2': 'Get in Touch',
