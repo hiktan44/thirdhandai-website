@@ -17,12 +17,12 @@ export default function ServicesSection() {
   const defaultServices = [
     {
       icon: Brain,
-      title: "AI Çözümleri",
-      description: "Şirketinize özel yapay zeka çözümleri geliştiriyoruz. Veri analizi, tahmin modelleri ve karar destek sistemleri.",
-      features: [
-        "Veri analizleri ve tahminleme",
-        "Doğal dil işleme sistemleri",
-        "Görüntü ve ses tanıma"
+      titleKey: 'services.ai.title',
+      descriptionKey: 'services.ai.description',
+      featureKeys: [
+        'services.ai.feature1',
+        'services.ai.feature2',
+        'services.ai.feature3'
       ],
       bgColor: "bg-blue-100",
       iconColor: "text-blue-600",
@@ -135,9 +135,9 @@ export default function ServicesSection() {
     <section id="hizmetler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-slate-900 mb-6" style={{fontFamily: 'Inter', fontWeight: 900}}>Hizmetlerimiz</h2>
+          <h2 className="text-5xl font-extrabold text-slate-900 mb-6" style={{fontFamily: 'Inter', fontWeight: 900}}>{t('services.title')}</h2>
           <p className="text-xl font-sans text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
-            İşletmenizin ihtiyaçlarına özel, modern yapay zeka çözümleri sunuyoruz. İster küçük bir işletme olun, ister kurumsal bir firma - size uygun AI çözümlerimiz var.
+            {t('services.subtitle')}
           </p>
         </div>
 
@@ -148,13 +148,13 @@ export default function ServicesSection() {
                 <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 ${service.hoverBg} transition-colors`}>
                   <service.icon className={`w-8 h-8 ${service.iconColor} group-hover:text-white transition-colors`} />
                 </div>
-                <h3 className="text-xl font-heading text-slate-900 mb-4" style={{fontWeight: 700}}>{service.title}</h3>
-                <p className="font-sans text-slate-700 mb-6" style={{fontWeight: 500}}>{service.description}</p>
+                <h3 className="text-xl font-heading text-slate-900 mb-4" style={{fontWeight: 700}}>{t(service.titleKey || service.title)}</h3>
+                <p className="font-sans text-slate-700 mb-6" style={{fontWeight: 500}}>{t(service.descriptionKey || service.description)}</p>
                 <ul className="space-y-2 text-sm text-slate-700 mb-6" style={{fontWeight: 500}}>
-                  {service.features.map((feature, featureIndex) => (
+                  {(service.featureKeys || service.features).map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
                       <Check className="w-4 h-4 text-green-600 mr-2 flex-shrink-0" />
-                      {feature}
+                      {typeof feature === 'string' && feature.includes('.') ? t(feature) : feature}
                     </li>
                   ))}
                 </ul>
@@ -163,7 +163,7 @@ export default function ServicesSection() {
                   className="text-primary font-semibold hover:text-primary/80 p-0"
                   onClick={() => scrollToSection("iletisim")}
                 >
-                  Detaylı Bilgi <ArrowRight className="w-4 h-4 ml-2" />
+                  {t('services.cta')} <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </CardContent>
             </Card>
