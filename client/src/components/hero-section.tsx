@@ -22,8 +22,7 @@ export default function HeroSection() {
           <div className="animate-slide-up">
             <h1 className="text-7xl lg:text-8xl font-heading text-white mb-8" style={{fontWeight: 900, lineHeight: 1.2}}>
               <div className="text-blue-400">{t('hero.title1')}</div>
-              <div className="text-5xl lg:text-6xl">{t('hero.title2')}</div>
-              <div>{t('hero.title3')}</div>
+              <div className="text-5xl lg:text-6xl">{t('hero.title2')} {t('hero.title3')}</div>
             </h1>
             <p className="text-xl font-sans text-slate-300 mb-8 leading-relaxed">
               {t('hero.subtitle')}
