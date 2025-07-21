@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, User } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function TestimonialsSection() {
   const { t } = useLanguage();
@@ -29,11 +30,14 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">{t('testimonials.title')}</h2>
-          <p className="text-xl text-slate-800 font-medium">{t('testimonials.subtitle')}</p>
+          <h2 className="text-4xl font-heading font-bold text-white mb-4">{t('testimonials.title')}</h2>
+          <p className="text-xl text-slate-300 font-medium">{t('testimonials.subtitle')}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">

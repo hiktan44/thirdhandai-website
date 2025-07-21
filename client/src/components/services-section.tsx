@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles, MessageSquare, Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function ServicesSection() {
   const { t } = useLanguage();
@@ -138,11 +139,14 @@ export default function ServicesSection() {
 
 
   return (
-    <section id="hizmetler" className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="hizmetler" className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-slate-900 mb-6" style={{fontFamily: 'Inter', fontWeight: 900}}>{t('services.title')}</h2>
-          <p className="text-xl font-sans text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
+          <h2 className="text-5xl font-extrabold text-white mb-6" style={{fontFamily: 'Inter', fontWeight: 900}}>{t('services.title')}</h2>
+          <p className="text-xl font-sans text-slate-300 max-w-3xl mx-auto" style={{fontWeight: 500}}>
             {t('services.subtitle')}
           </p>
         </div>

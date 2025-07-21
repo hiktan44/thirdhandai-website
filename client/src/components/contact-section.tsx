@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { MapPin, Phone, Mail, Clock, Linkedin, Twitter, Github, Youtube, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function ContactSection() {
   const { t } = useLanguage();
@@ -112,17 +113,20 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="iletisim" className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="iletisim" className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">{t('contact.title')}</h2>
-          <p className="text-xl text-slate-800 font-medium">{t('contact.subtitle')}</p>
+          <h2 className="text-4xl font-heading font-bold text-white mb-4">{t('contact.title')}</h2>
+          <p className="text-xl text-slate-300 font-medium">{t('contact.subtitle')}</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-2xl font-heading font-bold text-slate-900 mb-8">{t('contact.infoTitle')}</h3>
+            <h3 className="text-2xl font-heading font-bold text-white mb-8">{t('contact.infoTitle')}</h3>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => (

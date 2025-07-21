@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Play, Video, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function VideoProjectsSection() {
   const { t, language } = useLanguage();
@@ -26,11 +27,14 @@ export default function VideoProjectsSection() {
   ];
 
   return (
-    <section id="video-projeler" className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="video-projeler" className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>{t('videos.title')}</h2>
-          <p className="text-xl text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
+          <h2 className="text-4xl font-heading text-white mb-4" style={{fontWeight: 800}}>{t('videos.title')}</h2>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto" style={{fontWeight: 500}}>
             {t('videos.subtitle')}
           </p>
         </div>

@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function WorkProcessSection() {
   const { t } = useLanguage();
@@ -30,11 +31,14 @@ export default function WorkProcessSection() {
   ];
 
   return (
-    <section className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">{t('process.title')}</h2>
-          <p className="text-xl text-slate-800 font-medium max-w-3xl mx-auto">
+          <h2 className="text-4xl font-heading font-bold text-white mb-4">{t('process.title')}</h2>
+          <p className="text-xl text-slate-300 font-medium max-w-3xl mx-auto">
             {t('process.subtitle')}
           </p>
         </div>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Users, Rocket, Tag, Headphones, Phone, ServerCog } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "./space-background";
 
 export default function AboutSection() {
   const { t } = useLanguage();
@@ -53,8 +54,11 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="hakkimizda" className="py-20 bg-white/10 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="hakkimizda" className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated Background */}
+      <SpaceBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="text-center mb-8">
@@ -64,21 +68,21 @@ export default function AboutSection() {
                   <div className="w-12 h-12 border-2 border-white rounded-lg mx-auto"></div>
                 </div>
               </div>
-              <h3 className="text-2xl font-heading font-bold text-slate-900 mb-2">Third Hand</h3>
-              <p className="text-blue-700 text-lg font-bold">AI Agency</p>
+              <h3 className="text-2xl font-heading font-bold text-white mb-2">Third Hand</h3>
+              <p className="text-blue-400 text-lg font-bold">AI Agency</p>
               <div className="mt-4">
-                <span className="text-3xl font-bold text-blue-700">5+</span>
-                <p className="text-slate-700 font-medium">{t('about.experience')}</p>
+                <span className="text-3xl font-bold text-blue-400">5+</span>
+                <p className="text-slate-300 font-medium">{t('about.experience')}</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h2 className="text-4xl font-heading font-bold text-slate-900 mb-6">{t('about.title')}</h2>
-            <p className="text-xl text-slate-800 font-medium mb-8 leading-relaxed">
+            <h2 className="text-4xl font-heading font-bold text-white mb-6">{t('about.title')}</h2>
+            <p className="text-xl text-slate-300 font-medium mb-8 leading-relaxed">
               {t('about.intro')}
             </p>
-            <p className="text-slate-700 font-medium mb-8 leading-relaxed">
+            <p className="text-slate-400 font-medium mb-8 leading-relaxed">
               {t('about.mission')}
             </p>
 
