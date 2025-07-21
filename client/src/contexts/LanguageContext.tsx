@@ -94,6 +94,16 @@ const translations = {
     'services.chatbot.feature6': '1-2 günde hızlı teslimat',
     'services.chatbot.feature7': '7/24 müşteri desteği',
     
+    'services.export.title': 'Export AI',
+    'services.export.description': 'Firmalar GTIP numaralarını verdiğinde, hedef ülkedeki ithalatçı ve potansiyel müşterileri tespit ediyoruz. Yönetici iletişim bilgileri ve firma detaylarıyla hazır raporlar sunuyoruz.',
+    'services.export.feature1': 'GTIP bazlı hedef pazar analizi',
+    'services.export.feature2': 'İthalatçı firma tespiti ve iletişim bilgileri',
+    'services.export.feature3': 'Yönetici ve karar verici kişilerin bilgileri',
+    'services.export.feature4': 'Ürün bazlı pazar büyüklüğü analizi',
+    'services.export.feature5': 'Rakip analizi ve fiyat araştırması',
+    'services.export.feature6': 'Detaylı müşteri listeleri ve segmentasyon',
+    'services.export.feature7': 'Hazır iş geliştirme raporları',
+    
     // Projects Section
     'projects.title': 'Örnek Projeler',
     'projects.subtitle': 'Third Hand AI Agency olarak gerçekleştirdiğimiz başarılı projelerden bazı örnekler. Farklı sektörlere yönelik yapay zeka çözümlerimizi inceleyebilirsiniz.',
@@ -222,6 +232,16 @@ const translations = {
     'services.chatbot.feature5': 'Instant response to customer queries',
     'services.chatbot.feature6': 'Fast delivery in 1-2 days',
     'services.chatbot.feature7': '24/7 customer support',
+    
+    'services.export.title': 'Export AI',
+    'services.export.description': 'When companies provide GTIP codes, we identify importers and potential customers in target countries. We deliver ready reports with executive contact information and company details.',
+    'services.export.feature1': 'GTIP-based target market analysis',
+    'services.export.feature2': 'Importer identification and contact information',
+    'services.export.feature3': 'Executive and decision maker details',
+    'services.export.feature4': 'Product-based market size analysis',
+    'services.export.feature5': 'Competitor analysis and price research',
+    'services.export.feature6': 'Detailed customer lists and segmentation',
+    'services.export.feature7': 'Ready business development reports',
     
     // Projects Section
     'projects.title': 'Sample Projects',

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles, MessageSquare } from "lucide-react";
+import { Brain, ServerCog, Code, Scissors, ArrowRight, Check, Camera, Video, Sparkles, MessageSquare, Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ServicesSection() {
@@ -68,6 +68,23 @@ export default function ServicesSection() {
       hoverBg: "group-hover:bg-orange-600"
     },
     {
+      icon: Globe,
+      titleKey: 'services.export.title',
+      descriptionKey: 'services.export.description',
+      featureKeys: [
+        'services.export.feature1',
+        'services.export.feature2',
+        'services.export.feature3',
+        'services.export.feature4',
+        'services.export.feature5',
+        'services.export.feature6',
+        'services.export.feature7'
+      ],
+      bgColor: "bg-emerald-100",
+      iconColor: "text-emerald-600",
+      hoverBg: "group-hover:bg-emerald-600"
+    },
+    {
       icon: Camera,
       title: "AI Ürün Görselleri",
       description: "Ürünleriniz için yapay zeka destekli profesyonel görsel ve video içerikler üretiyoruz. E-ticaret ve pazarlama için özel çözümler.",
@@ -94,21 +111,6 @@ export default function ServicesSection() {
       bgColor: "bg-indigo-100",
       iconColor: "text-indigo-600",
       hoverBg: "group-hover:bg-indigo-600"
-    },
-
-    {
-      icon: Brain,
-      title: "GPT-4 Entegrasyonu",
-      description: "OpenAI'nin en gelişmiş dil modeli GPT-4 ile güçlendirilmiş akıllı asistan çözümleri. Doğal dil işleme, metin üretimi ve analiz yetenekleri.",
-      features: [
-        "Gelişmiş doğal dil anlama",
-        "Çok dilli destek",
-        "Kod üretimi ve analizi",
-        "Yaratıcı içerik oluşturma"
-      ],
-      bgColor: "bg-emerald-100",
-      iconColor: "text-emerald-600",
-      hoverBg: "group-hover:bg-emerald-600"
     },
     {
       icon: MessageSquare,
