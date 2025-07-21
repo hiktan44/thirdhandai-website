@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, User } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function TestimonialsSection() {
+  const { t } = useLanguage();
   const testimonials = [
     {
       text: "Third Hand AI Agency'nin geliştirdiği chatbot çözümü müşteri hizmetlerimizin verimliliğini %75 artırdı. Artık daha az maliyetle daha fazla müşteriye hizmet verebiliyoruz.",
@@ -30,8 +32,8 @@ export default function TestimonialsSection() {
     <section className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">Müşteri Görüşleri</h2>
-          <p className="text-xl text-slate-800 font-medium">Müşterilerimizin AI çözümlerimiz hakkındaki düşünceleri</p>
+          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">{t('testimonials.title')}</h2>
+          <p className="text-xl text-slate-800 font-medium">{t('testimonials.subtitle')}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">

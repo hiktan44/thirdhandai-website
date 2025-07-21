@@ -119,12 +119,28 @@ const translations = {
     // Work Process Section
     'process.title': 'Çalışma Sürecimiz',
     'process.subtitle': 'Projelerinizi hayata geçirirken izlediğimiz metodoloji ile kaliteli, zamanında ve bütçe dostu çözümler sunuyoruz.',
+    'process.step1.title': 'Keşif ve Analiz',
+    'process.step1.description': 'İhtiyaçlarınızı detaylı analiz eder, mevcut süreçlerinizi inceleriz.',
+    'process.step2.title': 'Çözüm Tasarımı',
+    'process.step2.description': 'İhtiyaçlarınıza en uygun AI çözümlerini ve teknolojileri belirleriz.',
+    'process.step3.title': 'Geliştirme',
+    'process.step3.description': 'En son teknolojileri kullanarak çözümlerinizi geliştiriyoruz.',
+    'process.step4.title': 'Test ve Entegrasyon',
+    'process.step4.description': 'Çözümlerimizi test eder ve mevcut sistemlerinize entegre ederiz.',
     
     // About Section
     'about.title': 'Hakkımızda',
     'about.intro': 'Third Hand AI Agency olarak 5 yılı aşkın süredir yapay zeka teknolojileri konusunda uzmanlaşmış, yenilikçi çözümler sunan bir teknoloji şirketiyiz.',
     'about.mission': 'Misyonumuz, şirketlerin yapay zeka teknolojilerinden en verimli şekilde faydalanmasını sağlamak ve rekabet avantajı elde etmelerine yardımcı olmaktır.',
     'about.experience': 'Yıl Deneyim',
+    'about.features.team.title': 'Profesyonel Ekip',
+    'about.features.team.description': '7 kişilik AI uzmanı ekip',
+    'about.features.tech.title': 'Modern Teknolojiler',
+    'about.features.tech.description': 'En yeni AI teknolojileri',
+    'about.features.pricing.title': 'Uygun Fiyatlandırma',
+    'about.features.pricing.description': 'Her bütçeye uygun çözümler',
+    'about.features.support.title': 'Kesintisiz Destek',
+    'about.features.support.description': '7/24 teknik destek',
     
     // Contact Section
     'contact.title': 'İletişime Geçin',
@@ -161,6 +177,11 @@ const translations = {
     // Testimonials
     'testimonials.title': 'Müşteri Görüşleri',
     'testimonials.subtitle': 'Müşterilerimizin AI çözümlerimiz hakkındaki düşünceleri',
+    
+    // CTA Section
+    'cta.title': 'İşinizi Dönüştürmeye Hazır mısınız?',
+    'cta.subtitle': 'Yapay zeka teknolojileri ile işinizi geliştirmek, verimliliğinizi artırmak ve rekabette öne geçmek için hemen iletişime geçin.',
+    'cta.button': 'Ücretsiz Danışmanlık Alın',
     
     // Footer
     'footer.tagline': 'Yapay zeka teknolojileri ile işinizi geleceğe taşıyoruz.',
@@ -278,12 +299,28 @@ const translations = {
     // Work Process Section
     'process.title': 'Our Work Process',
     'process.subtitle': 'We deliver quality, timely and budget-friendly solutions with the methodology we follow while bringing your projects to life.',
+    'process.step1.title': 'Discovery & Analysis',
+    'process.step1.description': 'We analyze your needs in detail and examine your current processes.',
+    'process.step2.title': 'Solution Design',
+    'process.step2.description': 'We identify the most suitable AI solutions and technologies for your needs.',
+    'process.step3.title': 'Development',
+    'process.step3.description': 'We develop your solutions using the latest technologies.',
+    'process.step4.title': 'Testing & Integration',
+    'process.step4.description': 'We test our solutions and integrate them into your existing systems.',
     
     // About Section
     'about.title': 'About Us',
     'about.intro': 'As Third Hand AI Agency, we are a technology company that has been specializing in artificial intelligence technologies for over 5 years, offering innovative solutions.',
     'about.mission': 'Our mission is to enable companies to benefit from artificial intelligence technologies in the most efficient way and help them gain a competitive advantage.',
     'about.experience': 'Years of Experience',
+    'about.features.team.title': 'Professional Team',
+    'about.features.team.description': '7-person AI expert team',
+    'about.features.tech.title': 'Modern Technologies',
+    'about.features.tech.description': 'Latest AI technologies',
+    'about.features.pricing.title': 'Affordable Pricing',
+    'about.features.pricing.description': 'Solutions for every budget',
+    'about.features.support.title': 'Continuous Support',
+    'about.features.support.description': '24/7 technical support',
     
     // Contact Section
     'contact.title': 'Get in Touch',
@@ -320,6 +357,11 @@ const translations = {
     // Testimonials
     'testimonials.title': 'Customer Reviews',
     'testimonials.subtitle': 'What our customers think about our AI solutions',
+    
+    // CTA Section
+    'cta.title': 'Ready to Transform Your Business?',
+    'cta.subtitle': 'Contact us now to improve your business with artificial intelligence technologies, increase your efficiency and stay ahead of the competition.',
+    'cta.button': 'Get Free Consultation',
     
     // Footer
     'footer.tagline': 'We take your business to the future with artificial intelligence technologies.',

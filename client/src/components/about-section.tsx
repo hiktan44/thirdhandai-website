@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Users, Rocket, Tag, Headphones, Phone, ServerCog } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AboutSection() {
+  const { t } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -12,32 +14,32 @@ export default function AboutSection() {
   const features = [
     {
       icon: Users,
-      title: "Profesyonel Ekip",
-      description: "7 kişilik AI uzmanı ekip",
+      title: t('about.features.team.title'),
+      description: t('about.features.team.description'),
       bgColor: "bg-blue-50",
       iconBg: "bg-blue-600",
       iconColor: "text-white"
     },
     {
       icon: Rocket,
-      title: "Modern Teknolojiler",
-      description: "En yeni AI teknolojileri",
+      title: t('about.features.tech.title'),
+      description: t('about.features.tech.description'),
       bgColor: "bg-green-50",
       iconBg: "bg-green-600",
       iconColor: "text-white"
     },
     {
       icon: Tag,
-      title: "Uygun Fiyatlandırma",
-      description: "Her bütçeye uygun çözümler",
+      title: t('about.features.pricing.title'),
+      description: t('about.features.pricing.description'),
       bgColor: "bg-purple-50",
       iconBg: "bg-purple-600",
       iconColor: "text-white"
     },
     {
       icon: Headphones,
-      title: "Kesintisiz Destek",
-      description: "7/24 teknik destek",
+      title: t('about.features.support.title'),
+      description: t('about.features.support.description'),
       bgColor: "bg-orange-50",
       iconBg: "bg-orange-600",
       iconColor: "text-white"
@@ -66,18 +68,18 @@ export default function AboutSection() {
               <p className="text-blue-700 text-lg font-bold">AI Agency</p>
               <div className="mt-4">
                 <span className="text-3xl font-bold text-blue-700">5+</span>
-                <p className="text-slate-700 font-medium">Yıl Deneyim</p>
+                <p className="text-slate-700 font-medium">{t('about.experience')}</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h2 className="text-4xl font-heading font-bold text-slate-900 mb-6">Hakkımızda</h2>
+            <h2 className="text-4xl font-heading font-bold text-slate-900 mb-6">{t('about.title')}</h2>
             <p className="text-xl text-slate-800 font-medium mb-8 leading-relaxed">
-              Third Hand AI Agency olarak 5 yılı aşkın süredir yapay zeka teknolojileri konusunda uzmanlaşmış, yenilikçi çözümler sunan bir teknoloji şirketiyiz.
+              {t('about.intro')}
             </p>
             <p className="text-slate-700 font-medium mb-8 leading-relaxed">
-              Misyonumuz, şirketlerin yapay zeka teknolojilerinden en verimli şekilde faydalanmasını sağlamak ve rekabet avantajı elde etmelerine yardımcı olmaktır.
+              {t('about.mission')}
             </p>
 
             <div className="grid grid-cols-2 gap-6">
@@ -98,7 +100,7 @@ export default function AboutSection() {
                 onClick={() => scrollToSection("iletisim")}
               >
                 <Phone className="w-4 h-4 mr-2" />
-                Bize Ulaşın
+                {t('nav.contact')}
               </Button>
               <Button 
                 variant="outline"
@@ -106,7 +108,7 @@ export default function AboutSection() {
                 onClick={() => scrollToSection("hizmetler")}
               >
                 <ServerCog className="w-4 h-4 mr-2" />
-                Hizmetlerimiz
+                {t('nav.services')}
               </Button>
             </div>
           </div>
