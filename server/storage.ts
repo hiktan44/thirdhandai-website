@@ -1,8 +1,8 @@
 import { 
-  users, contactMessages, projects, videos, aiModels,
+  users, contactMessages, projects, videos, aiModels, whatsappSettings,
   type User, type InsertUser, type ContactMessage, type InsertContactMessage,
   type Project, type InsertProject, type Video, type InsertVideo,
-  type AiModel, type InsertAiModel
+  type AiModel, type InsertAiModel, type WhatsAppSettings, type InsertWhatsAppSettings
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, asc } from "drizzle-orm";
@@ -37,6 +37,10 @@ export interface IStorage {
   createAiModel(model: InsertAiModel): Promise<AiModel>;
   updateAiModel(id: number, model: Partial<InsertAiModel>): Promise<AiModel | undefined>;
   deleteAiModel(id: number): Promise<boolean>;
+  
+  // WhatsApp Settings methods
+  getWhatsAppSettings(): Promise<WhatsAppSettings | undefined>;
+  updateWhatsAppSettings(settings: InsertWhatsAppSettings): Promise<WhatsAppSettings>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -176,6 +180,31 @@ export class DatabaseStorage implements IStorage {
   async deleteAiModel(id: number): Promise<boolean> {
     const result = await db.delete(aiModels).where(eq(aiModels.id, id));
     return result.rowCount > 0;
+  }
+
+  // WhatsApp Settings methods
+  async getWhatsAppSettings(): Promise<WhatsAppSettings | undefined> {
+    const [settings] = await db.select().from(whatsappSettings).limit(1);
+    return settings || undefined;
+  }
+
+  async updateWhatsAppSettings(insertSettings: InsertWhatsAppSettings): Promise<WhatsAppSettings> {
+    const existingSettings = await this.getWhatsAppSettings();
+    
+    if (existingSettings) {
+      const [updated] = await db
+        .update(whatsappSettings)
+        .set({ ...insertSettings, updatedAt: new Date() })
+        .where(eq(whatsappSettings.id, existingSettings.id))
+        .returning();
+      return updated;
+    } else {
+      const [created] = await db
+        .insert(whatsappSettings)
+        .values(insertSettings)
+        .returning();
+      return created;
+    }
   }
 }
 

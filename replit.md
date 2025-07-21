@@ -51,6 +51,20 @@ Preferred communication style: Simple, everyday language.
 - **Projects Table**: Portfolio projects (id, title, description, link, image, category, order_index, created_at, updated_at)
 - **Videos Table**: Video content (id, title, description, video_url, thumbnail, order_index, created_at, updated_at)
 - **AI Models Table**: AI model configurations (id, name, description, features[JSON], icon, order_index, created_at, updated_at)
+- **WhatsApp Settings Table**: WhatsApp bot configuration (id, phone_number, welcome_message, enabled, updated_at)
+
+### Recent Updates (January 21, 2025)
+- **WhatsApp Integration**: Full WhatsApp bot integration with admin panel controls
+  - WhatsApp floating widget with customizable welcome message
+  - Admin panel settings for phone number, welcome message, and enable/disable toggle
+  - Embeddable JavaScript widget for external websites
+  - Auto-language detection (TR/EN) for user interface
+  - Professional popup design with smooth animations
+  - External embed script at `/whatsapp-widget.js`
+- **Export AI Service**: New service replacing GPT-4 integration
+  - GTIP-based market analysis for international trade
+  - Target customer identification and contact information
+  - Positioned as first item in second row of services section
 
 ### Recent Updates (January 13, 2025)
 - **Database Integration**: Migrated from in-memory storage to PostgreSQL database

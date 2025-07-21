@@ -95,3 +95,16 @@ export type Video = typeof videos.$inferSelect;
 export type InsertVideo = z.infer<typeof insertVideoSchema>;
 export type AiModel = typeof aiModels.$inferSelect;
 export type InsertAiModel = z.infer<typeof insertAiModelSchema>;
+
+// WhatsApp Settings Table
+export const whatsappSettings = pgTable("whatsapp_settings", {
+  id: serial("id").primaryKey(),
+  phoneNumber: text("phone_number").notNull(),
+  welcomeMessage: text("welcome_message"),
+  enabled: boolean("enabled").default(true),
+  updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
+
+export const insertWhatsAppSettingsSchema = createInsertSchema(whatsappSettings).omit({ id: true, updatedAt: true });
+export type InsertWhatsAppSettings = z.infer<typeof insertWhatsAppSettingsSchema>;
+export type WhatsAppSettings = typeof whatsappSettings.$inferSelect;

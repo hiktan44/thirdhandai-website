@@ -29,6 +29,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
 import type { Project, Video as VideoType, AiModel, ContactMessage } from "../../../shared/schema";
+import WhatsAppSettings from "@/components/admin/whatsapp-settings";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
@@ -624,6 +625,11 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             </div>
+          )}
+
+          {/* Settings Tab */}
+          {activeTab === "settings" && (
+            <WhatsAppSettings />
           )}
         </div>
       </div>

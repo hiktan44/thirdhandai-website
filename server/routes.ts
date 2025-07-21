@@ -274,6 +274,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // WhatsApp Settings API
+  app.get("/api/whatsapp-settings", async (req, res) => {
+    try {
+      const settings = await storage.getWhatsAppSettings();
+      if (!settings) {
+        return res.json({ phoneNumber: '', welcomeMessage: '', enabled: false });
+      }
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch WhatsApp settings" });
+    }
+  });
+
+  app.post("/api/admin/whatsapp-settings", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const { phoneNumber, welcomeMessage, enabled } = req.body;
+      
+      if (!phoneNumber) {
+        return res.status(400).json({ error: "Phone number is required" });
+      }
+      
+      const settings = await storage.updateWhatsAppSettings({
+        phoneNumber,
+        welcomeMessage,
+        enabled
+      });
+      
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update WhatsApp settings" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

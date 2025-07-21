@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import AdminDashboard from "@/pages/admin-dashboard";
 import AdminLoginPage from "@/pages/admin-login-page";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import WhatsAppWidget from "@/components/whatsapp-widget";
 
 function Router() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <WhatsAppWidget />
         </TooltipProvider>
       </LanguageProvider>
     </QueryClientProvider>
