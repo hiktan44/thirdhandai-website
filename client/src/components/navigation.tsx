@@ -6,6 +6,7 @@ import { Menu, User } from "lucide-react";
 import { Link } from "wouter";
 import Logo from "@/components/logo";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SpaceBackground from "@/components/space-background";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,8 +30,15 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-slate-200 z-50">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 w-full z-50 relative overflow-hidden">
+      {/* Animated Background - Same as Hero Section */}
+      <div className="absolute inset-0">
+        <SpaceBackground />
+      </div>
+      
+      {/* Navigation Content with semi-transparent background */}
+      <div className="relative z-10 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center">
@@ -44,7 +52,7 @@ export default function Navigation() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-slate-700 hover:text-primary px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}
+                  className="text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}
                 >
                   {item.label}
                 </button>
@@ -66,17 +74,17 @@ export default function Navigation() {
             <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="text-white hover:text-blue-400">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-slate-900 border-slate-700">
                   <div className="flex flex-col space-y-4 mt-8">
                     {navItems.map((item) => (
                       <button
                         key={item.id}
                         onClick={() => scrollToSection(item.id)}
-                        className="text-left text-slate-700 hover:text-primary px-3 py-2 transition-colors font-sans font-medium"
+                        className="text-left text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans font-medium"
                       >
                         {item.label}
                       </button>
@@ -86,6 +94,7 @@ export default function Navigation() {
               </Sheet>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </nav>
