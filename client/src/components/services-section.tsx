@@ -30,12 +30,12 @@ export default function ServicesSection() {
     },
     {
       icon: ServerCog,
-      title: "AI Otomasyonları",
-      description: "Tekrarlayan işleri otomatikleştirin, insan kaynaklarınızı daha değerli alanlara yönlendirin.",
-      features: [
-        "İş süreçleri otomasyonu",
-        "Akıllı chatbot çözümleri",
-        "Müşteri hizmetleri otomasyonu"
+      titleKey: 'services.automation.title',
+      descriptionKey: 'services.automation.description',
+      featureKeys: [
+        'services.automation.feature1',
+        'services.automation.feature2',
+        'services.automation.feature3'
       ],
       bgColor: "bg-green-100",
       iconColor: "text-green-600",
@@ -43,12 +43,12 @@ export default function ServicesSection() {
     },
     {
       icon: Code,
-      title: "Özel Programlar",
-      description: "İhtiyaçlarınıza özel yazılım çözümleri geliştiriyoruz. Web, mobil ve masaüstü uygulamaları.",
-      features: [
-        "Özel web ve mobil uygulamalar",
-        "AI entegrasyonlu yazılımlar",
-        "Veritabanı yönetim sistemleri"
+      titleKey: 'services.development.title',
+      descriptionKey: 'services.development.description',
+      featureKeys: [
+        'services.development.feature1',
+        'services.development.feature2',
+        'services.development.feature3'
       ],
       bgColor: "bg-purple-100",
       iconColor: "text-purple-600",
@@ -56,12 +56,12 @@ export default function ServicesSection() {
     },
     {
       icon: Scissors,
-      title: "Terzi Usulü Çözümler",
-      description: "Her müşterimizin ihtiyaçları farklıdır. Sizin için sektörünüze özel çözümler tasarlıyoruz.",
-      features: [
-        "Sektöre özel AI çözümleri",
-        "Kişiselleştirilmiş danışmanlık",
-        "Entegre teknoloji çözümleri"
+      titleKey: 'services.media.title',
+      descriptionKey: 'services.media.description',
+      featureKeys: [
+        'services.media.feature1',
+        'services.media.feature2',
+        'services.media.feature3'
       ],
       bgColor: "bg-orange-100",
       iconColor: "text-orange-600",
@@ -86,13 +86,15 @@ export default function ServicesSection() {
     },
     {
       icon: Camera,
-      title: "AI Ürün Görselleri",
-      description: "Ürünleriniz için yapay zeka destekli profesyonel görsel ve video içerikler üretiyoruz. E-ticaret ve pazarlama için özel çözümler.",
-      features: [
-        "AI ile ürün fotoğrafı üretimi",
-        "360 derece ürün görüntüleri",
-        "Arka plan değiştirme ve düzenleme",
-        "Toplu görsel işleme"
+      titleKey: 'services.image.title',
+      descriptionKey: 'services.image.description',
+      featureKeys: [
+        'services.image.feature1',
+        'services.image.feature2',
+        'services.image.feature3',
+        'services.image.feature4',
+        'services.image.feature5',
+        'services.image.feature6'
       ],
       bgColor: "bg-pink-100",
       iconColor: "text-pink-600",
@@ -100,13 +102,15 @@ export default function ServicesSection() {
     },
     {
       icon: Video,
-      title: "AI Video Prodüksiyon",
-      description: "Markanız için AI destekli etkileyici video içerikler hazırlıyoruz. Reklam, tanıtım ve sosyal medya için özel efektli videolar.",
-      features: [
-        "AI destekli video düzenleme",
-        "Otomatik altyazı ve dublaj",
-        "Özel efekt ve animasyonlar",
-        "Sosyal medya formatları"
+      titleKey: 'services.video.title',
+      descriptionKey: 'services.video.description',
+      featureKeys: [
+        'services.video.feature1',
+        'services.video.feature2',
+        'services.video.feature3',
+        'services.video.feature4',
+        'services.video.feature5',
+        'services.video.feature6'
       ],
       bgColor: "bg-indigo-100",
       iconColor: "text-indigo-600",
@@ -114,16 +118,16 @@ export default function ServicesSection() {
     },
     {
       icon: MessageSquare,
-      title: "AI Sesli & Görüntülü Chatbot",
-      description: "İşletmeniz için 1-2 gün içinde hazır! Sesli komutları anlayan, görüntü işleyebilen ve video desteği olan akıllı chatbot çözümleri.",
-      features: [
-        "Sesli komut ve yanıt sistemi",
-        "Görüntü tanıma ve işleme",
-        "Görüntülü AI asistan hizmetleri",
-        "Ürün ve hizmetlerinizi tanıtan yapay zeka",
-        "Müşteri sorularına anında yanıt",
-        "1-2 günde hızlı teslimat",
-        "7/24 müşteri desteği"
+      titleKey: 'services.chatbot.title',
+      descriptionKey: 'services.chatbot.description',
+      featureKeys: [
+        'services.chatbot.feature1',
+        'services.chatbot.feature2',
+        'services.chatbot.feature3',
+        'services.chatbot.feature4',
+        'services.chatbot.feature5',
+        'services.chatbot.feature6',
+        'services.chatbot.feature7'
       ],
       bgColor: "bg-cyan-100",
       iconColor: "text-cyan-600",

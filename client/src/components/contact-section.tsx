@@ -9,8 +9,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { MapPin, Phone, Mail, Clock, Linkedin, Twitter, Github, Youtube, Send } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ContactSection() {
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +29,7 @@ export default function ContactSection() {
     },
     onSuccess: (data) => {
       toast({
-        title: "Başarılı!",
+        title: t('contact.success'),
         description: data.message,
       });
       setFormData({
@@ -40,8 +42,8 @@ export default function ContactSection() {
     },
     onError: () => {
       toast({
-        title: "Hata!",
-        description: "Mesaj gönderilemedi. Lütfen tekrar deneyin.",
+        title: t('contact.error'),
+        description: t('contact.errorMessage'),
         variant: "destructive",
       });
     },
@@ -52,8 +54,8 @@ export default function ContactSection() {
     
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
-        title: "Uyarı!",
-        description: "Lütfen tüm alanları doldurun.",
+        title: t('contact.warning'),
+        description: t('contact.fillFields'),
         variant: "destructive",
       });
       return;
@@ -61,8 +63,8 @@ export default function ContactSection() {
 
     if (!formData.privacyAccepted) {
       toast({
-        title: "Uyarı!",
-        description: "Lütfen gizlilik sözleşmesini onaylayın.",
+        title: t('contact.warning'),
+        description: t('contact.acceptPrivacy'),
         variant: "destructive",
       });
       return;
@@ -74,29 +76,29 @@ export default function ContactSection() {
   const contactInfo = [
     {
       icon: MapPin,
-      title: "Adres",
-      content: ["Teknoloji Vadisi, İnovasyon Caddesi No:42", "Levent / İstanbul"],
+      title: t('contact.info.address'),
+      content: [t('contact.info.addressLine1'), t('contact.info.addressLine2')],
       bgColor: "bg-blue-100",
       iconColor: "text-blue-600"
     },
     {
       icon: Phone,
-      title: "Telefon",
+      title: t('contact.info.phone'),
       content: ["+90 (212) 555 66 77", "+90 (532) 666 77 88"],
       bgColor: "bg-green-100",
       iconColor: "text-green-600"
     },
     {
       icon: Mail,
-      title: "E-posta",
+      title: t('contact.info.email'),
       content: ["info@thirdhandai.com", "destek@thirdhandai.com"],
       bgColor: "bg-purple-100",
       iconColor: "text-purple-600"
     },
     {
       icon: Clock,
-      title: "Çalışma Saatleri",
-      content: ["Pazartesi - Cuma: 09:00 - 18:00", "Hafta sonu: Kapalı"],
+      title: t('contact.info.hours'),
+      content: [t('contact.info.hoursWeekday'), t('contact.info.hoursWeekend')],
       bgColor: "bg-orange-100",
       iconColor: "text-orange-600"
     }
@@ -113,14 +115,14 @@ export default function ContactSection() {
     <section id="iletisim" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">İletişime Geçin</h2>
-          <p className="text-xl text-slate-800 font-medium">Projeniz hakkında konuşmak veya daha fazla bilgi almak için bize ulaşın.</p>
+          <h2 className="text-4xl font-heading font-bold text-slate-900 mb-4">{t('contact.title')}</h2>
+          <p className="text-xl text-slate-800 font-medium">{t('contact.subtitle')}</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-2xl font-heading font-bold text-slate-900 mb-8">İletişim Bilgileri</h3>
+            <h3 className="text-2xl font-heading font-bold text-slate-900 mb-8">{t('contact.infoTitle')}</h3>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
@@ -142,7 +144,7 @@ export default function ContactSection() {
 
             {/* Social Media */}
             <div className="mt-8">
-              <h4 className="font-heading font-bold text-slate-900 mb-4">Bizi Takip Edin</h4>
+              <h4 className="font-heading font-bold text-slate-900 mb-4">{t('contact.followUs')}</h4>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <a
@@ -160,51 +162,51 @@ export default function ContactSection() {
           {/* Contact Form */}
           <Card className="bg-slate-50">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-heading font-bold text-slate-900 mb-6">Mesaj Gönderin</h3>
+              <h3 className="text-2xl font-heading font-bold text-slate-900 mb-6">{t('contact.sendMessage')}</h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="name">İsim</Label>
+                    <Label htmlFor="name">{t('contact.form.name')}</Label>
                     <Input
                       id="name"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Adınız Soyadınız"
+                      placeholder={t('contact.form.namePlaceholder')}
                       className="mt-2"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">E-posta</Label>
+                    <Label htmlFor="email">{t('contact.form.email')}</Label>
                     <Input
                       id="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="email@ornek.com"
+                      placeholder={t('contact.form.emailPlaceholder')}
                       className="mt-2"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="subject">Konu</Label>
+                  <Label htmlFor="subject">{t('contact.form.subject')}</Label>
                   <Input
                     id="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
-                    placeholder="Mesaj konusu"
+                    placeholder={t('contact.form.subjectPlaceholder')}
                     className="mt-2"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="message">Mesaj</Label>
+                  <Label htmlFor="message">{t('contact.form.message')}</Label>
                   <Textarea
                     id="message"
                     value={formData.message}
                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                    placeholder="Mesajınızı buraya yazın..."
+                    placeholder={t('contact.form.messagePlaceholder')}
                     rows={5}
                     className="mt-2 resize-none"
                   />
@@ -220,7 +222,7 @@ export default function ContactSection() {
                     className="mt-1"
                   />
                   <Label htmlFor="privacy" className="text-sm text-slate-600 leading-relaxed">
-                    Kişisel verilerin işlenmesine dair aydınlatma metnini okudum ve onaylıyorum.
+                    {t('contact.form.privacyText')}
                   </Label>
                 </div>
 
@@ -230,7 +232,7 @@ export default function ContactSection() {
                   disabled={contactMutation.isPending}
                 >
                   <Send className="w-4 h-4 mr-2" />
-                  {contactMutation.isPending ? "Gönderiliyor..." : "Gönder"}
+                  {contactMutation.isPending ? t('contact.form.sending') : t('contact.form.send')}
                 </Button>
               </form>
             </CardContent>

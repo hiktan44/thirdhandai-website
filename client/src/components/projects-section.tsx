@@ -2,8 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Lightbulb, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ProjectsSection() {
+  const { t } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -31,9 +33,9 @@ export default function ProjectsSection() {
     <section id="projeler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>Örnek Projeler</h2>
+          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>{t('projects.title')}</h2>
           <p className="text-xl text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
-            Third Hand AI Agency olarak gerçekleştirdiğimiz başarılı projelerden bazı örnekler. Farklı sektörlere yönelik yapay zeka çözümlerimizi inceleyebilirsiniz.
+            {t('projects.subtitle')}
           </p>
         </div>
 
@@ -56,7 +58,7 @@ export default function ProjectsSection() {
                     onClick={() => window.open(project.link, '_blank')}
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    Siteyi Ziyaret Et
+                    {t('projects.visitSite')}
                   </Button>
                 )}
               </CardContent>
@@ -71,7 +73,7 @@ export default function ProjectsSection() {
             onClick={() => scrollToSection("iletisim")}
           >
             <Lightbulb className="w-4 h-4 mr-2" />
-            Projenizi Bize Anlatın
+            {t('projects.cta')}
           </Button>
         </div>
       </div>

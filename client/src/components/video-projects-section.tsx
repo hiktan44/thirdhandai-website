@@ -2,8 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Video, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function VideoProjectsSection() {
+  const { t } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -27,9 +29,9 @@ export default function VideoProjectsSection() {
     <section id="video-projeler" className="py-20 bg-white/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>Video Projelerimiz</h2>
+          <h2 className="text-4xl font-heading text-slate-900 mb-4" style={{fontWeight: 800}}>{t('videos.title')}</h2>
           <p className="text-xl text-slate-700 max-w-3xl mx-auto" style={{fontWeight: 500}}>
-            Yapay zeka ve teknoloji projelerimizin tanıtım videolarını inceleyebilirsiniz. AI çözümlerimizin nasıl çalıştığını ve iş süreçlerinize nasıl entegre olduğunu görebilirsiniz.
+            {t('videos.subtitle')}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export default function VideoProjectsSection() {
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-heading font-bold text-slate-900 mb-2">{video.title}</h3>
-                  <p className="text-slate-800 font-semibold text-sm">{video.description || 'Video açıklaması'}</p>
+                  <p className="text-slate-800 font-semibold text-sm">{video.description || t('videos.noDescription')}</p>
                 </CardContent>
               </Card>
             ))}
@@ -82,7 +84,7 @@ export default function VideoProjectsSection() {
             onClick={() => scrollToSection("iletisim")}
           >
             <Video className="w-4 h-4 mr-2" />
-            Özel Video Projesi İsteyin
+            {t('videos.cta')}
           </Button>
         </div>
       </div>
