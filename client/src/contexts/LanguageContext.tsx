@@ -110,11 +110,29 @@ const translations = {
     'projects.visitSite': 'Siteyi Ziyaret Et',
     'projects.cta': 'Projenizi Bize Anlatın',
     
+    // Individual Projects - Turkish
+    'project.1.title': 'fasheone.com',
+    'project.1.description': 'Fashion One için geliştirdiğimiz AI destekli stil danışmanı ve kişiselleştirilmiş alışveriş deneyimi platformu. Müşteri tercihlerini öğrenen ve moda önerileri sunan akıllı sistem.',
+    'project.2.title': 'ozgunpetshop.com',
+    'project.2.description': 'Pet Shop\'un dijital dönüşüm projesi. AI destekli pet sağlığı takibi, otomatik mama önerisi ve online veteriner randevu sistemi.',
+    'project.3.title': 'ozcanneotech.com',
+    'project.3.description': 'İleri teknoloji şirketi için geliştirilen kurumsal web sitesi ve AI destekli müşteri destek sistemi. Chatbot entegrasyonu ve akıllı ticket yönetimi.',
+    'project.4.title': 'lonelyloversclub.com',
+    'project.4.description': 'AI algoritmaları ile eşleştirme yapan modern arkadaşlık ve dating platformu. Kişilik analizi ve uyumluluk tahminleri ile desteklenen akıllı eşleştirme sistemi.',
+    
     // Video Projects Section
     'videos.title': 'Video Projelerimiz',
     'videos.subtitle': 'Yapay zeka ve teknoloji projelerimizin tanıtım videolarını inceleyebilirsiniz. AI çözümlerimizin nasıl çalıştığını ve iş süreçlerinize nasıl entegre olduğunu görebilirsiniz.',
     'videos.noDescription': 'Video açıklaması',
     'videos.cta': 'Özel Video Projesi İsteyin',
+    
+    // Individual Videos - Turkish
+    'video.1.title': 'Third Hand AI Agency Tanıtım',
+    'video.1.description': 'Yapay zeka çözümlerimiz ve hizmetlerimizin genel tanıtımı. İşletmenizi geleceğe taşıyacak AI teknolojilerini keşfedin.',
+    'video.2.title': 'AI Chatbot Demo',
+    'video.2.description': 'Sesli ve görüntülü AI chatbot sistemimizin canlı demosu. Müşteri hizmetlerinizi nasıl dönüştürebileceğini görün.',
+    'video.3.title': 'Otomasyon Çözümleri',
+    'video.3.description': 'İş süreçlerinizi otomatikleştiren AI çözümlerimizin detaylı incelemesi. Verimliliğinizi artırın, maliyetlerinizi düşürün.',
     
     // Work Process Section
     'process.title': 'Çalışma Sürecimiz',
@@ -290,11 +308,29 @@ const translations = {
     'projects.visitSite': 'Visit Site',
     'projects.cta': 'Tell Us About Your Project',
     
+    // Individual Projects - English
+    'project.1.title': 'fasheone.com',
+    'project.1.description': 'AI-powered style advisor and personalized shopping experience platform developed for Fashion One. Smart system that learns customer preferences and offers fashion recommendations.',
+    'project.2.title': 'ozgunpetshop.com',
+    'project.2.description': 'Pet Shop\'s digital transformation project. AI-powered pet health tracking, automatic food recommendation and online veterinary appointment system.',
+    'project.3.title': 'ozcanneotech.com',
+    'project.3.description': 'Corporate website and AI-powered customer support system developed for high-tech company. Chatbot integration and smart ticket management.',
+    'project.4.title': 'lonelyloversclub.com',
+    'project.4.description': 'Modern friendship and dating platform that matches with AI algorithms. Smart matching system supported by personality analysis and compatibility predictions.',
+    
     // Video Projects Section
     'videos.title': 'Our Video Projects',
     'videos.subtitle': 'You can watch promotional videos of our artificial intelligence and technology projects. See how our AI solutions work and integrate into your business processes.',
     'videos.noDescription': 'Video description',
     'videos.cta': 'Request Custom Video Project',
+    
+    // Individual Videos - English
+    'video.1.title': 'Third Hand AI Agency Introduction',
+    'video.1.description': 'General introduction to our AI solutions and services. Discover AI technologies that will take your business to the future.',
+    'video.2.title': 'AI Chatbot Demo',
+    'video.2.description': 'Live demo of our voice and video AI chatbot system. See how it can transform your customer service.',
+    'video.3.title': 'Automation Solutions',
+    'video.3.description': 'Detailed review of our AI solutions that automate your business processes. Increase efficiency, reduce costs.',
     
     // Work Process Section
     'process.title': 'Our Work Process',

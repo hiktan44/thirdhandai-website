@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ProjectsSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -50,8 +50,12 @@ export default function ProjectsSection() {
                 />
               )}
               <CardContent className="p-8">
-                <h3 className="text-2xl font-heading font-bold text-slate-900 mb-4">{project.title}</h3>
-                <p className="text-slate-800 font-semibold mb-6">{project.description}</p>
+                <h3 className="text-2xl font-heading font-bold text-slate-900 mb-4">
+                  {language === 'TR' ? project.title : t(`project.${project.id}.title`) || project.title}
+                </h3>
+                <p className="text-slate-800 font-semibold mb-6">
+                  {language === 'TR' ? project.description : t(`project.${project.id}.description`) || project.description}
+                </p>
                 {project.link && (
                   <Button 
                     className="bg-primary text-white hover:bg-primary/90"

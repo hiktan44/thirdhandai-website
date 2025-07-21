@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function VideoProjectsSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -68,8 +68,12 @@ export default function VideoProjectsSection() {
                   </div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-heading font-bold text-slate-900 mb-2">{video.title}</h3>
-                  <p className="text-slate-800 font-semibold text-sm">{video.description || t('videos.noDescription')}</p>
+                  <h3 className="text-xl font-heading font-bold text-slate-900 mb-2">
+                    {language === 'TR' ? video.title : t(`video.${video.id}.title`) || video.title}
+                  </h3>
+                  <p className="text-slate-800 font-semibold text-sm">
+                    {language === 'TR' ? (video.description || t('videos.noDescription')) : (t(`video.${video.id}.description`) || video.description || t('videos.noDescription'))}
+                  </p>
                 </CardContent>
               </Card>
             ))}
