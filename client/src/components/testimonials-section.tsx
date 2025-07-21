@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="shadow-lg">
+            <Card key={index} className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-2xl">
               <CardContent className="p-8">
                 <div className="mb-6">
                   <div className="flex text-yellow-400 mb-4">
@@ -50,15 +50,15 @@ export default function TestimonialsSection() {
                       <Star key={i} className="w-5 h-5 fill-current" />
                     ))}
                   </div>
-                  <p className="text-slate-700 font-medium italic">"{testimonial.text}"</p>
+                  <p className="text-slate-300 font-medium italic">"{testimonial.text}"</p>
                 </div>
                 <div className="flex items-center">
                   <div className={`w-12 h-12 ${testimonial.iconBg} rounded-full flex items-center justify-center mr-4`}>
                     <User className={`w-6 h-6 ${testimonial.iconColor}`} />
                   </div>
                   <div>
-                    <h4 className="font-heading font-bold text-slate-900">{testimonial.name}</h4>
-                    <p className="text-sm text-slate-700 font-medium">{testimonial.position}</p>
+                    <h4 className="font-heading font-bold text-white">{testimonial.name}</h4>
+                    <p className="text-sm text-slate-300 font-medium">{testimonial.position}</p>
                   </div>
                 </div>
               </CardContent>

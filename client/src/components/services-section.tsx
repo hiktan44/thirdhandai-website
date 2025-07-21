@@ -153,24 +153,24 @@ export default function ServicesSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {defaultServices.map((service, index) => (
-            <Card key={index} style={{background: 'linear-gradient(to bottom right, #fde68a, #fbbf24)'}} className="backdrop-blur-sm border-2 border-orange-400 hover:shadow-xl transition-all hover:border-orange-500 group cursor-pointer">
+            <Card key={index} className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 hover:bg-white/20 transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-2xl">
               <CardContent className="p-8">
                 <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 ${service.hoverBg} transition-colors`}>
                   <service.icon className={`w-8 h-8 ${service.iconColor} group-hover:text-white transition-colors`} />
                 </div>
-                <h3 className="text-xl font-heading text-slate-900 mb-4" style={{fontWeight: 700}}>{t(service.titleKey || service.title)}</h3>
-                <p className="font-sans text-slate-700 mb-6" style={{fontWeight: 500}}>{t(service.descriptionKey || service.description)}</p>
-                <ul className="space-y-2 text-sm text-slate-700 mb-6" style={{fontWeight: 500}}>
+                <h3 className="text-xl font-heading text-white mb-4" style={{fontWeight: 700}}>{t(service.titleKey || service.title)}</h3>
+                <p className="font-sans text-slate-300 mb-6" style={{fontWeight: 500}}>{t(service.descriptionKey || service.description)}</p>
+                <ul className="space-y-2 text-sm text-slate-300 mb-6" style={{fontWeight: 500}}>
                   {(service.featureKeys || service.features).map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
-                      <Check className="w-4 h-4 text-green-600 mr-2 flex-shrink-0" />
+                      <Check className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" />
                       {typeof feature === 'string' && feature.includes('.') ? t(feature) : feature}
                     </li>
                   ))}
                 </ul>
                 <Button 
                   variant="link" 
-                  className="text-primary font-semibold hover:text-primary/80 p-0"
+                  className="text-blue-400 font-semibold hover:text-blue-300 p-0"
                   onClick={() => scrollToSection("iletisim")}
                 >
                   {t('services.cta')} <ArrowRight className="w-4 h-4 ml-2" />

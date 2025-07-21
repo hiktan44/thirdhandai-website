@@ -49,8 +49,8 @@ export default function WorkProcessSection() {
               <div className={`w-20 h-20 ${step.color} rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold`}>
                 {step.number}
               </div>
-              <h3 className="text-xl font-heading font-bold text-slate-900 mb-4">{step.title}</h3>
-              <p className="text-slate-700 font-medium">{step.description}</p>
+              <h3 className="text-xl font-heading font-bold text-white mb-4">{step.title}</h3>
+              <p className="text-slate-300 font-medium">{step.description}</p>
             </div>
           ))}
         </div>

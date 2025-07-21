@@ -135,8 +135,8 @@ export default function ContactSection() {
                     <info.icon className={`w-6 h-6 ${info.iconColor}`} />
                   </div>
                   <div>
-                    <h4 className="font-heading font-bold text-slate-900 mb-1">{info.title}</h4>
-                    <div className="text-slate-700 font-medium">
+                    <h4 className="font-heading font-bold text-white mb-1">{info.title}</h4>
+                    <div className="text-slate-300 font-medium">
                       {info.content.map((line, lineIndex) => (
                         <p key={lineIndex}>{line}</p>
                       ))}
@@ -148,7 +148,7 @@ export default function ContactSection() {
 
             {/* Social Media */}
             <div className="mt-8">
-              <h4 className="font-heading font-bold text-slate-900 mb-4">{t('contact.followUs')}</h4>
+              <h4 className="font-heading font-bold text-white mb-4">{t('contact.followUs')}</h4>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <a
@@ -164,55 +164,55 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <Card className="bg-slate-50">
+          <Card className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 hover:bg-white/20 transition-all duration-300">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-heading font-bold text-slate-900 mb-6">{t('contact.sendMessage')}</h3>
+              <h3 className="text-2xl font-heading font-bold text-white mb-6">{t('contact.sendMessage')}</h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="name">{t('contact.form.name')}</Label>
+                    <Label htmlFor="name" className="text-white">{t('contact.form.name')}</Label>
                     <Input
                       id="name"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       placeholder={t('contact.form.namePlaceholder')}
-                      className="mt-2"
+                      className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">{t('contact.form.email')}</Label>
+                    <Label htmlFor="email" className="text-white">{t('contact.form.email')}</Label>
                     <Input
                       id="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                       placeholder={t('contact.form.emailPlaceholder')}
-                      className="mt-2"
+                      className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="subject">{t('contact.form.subject')}</Label>
+                  <Label htmlFor="subject" className="text-white">{t('contact.form.subject')}</Label>
                   <Input
                     id="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
                     placeholder={t('contact.form.subjectPlaceholder')}
-                    className="mt-2"
+                    className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="message">{t('contact.form.message')}</Label>
+                  <Label htmlFor="message" className="text-white">{t('contact.form.message')}</Label>
                   <Textarea
                     id="message"
                     value={formData.message}
                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                     placeholder={t('contact.form.messagePlaceholder')}
                     rows={5}
-                    className="mt-2 resize-none"
+                    className="mt-2 resize-none bg-white/20 border-white/30 text-white placeholder:text-slate-400"
                   />
                 </div>
 
@@ -225,7 +225,7 @@ export default function ContactSection() {
                     }
                     className="mt-1"
                   />
-                  <Label htmlFor="privacy" className="text-sm text-slate-600 leading-relaxed">
+                  <Label htmlFor="privacy" className="text-sm text-slate-300 leading-relaxed">
                     {t('contact.form.privacyText')}
                   </Label>
                 </div>

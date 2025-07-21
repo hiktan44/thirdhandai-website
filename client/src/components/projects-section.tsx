@@ -45,7 +45,7 @@ export default function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project) => (
-            <Card key={project.id} style={{background: 'linear-gradient(to bottom right, #fde68a, #fbbf24)'}} className="overflow-hidden shadow-lg hover:shadow-xl transition-all border-2 border-orange-400">
+            <Card key={project.id} className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 hover:bg-white/20 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-2xl">
               {project.image && (
                 <img 
                   src={project.image} 
@@ -54,10 +54,10 @@ export default function ProjectsSection() {
                 />
               )}
               <CardContent className="p-8">
-                <h3 className="text-2xl font-heading font-bold text-slate-900 mb-4">
+                <h3 className="text-2xl font-heading font-bold text-white mb-4">
                   {language === 'TR' ? project.title : t(`project.${project.id}.title`) || project.title}
                 </h3>
-                <p className="text-slate-800 font-semibold mb-6">
+                <p className="text-slate-300 font-semibold mb-6">
                   {language === 'TR' ? project.description : t(`project.${project.id}.description`) || project.description}
                 </p>
                 {project.link && (

@@ -88,12 +88,12 @@ export default function AboutSection() {
 
             <div className="grid grid-cols-2 gap-6">
               {features.map((feature, index) => (
-                <div key={index} className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div key={index} className="text-center p-6 bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 hover:bg-white/20 transition-all duration-300 rounded-xl">
                   <div className={`w-12 h-12 ${feature.iconBg} rounded-lg flex items-center justify-center mx-auto mb-4`}>
                     <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
                   </div>
-                  <h4 className="font-heading font-bold text-slate-900 mb-2">{feature.title}</h4>
-                  <p className="text-sm text-slate-700 font-medium">{feature.description}</p>
+                  <h4 className="font-heading font-bold text-white mb-2">{feature.title}</h4>
+                  <p className="text-sm text-slate-300 font-medium">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -122,8 +122,8 @@ export default function AboutSection() {
         <div className="mt-20 grid md:grid-cols-3 gap-8 text-center">
           {stats.map((stat, index) => (
             <div key={index}>
-              <div className="text-4xl font-bold text-blue-600 mb-2">{stat.number}</div>
-              <p className="text-slate-600">{stat.label}</p>
+              <div className="text-4xl font-bold text-blue-400 mb-2">{stat.number}</div>
+              <p className="text-slate-300">{stat.label}</p>
             </div>
           ))}
         </div>
