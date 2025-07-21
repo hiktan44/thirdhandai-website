@@ -60,7 +60,10 @@ export default function WhatsAppSettings() {
   const onSubmit = async (data: WhatsAppFormData) => {
     setSaving(true);
     try {
-      await apiRequest('/api/admin/whatsapp-settings', 'POST', data);
+      await apiRequest('/api/admin/whatsapp-settings', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
       toast({
         title: "Başarılı",
         description: "WhatsApp ayarları güncellendi."
