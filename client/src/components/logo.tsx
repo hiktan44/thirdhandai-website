@@ -11,7 +11,7 @@ export default function Logo({ className, showText = true }: LogoProps) {
       <img 
         src="/logo.jpg" 
         alt="Third Hand AI Agency" 
-        className="h-20 w-auto object-contain"
+        className="h-24 w-auto object-contain"
       />
       {showText && (
         <div className="flex flex-col">

@@ -39,7 +39,7 @@ export default function Navigation() {
       {/* Navigation Content with semi-transparent background */}
       <div className="relative z-10 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
         <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <div className="flex items-center">
             <Logo />
