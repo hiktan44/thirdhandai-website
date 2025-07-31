@@ -62,14 +62,13 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="text-center mb-8">
-              <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <div className="text-white text-center">
-                  <div className="text-4xl mb-2">🧠</div>
-                  <div className="w-12 h-12 border-2 border-white rounded-lg mx-auto"></div>
-                </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mx-auto mb-6 inline-block">
+                <img 
+                  src="/logo.jpg" 
+                  alt="Third Hand AI Agency" 
+                  className="h-32 w-auto object-contain mx-auto"
+                />
               </div>
-              <h3 className="text-2xl font-heading font-bold text-white mb-2">Third Hand</h3>
-              <p className="text-blue-400 text-lg font-bold">AI Agency</p>
               <div className="mt-4">
                 <span className="text-3xl font-bold text-blue-400">5+</span>
                 <p className="text-slate-300 font-medium">{t('about.experience')}</p>
