@@ -120,8 +120,9 @@ Preferred communication style: Simple, everyday language.
 
 ### Database Integration
 - **Drizzle Kit**: Database migration and schema management
-- **Neon Database**: Serverless PostgreSQL provider
+- **Supabase**: PostgreSQL database provider (migrated from Neon)
 - **Connection**: Environment-based database URL configuration
+- **Migration Date**: January 2025 - Switched from Neon to Supabase for database hosting
 
 ## Deployment Strategy
 
