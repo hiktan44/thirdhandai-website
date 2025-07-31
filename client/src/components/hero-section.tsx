@@ -48,17 +48,12 @@ export default function HeroSection() {
             </div>
           </div>
           <div className="lg:text-right animate-fade-in">
-            <div className="bg-slate-800 rounded-2xl p-8 shadow-2xl inline-block">
-              <div className="w-32 h-32 bg-primary rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                <div className="text-white text-center">
-                  <div className="text-4xl mb-2">🧠</div>
-                  <div className="w-12 h-12 border-2 border-white rounded-lg mx-auto"></div>
-                </div>
-              </div>
-              <div className="text-white text-center">
-                <h3 className="text-2xl font-heading font-bold mb-2">Third Hand</h3>
-                <p className="text-blue-400 text-lg font-heading font-medium">AI Agency</p>
-              </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-2xl inline-block">
+              <img 
+                src="/logo.jpg" 
+                alt="Third Hand AI Agency" 
+                className="h-48 w-auto object-contain mx-auto"
+              />
             </div>
           </div>
         </div>
