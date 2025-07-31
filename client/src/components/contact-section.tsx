@@ -82,13 +82,7 @@ export default function ContactSection() {
       bgColor: "bg-blue-100",
       iconColor: "text-blue-600"
     },
-    {
-      icon: Phone,
-      title: t('contact.info.phone'),
-      content: ["+90 (212) 555 66 77", "+90 (532) 666 77 88"],
-      bgColor: "bg-green-100",
-      iconColor: "text-green-600"
-    },
+
     {
       icon: Mail,
       title: t('contact.info.email'),
