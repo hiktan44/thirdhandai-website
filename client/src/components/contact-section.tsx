@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { MapPin, Phone, Mail, Clock, Linkedin, Twitter, Github, Youtube, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Linkedin, Twitter, Github, Youtube, Instagram, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SpaceBackground from "./space-background";
 
@@ -108,6 +108,7 @@ export default function ContactSection() {
   const socialLinks = [
     { icon: Linkedin, color: "bg-blue-600 hover:bg-blue-700", href: "#" },
     { icon: Twitter, color: "bg-blue-400 hover:bg-blue-500", href: "#" },
+    { icon: Instagram, color: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700", href: "#" },
     { icon: Github, color: "bg-gray-800 hover:bg-gray-900", href: "#" },
     { icon: Youtube, color: "bg-red-600 hover:bg-red-700", href: "#" }
   ];
