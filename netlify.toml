@@ -1,6 +1,6 @@
 [build]
   # Build command - sadece frontend build
-  command = "npm run build:netlify"
+  command = "npm run build"
   # Frontend dosyalarının konumu
   publish = "dist/public"
   # Functions klasörü
