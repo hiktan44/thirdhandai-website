@@ -410,12 +410,22 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('TR');
-  
+  // Load language from localStorage or default to 'TR'
+  const [language, setLanguage] = useState<Language>(() => {
+    const savedLanguage = localStorage.getItem('language');
+    return (savedLanguage as Language) || 'TR';
+  });
+
+  // Save language to localStorage and update HTML lang attribute whenever it changes
+  React.useEffect(() => {
+    localStorage.setItem('language', language);
+    document.documentElement.lang = language.toLowerCase();
+  }, [language]);
+
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations['TR']] || key;
   };
-  
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}

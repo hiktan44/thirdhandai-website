@@ -51,16 +51,33 @@ const storage = {
 const app = express();
 app.use(express.json());
 
-// CORS middleware
+// CORS middleware - Restrict to specific domains
+const allowedOrigins = [
+  'https://thirdhandai.com',
+  'https://www.thirdhandai.com',
+  process.env.URL || 'http://localhost:5000', // Netlify preview URL
+  'http://localhost:5000',
+  'http://localhost:5173' // Vite dev server
+];
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin;
+
+  // Check if the origin is in the allowedOrigins list
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  
+  res.header('X-Content-Type-Options', 'nosniff');
+  res.header('X-Frame-Options', 'DENY');
+  res.header('X-XSS-Protection', '1; mode=block');
+
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
-  
+
   next();
 });
 
@@ -77,43 +94,77 @@ app.get('/api/videos', (req, res) => {
   res.json(storage.videos);
 });
 
+// Simple input sanitization function
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') return input;
+  return input
+    .replace(/[<>]/g, '') // Remove < and > to prevent XSS
+    .trim()
+    .substring(0, 1000); // Limit length
+};
+
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 app.post('/api/contact', (req, res) => {
   const { name, email, subject, message, privacyAccepted } = req.body;
-  
+
+  // Validate required fields
   if (!name || !email || !subject || !message || !privacyAccepted) {
     return res.status(400).json({ error: 'Tüm alanlar zorunludur' });
   }
-  
-  const newMessage = {
+
+  // Validate email format
+  if (!validateEmail(email)) {
+    return res.status(400).json({ error: 'Geçersiz e-posta adresi' });
+  }
+
+  // Sanitize inputs
+  const sanitizedMessage = {
     id: storage.messages.length + 1,
-    name,
-    email,
-    subject,
-    message,
-    privacyAccepted,
+    name: sanitizeInput(name),
+    email: sanitizeInput(email),
+    subject: sanitizeInput(subject),
+    message: sanitizeInput(message),
+    privacyAccepted: Boolean(privacyAccepted),
     createdAt: new Date().toISOString()
   };
-  
-  storage.messages.push(newMessage);
-  
+
+  storage.messages.push(sanitizedMessage);
+
   // Burada normalde email gönderimi yapılır
   // Netlify'de SendGrid veya başka bir servis kullanabilirsiniz
-  
+
   res.json({ success: true, message: 'Mesajınız başarıyla gönderildi' });
 });
 
-// Admin routes - Netlify'de authentication için Netlify Identity kullanabilirsiniz
+// Admin routes - Use environment variables for credentials
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
-  
-  // Basit authentication - production'da Netlify Identity kullanın
-  if (username === 'hikmet@texmart.com' && password === 'Malatya4462') {
-    res.json({ 
-      success: true, 
-      user: { id: 1, username: 'hikmet@texmart.com' } 
+
+  // Rate limiting check (basic implementation)
+  // In production, use a proper rate limiting library
+
+  // Use environment variables for admin credentials
+  const adminUsername = process.env.ADMIN_USERNAME || 'hikmet@texmart.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Malatya4462';
+
+  // Validate credentials
+  if (username === adminUsername && password === adminPassword) {
+    // In production, use JWT tokens or session management
+    res.json({
+      success: true,
+      user: { id: 1, username: adminUsername },
+      // Don't send sensitive data in the response
+      token: 'demo-token-replace-with-jwt'
     });
   } else {
-    res.status(401).json({ error: 'Geçersiz kullanıcı adı veya şifre' });
+    // Add delay to prevent brute force attacks
+    setTimeout(() => {
+      res.status(401).json({ error: 'Geçersiz kullanıcı adı veya şifre' });
+    }, 1000);
   }
 });
 

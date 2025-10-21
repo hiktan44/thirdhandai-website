@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://thirdhandai.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/

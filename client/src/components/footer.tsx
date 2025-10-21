@@ -4,10 +4,12 @@ import SpaceBackground from "./space-background";
 export default function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="bg-black/20 backdrop-blur-sm text-white py-12 relative overflow-hidden">
+    <footer className="bg-black/20 backdrop-blur-sm text-white py-12 relative overflow-hidden" role="contentinfo">
       {/* Animated Background */}
-      <SpaceBackground />
-      
+      <div aria-hidden="true">
+        <SpaceBackground />
+      </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-slate-400 mb-4">

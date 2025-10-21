@@ -100,18 +100,20 @@ export default function ContactSection() {
   ];
 
   const socialLinks = [
-    { icon: Linkedin, color: "bg-blue-600 hover:bg-blue-700", href: "#" },
-    { icon: Twitter, color: "bg-blue-400 hover:bg-blue-500", href: "#" },
-    { icon: Instagram, color: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700", href: "#" },
-    { icon: Github, color: "bg-gray-800 hover:bg-gray-900", href: "#" },
-    { icon: Youtube, color: "bg-red-600 hover:bg-red-700", href: "#" }
+    { icon: Linkedin, color: "bg-blue-600 hover:bg-blue-700", href: "#", label: "LinkedIn" },
+    { icon: Twitter, color: "bg-blue-400 hover:bg-blue-500", href: "#", label: "Twitter" },
+    { icon: Instagram, color: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700", href: "#", label: "Instagram" },
+    { icon: Github, color: "bg-gray-800 hover:bg-gray-900", href: "#", label: "GitHub" },
+    { icon: Youtube, color: "bg-red-600 hover:bg-red-700", href: "#", label: "YouTube" }
   ];
 
   return (
     <section id="iletisim" className="py-20 bg-white/10 backdrop-blur-sm relative overflow-hidden">
       {/* Animated Background */}
-      <SpaceBackground />
-      
+      <div aria-hidden="true">
+        <SpaceBackground />
+      </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-heading font-bold text-white mb-4">{t('contact.title')}</h2>
@@ -126,7 +128,7 @@ export default function ContactSection() {
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
                 <div key={index} className="flex items-start">
-                  <div className={`w-12 h-12 ${info.bgColor} rounded-lg flex items-center justify-center mr-4 flex-shrink-0`}>
+                  <div className={`w-12 h-12 ${info.bgColor} rounded-lg flex items-center justify-center mr-4 flex-shrink-0`} aria-hidden="true">
                     <info.icon className={`w-6 h-6 ${info.iconColor}`} />
                   </div>
                   <div>
@@ -144,14 +146,16 @@ export default function ContactSection() {
             {/* Social Media */}
             <div className="mt-8">
               <h4 className="font-heading font-bold text-white mb-4">{t('contact.followUs')}</h4>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4" role="list">
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
                     href={social.href}
                     className={`w-10 h-10 ${social.color} rounded-lg flex items-center justify-center text-white transition-colors`}
+                    aria-label={`${social.label} - Third Hand AI Agency'yi sosyal medyada takip edin`}
+                    role="listitem"
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-5 h-5" aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -163,27 +167,33 @@ export default function ContactSection() {
             <CardContent className="p-8">
               <h3 className="text-2xl font-heading font-bold text-white mb-6">{t('contact.sendMessage')}</h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" aria-label={t('contact.sendMessage')}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="name" className="text-white">{t('contact.form.name')}</Label>
                     <Input
                       id="name"
+                      name="name"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       placeholder={t('contact.form.namePlaceholder')}
                       className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
+                      required
+                      aria-required="true"
                     />
                   </div>
                   <div>
                     <Label htmlFor="email" className="text-white">{t('contact.form.email')}</Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                       placeholder={t('contact.form.emailPlaceholder')}
                       className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
+                      required
+                      aria-required="true"
                     />
                   </div>
                 </div>
@@ -192,10 +202,13 @@ export default function ContactSection() {
                   <Label htmlFor="subject" className="text-white">{t('contact.form.subject')}</Label>
                   <Input
                     id="subject"
+                    name="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
                     placeholder={t('contact.form.subjectPlaceholder')}
                     className="mt-2 bg-white/20 border-white/30 text-white placeholder:text-slate-400"
+                    required
+                    aria-required="true"
                   />
                 </div>
 
@@ -203,11 +216,14 @@ export default function ContactSection() {
                   <Label htmlFor="message" className="text-white">{t('contact.form.message')}</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     value={formData.message}
                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                     placeholder={t('contact.form.messagePlaceholder')}
                     rows={5}
                     className="mt-2 resize-none bg-white/20 border-white/30 text-white placeholder:text-slate-400"
+                    required
+                    aria-required="true"
                   />
                 </div>
 
@@ -215,22 +231,24 @@ export default function ContactSection() {
                   <Checkbox
                     id="privacy"
                     checked={formData.privacyAccepted}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       setFormData(prev => ({ ...prev, privacyAccepted: checked as boolean }))
                     }
                     className="mt-1"
+                    aria-required="true"
                   />
                   <Label htmlFor="privacy" className="text-sm text-slate-300 leading-relaxed">
                     {t('contact.form.privacyText')}
                   </Label>
                 </div>
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-primary text-white hover:bg-primary/90"
                   disabled={contactMutation.isPending}
+                  aria-label={contactMutation.isPending ? t('contact.form.sending') : t('contact.form.send')}
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-4 h-4 mr-2" aria-hidden="true" />
                   {contactMutation.isPending ? t('contact.form.sending') : t('contact.form.send')}
                 </Button>
               </form>
