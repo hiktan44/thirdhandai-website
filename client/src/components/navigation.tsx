@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import LanguageToggle from "@/components/ui/language-toggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, User } from "lucide-react";
 import { Link } from "wouter";
 import Logo from "@/components/logo";
@@ -21,12 +22,13 @@ export default function Navigation() {
   };
 
   const navItems = [
-    { id: "ana-sayfa", label: t('nav.home') },
-    { id: "hizmetler", label: t('nav.services') },
-    { id: "projeler", label: t('nav.projects') },
-    { id: "video-projeler", label: t('nav.videos') },
-    { id: "hakkimizda", label: t('nav.about') },
-    { id: "iletisim", label: t('nav.contact') },
+    { id: "ana-sayfa", label: t('nav.home'), type: "scroll" },
+    { id: "hizmetler", label: t('nav.services'), type: "scroll" },
+    { id: "projeler", label: t('nav.projects'), type: "scroll" },
+    { id: "video-projeler", label: t('nav.videos'), type: "scroll" },
+    { id: "blog", label: t('nav.blog'), type: "link", href: "/blog" },
+    { id: "hakkimizda", label: t('nav.about'), type: "scroll" },
+    { id: "iletisim", label: t('nav.contact'), type: "scroll" },
   ];
 
   return (
@@ -49,19 +51,28 @@ export default function Navigation() {
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
             <div className="flex items-baseline space-x-8">
               {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}
-                >
-                  {item.label}
-                </button>
+                item.type === "link" ? (
+                  <Link key={item.id} href={item.href!}>
+                    <button className="text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}>
+                      {item.label}
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans" style={{fontWeight: 600}}
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
             </div>
           </div>
 
-          {/* Language & Admin */}
-          <div className="flex items-center space-x-4">
+          {/* Language, Theme & Admin */}
+          <div className="flex items-center space-x-2">
+            <ThemeToggle />
             <LanguageToggle />
             <Link href="/admin">
               <Button className="bg-primary text-white hover:bg-primary/90">
@@ -81,13 +92,24 @@ export default function Navigation() {
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-slate-900 border-slate-700">
                   <div className="flex flex-col space-y-4 mt-8">
                     {navItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        className="text-left text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans font-medium"
-                      >
-                        {item.label}
-                      </button>
+                      item.type === "link" ? (
+                        <Link key={item.id} href={item.href!}>
+                          <button
+                            onClick={() => setIsOpen(false)}
+                            className="text-left text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans font-medium w-full"
+                          >
+                            {item.label}
+                          </button>
+                        </Link>
+                      ) : (
+                        <button
+                          key={item.id}
+                          onClick={() => scrollToSection(item.id)}
+                          className="text-left text-slate-200 hover:text-blue-400 px-3 py-2 transition-colors font-sans font-medium"
+                        >
+                          {item.label}
+                        </button>
+                      )
                     ))}
                   </div>
                 </SheetContent>

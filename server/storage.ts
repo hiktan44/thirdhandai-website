@@ -1,8 +1,9 @@
 import { 
-  users, contactMessages, projects, videos, aiModels, whatsappSettings,
+  users, contactMessages, projects, videos, aiModels, whatsappSettings, blogPosts,
   type User, type InsertUser, type ContactMessage, type InsertContactMessage,
   type Project, type InsertProject, type Video, type InsertVideo,
-  type AiModel, type InsertAiModel, type WhatsAppSettings, type InsertWhatsAppSettings
+  type AiModel, type InsertAiModel, type WhatsAppSettings, type InsertWhatsAppSettings,
+  type BlogPost, type InsertBlogPost
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, asc } from "drizzle-orm";
@@ -41,6 +42,14 @@ export interface IStorage {
   // WhatsApp Settings methods
   getWhatsAppSettings(): Promise<WhatsAppSettings | undefined>;
   updateWhatsAppSettings(settings: InsertWhatsAppSettings): Promise<WhatsAppSettings>;
+  
+  // Blog Post methods
+  getBlogPosts(published?: boolean): Promise<BlogPost[]>;
+  getBlogPost(id: number): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
+  deleteBlogPost(id: number): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -205,6 +214,49 @@ export class DatabaseStorage implements IStorage {
         .returning();
       return created;
     }
+  }
+
+  // Blog Post methods
+  async getBlogPosts(published?: boolean): Promise<BlogPost[]> {
+    let query = db.select().from(blogPosts);
+    
+    if (published !== undefined) {
+      query = query.where(eq(blogPosts.published, published)) as any;
+    }
+    
+    return await query.orderBy(asc(blogPosts.orderIndex));
+  }
+
+  async getBlogPost(id: number): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post || undefined;
+  }
+
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post || undefined;
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const [post] = await db
+      .insert(blogPosts)
+      .values(insertPost)
+      .returning();
+    return post;
+  }
+
+  async updateBlogPost(id: number, updateData: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
+    const [post] = await db
+      .update(blogPosts)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return post || undefined;
+  }
+
+  async deleteBlogPost(id: number): Promise<boolean> {
+    const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    return result.rowCount > 0;
   }
 }
 

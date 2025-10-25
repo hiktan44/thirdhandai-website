@@ -7,13 +7,19 @@ import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 import AdminDashboard from "@/pages/admin-dashboard";
 import AdminLoginPage from "@/pages/admin-login-page";
+import BlogPage from "@/pages/blog";
+import BlogDetailPage from "@/pages/blog-detail";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import WhatsAppWidget from "@/components/whatsapp-widget";
+import "@/config/i18n";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/blog" component={BlogPage} />
+      <Route path="/blog/:slug" component={BlogDetailPage} />
       <Route path="/admin" component={AdminLoginPage} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route component={NotFound} />
@@ -24,13 +30,15 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-          <WhatsAppWidget />
-        </TooltipProvider>
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+            <WhatsAppWidget />
+          </TooltipProvider>
+        </LanguageProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Loader2, LogOut, Mail, Calendar, Eye, Home, Users, Briefcase, Video, Brain, MessageSquare, Settings, Menu, Plus, Edit, Trash2, GripVertical } from "lucide-react";
+import { Loader2, LogOut, Mail, Calendar, Eye, Home, Users, Briefcase, Video, Brain, MessageSquare, Settings, Menu, Plus, Edit, Trash2, GripVertical, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { useLocation } from "wouter";
@@ -30,6 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
 import type { Project, Video as VideoType, AiModel, ContactMessage } from "../../../shared/schema";
 import WhatsAppSettings from "@/components/admin/whatsapp-settings";
+import { BlogManagement } from "@/components/admin/BlogManagement";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
@@ -284,6 +285,7 @@ export default function AdminDashboard() {
     { id: "projects", label: "Projeler", icon: Briefcase },
     { id: "videos", label: "Video Yönetimi", icon: Video },
     { id: "ai-models", label: "AI Modelleri", icon: Brain },
+    { id: "blog", label: "Blog Yönetimi", icon: FileText },
     { id: "settings", label: "Ayarlar", icon: Settings },
   ];
 
@@ -625,6 +627,11 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             </div>
+          )}
+
+          {/* Blog Tab */}
+          {activeTab === "blog" && (
+            <BlogManagement />
           )}
 
           {/* Settings Tab */}

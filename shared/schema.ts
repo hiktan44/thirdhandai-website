@@ -108,3 +108,32 @@ export const whatsappSettings = pgTable("whatsapp_settings", {
 export const insertWhatsAppSettingsSchema = createInsertSchema(whatsappSettings).omit({ id: true, updatedAt: true });
 export type InsertWhatsAppSettings = z.infer<typeof insertWhatsAppSettingsSchema>;
 export type WhatsAppSettings = typeof whatsappSettings.$inferSelect;
+
+// Blog Posts table
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  titleTr: text("title_tr").notNull(),
+  titleEn: text("title_en").notNull(),
+  contentTr: text("content_tr").notNull(),
+  contentEn: text("content_en").notNull(),
+  excerptTr: text("excerpt_tr"),
+  excerptEn: text("excerpt_en"),
+  slug: text("slug").notNull().unique(),
+  coverImage: text("cover_image"),
+  category: varchar("category", { length: 100 }),
+  tags: jsonb("tags").default([]),
+  published: boolean("published").default(false),
+  publishedAt: timestamp("published_at"),
+  orderIndex: integer("order_index").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

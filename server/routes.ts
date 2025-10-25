@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactMessageSchema, insertUserSchema, insertProjectSchema, insertVideoSchema, insertAiModelSchema } from "@shared/schema";
+import { insertContactMessageSchema, insertUserSchema, insertProjectSchema, insertVideoSchema, insertAiModelSchema, insertBlogPostSchema } from "@shared/schema";
 
 // Extend session to include user data
 declare module "express-session" {
@@ -308,6 +308,95 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(settings);
     } catch (error) {
       res.status(500).json({ error: "Failed to update WhatsApp settings" });
+    }
+  });
+
+  // Blog Posts API - Public routes
+  app.get("/api/blog-posts", async (req, res) => {
+    try {
+      const published = req.query.published === "true";
+      const posts = await storage.getBlogPosts(published);
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.get("/api/blog-posts/:slug", async (req, res) => {
+    try {
+      const post = await storage.getBlogPostBySlug(req.params.slug);
+      if (post) {
+        res.json(post);
+      } else {
+        res.status(404).json({ message: "Blog post not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
+
+  // Blog Posts API - Admin routes
+  app.get("/api/admin/blog-posts", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.post("/api/admin/blog-posts", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(validatedData);
+      res.json(post);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid blog post data" });
+    }
+  });
+
+  app.put("/api/admin/blog-posts/:id", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertBlogPostSchema.partial().parse(req.body);
+      const post = await storage.updateBlogPost(id, validatedData);
+      if (post) {
+        res.json(post);
+      } else {
+        res.status(404).json({ message: "Blog post not found" });
+      }
+    } catch (error) {
+      res.status(400).json({ message: "Invalid blog post data" });
+    }
+  });
+
+  app.delete("/api/admin/blog-posts/:id", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteBlogPost(id);
+      if (deleted) {
+        res.json({ message: "Blog post deleted" });
+      } else {
+        res.status(404).json({ message: "Blog post not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete blog post" });
     }
   });
 
