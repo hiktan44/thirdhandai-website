@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { apiRequest } from "@/lib/queryClient";
 import "@/styles/aurora-home.css";
 
 type Project = {
@@ -98,6 +99,19 @@ const CONTENT = {
       more: "Daha Fazla Gör ↓", visit: "Siteyi Ziyaret Et →", details: "Detaylar →",
     },
     final: { h2a: "Ekibinize", h2b: "üçüncü eli", h2c: "ekleyelim mi?", p: "30 dakikalık ücretsiz keşif görüşmesinde işiniz için somut bir AI fırsatı belirleyelim.", btn: "Görüşme ayarla →" },
+    contact: {
+      eyebrow: "İletişim", title: "Projenizi konuşalım", sub: "Sorularınız için formu doldurun, en kısa sürede dönüş yapalım.",
+      info: { addr: "Adres", addrVal: "Levent / İstanbul", phone: "Telefon", phoneVal: "+90 (212) 555 66 77", email: "E-posta", emailVal: "merhaba@thirdhand.com.tr", hours: "Çalışma Saatleri", hoursVal: "Pzt - Cuma: 09:00 - 18:00" },
+      name: "İsim", namePh: "Adınız Soyadınız",
+      mail: "E-posta", mailPh: "email@ornek.com",
+      subject: "Konu", subjectPh: "Mesaj konusu",
+      message: "Mesaj", messagePh: "Mesajınızı buraya yazın...",
+      privacy: "Kişisel verilerin işlenmesine dair aydınlatma metnini okudum ve onaylıyorum.",
+      send: "Gönder", sending: "Gönderiliyor...",
+      ok: "Mesajınız başarıyla gönderildi! En kısa sürede dönüş yapacağız.",
+      err: "Mesaj gönderilemedi. Lütfen tekrar deneyin.",
+      fill: "Lütfen tüm alanları doldurun ve onay kutusunu işaretleyin.",
+    },
     footer: { left: "© 2026 Third Hand AI Agency · Levent / İstanbul" },
   },
   EN: {
@@ -140,6 +154,19 @@ const CONTENT = {
       more: "Show More ↓", visit: "Visit Site →", details: "Details →",
     },
     final: { h2a: "Shall we add", h2b: "a third hand", h2c: "to your team?", p: "In a 30-minute free discovery call, let's identify a concrete AI opportunity for your business.", btn: "Book a call →" },
+    contact: {
+      eyebrow: "Contact", title: "Let's talk about your project", sub: "Fill in the form with your questions and we'll get back to you shortly.",
+      info: { addr: "Address", addrVal: "Levent / Istanbul", phone: "Phone", phoneVal: "+90 (212) 555 66 77", email: "Email", emailVal: "merhaba@thirdhand.com.tr", hours: "Working Hours", hoursVal: "Mon - Fri: 09:00 - 18:00" },
+      name: "Name", namePh: "Your full name",
+      mail: "Email", mailPh: "email@example.com",
+      subject: "Subject", subjectPh: "Message subject",
+      message: "Message", messagePh: "Write your message here...",
+      privacy: "I have read and accept the privacy notice on the processing of personal data.",
+      send: "Send", sending: "Sending...",
+      ok: "Your message has been sent! We'll get back to you shortly.",
+      err: "Message could not be sent. Please try again.",
+      fill: "Please fill in all fields and check the consent box.",
+    },
     footer: { left: "© 2026 Third Hand AI Agency · Levent / Istanbul" },
   },
 } as const;
@@ -183,11 +210,43 @@ function ProjectCard({ p, index, lang, visit, details }: { p: Project; index: nu
   );
 }
 
+type FormState = { name: string; email: string; subject: string; message: string; privacy: boolean };
+const EMPTY_FORM: FormState = { name: "", email: "", subject: "", message: "", privacy: false };
+
 export default function Home() {
   const { language, setLanguage } = useLanguage();
   const [showAll, setShowAll] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const c = CONTENT[language];
   const visible = showAll ? PROJECTS : PROJECTS.slice(0, SHOW);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.subject || !form.message || !form.privacy) {
+      setStatus({ type: "err", text: c.contact.fill });
+      return;
+    }
+    setSubmitting(true);
+    setStatus(null);
+    try {
+      await apiRequest("POST", "/api/contact", {
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+        privacyAccepted: form.privacy,
+      });
+      setStatus({ type: "ok", text: c.contact.ok });
+      setForm(EMPTY_FORM);
+    } catch {
+      setStatus({ type: "err", text: c.contact.err });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="aurora-page">
@@ -218,8 +277,28 @@ export default function Home() {
                 <button className={language === "EN" ? "active" : ""} onClick={() => setLanguage("EN")}>EN</button>
               </div>
               <a href="#iletisim" className="btn btn-pri">{c.nav.cta}</a>
+              <button
+                className={`hamburger${menuOpen ? " open" : ""}`}
+                aria-label="Menu"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen((o) => !o)}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
             </div>
           </nav>
+
+          <div className={`mobile-menu glass${menuOpen ? " open" : ""}`}>
+            <a href="#cozumler" onClick={() => setMenuOpen(false)}>{c.nav.solutions}</a>
+            <a href="#projeler" onClick={() => setMenuOpen(false)}>{c.nav.projects}</a>
+            <a href="#surec" onClick={() => setMenuOpen(false)}>{c.nav.process}</a>
+            <Link href="/blog" onClick={() => setMenuOpen(false)}>{c.nav.blog}</Link>
+            <a href="#iletisim" onClick={() => setMenuOpen(false)}>{c.nav.contact}</a>
+            <Link href="/admin" onClick={() => setMenuOpen(false)}>{c.nav.admin}</Link>
+            <a href="#iletisim" className="btn btn-pri" onClick={() => setMenuOpen(false)}>{c.nav.cta}</a>
+          </div>
 
           <header className="hero">
             <span className="pill glass">{c.hero.pill}</span>
@@ -300,7 +379,67 @@ export default function Home() {
             )}
           </section>
 
-          <div className="final glass" id="iletisim">
+          <section id="iletisim" className="center">
+            <span className="eyebrow">{c.contact.eyebrow}</span>
+            <h2 className="sech">{c.contact.title}</h2>
+            <p className="secsub">{c.contact.sub}</p>
+            <div className="contact-grid">
+              <div className="cinfo glass">
+                <div className="row">
+                  <div className="ci">📍</div>
+                  <div><b>{c.contact.info.addr}</b><span>{c.contact.info.addrVal}</span></div>
+                </div>
+                <div className="row">
+                  <div className="ci">📞</div>
+                  <div><b>{c.contact.info.phone}</b><span>{c.contact.info.phoneVal}</span></div>
+                </div>
+                <div className="row">
+                  <div className="ci">✉️</div>
+                  <div><b>{c.contact.info.email}</b><span>{c.contact.info.emailVal}</span></div>
+                </div>
+                <div className="row">
+                  <div className="ci">🕑</div>
+                  <div><b>{c.contact.info.hours}</b><span>{c.contact.info.hoursVal}</span></div>
+                </div>
+              </div>
+
+              <form className="cform glass" onSubmit={handleSubmit}>
+                <div className="frow">
+                  <div>
+                    <label htmlFor="cf-name">{c.contact.name}</label>
+                    <input id="cf-name" type="text" placeholder={c.contact.namePh}
+                      value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                  </div>
+                  <div>
+                    <label htmlFor="cf-email">{c.contact.mail}</label>
+                    <input id="cf-email" type="email" placeholder={c.contact.mailPh}
+                      value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="cf-subject">{c.contact.subject}</label>
+                  <input id="cf-subject" type="text" placeholder={c.contact.subjectPh}
+                    value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} />
+                </div>
+                <div>
+                  <label htmlFor="cf-message">{c.contact.message}</label>
+                  <textarea id="cf-message" placeholder={c.contact.messagePh}
+                    value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+                </div>
+                <label className="check">
+                  <input type="checkbox" checked={form.privacy}
+                    onChange={(e) => setForm({ ...form, privacy: e.target.checked })} />
+                  <span>{c.contact.privacy}</span>
+                </label>
+                {status && <div className={`cstatus ${status.type}`}>{status.text}</div>}
+                <button type="submit" className="btn btn-pri" disabled={submitting}>
+                  {submitting ? c.contact.sending : c.contact.send}
+                </button>
+              </form>
+            </div>
+          </section>
+
+          <div className="final glass">
             <h2>
               {c.final.h2a} <span className="g">{c.final.h2b}</span> {c.final.h2c}
             </h2>
