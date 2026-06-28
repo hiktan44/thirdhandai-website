@@ -1,68 +1,148 @@
 import { useState } from "react";
+import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 import "@/styles/aurora-home.css";
 
-type Project = { n: string; d: string; u: string; t: string };
+type Project = {
+  n: string;
+  u: string;
+  tr: { t: string; d: string };
+  en: { t: string; d: string };
+};
 
 const PROJECTS: Project[] = [
-  { n: "fasheone.com", d: "Moda e-ticaret için AI destekli kişiselleştirilmiş alışveriş deneyimi.", u: "https://fasheone.com/", t: "E-ticaret" },
-  { n: "PodcastYap.com", d: "AI destekli ses düzenleme, transkripsiyon ve içerik önerili podcast platformu.", u: "https://podcastyap.com", t: "Medya" },
-  { n: "Doc2Podcast", d: "PDF dosyalarını doğal, akıcı bir podcast'e dönüştüren AI teknolojisi.", u: "https://doc2podcast.com", t: "AI Araç" },
-  { n: "Uygulama Deposu", d: "100+ AI aracını keşfet ve yönet — kapsamlı AI araç platformu.", u: "https://uygulamadeposu.netlify.app/", t: "Platform" },
-  { n: "Akıllı Müşteri Asistanı", d: "WhatsApp ve web'e entegre 7/24 destek botu.", u: "#", t: "Chatbot" },
-  { n: "Restoran Rezervasyon Botu", d: "Sesli ve yazılı otomatik rezervasyon sistemi.", u: "#", t: "Otomasyon" },
-  { n: "Ürün Öneri Motoru", d: "Kullanıcı davranışına göre kişiselleştirilmiş öneriler.", u: "#", t: "E-ticaret" },
-  { n: "Otomatik Fatura İşleme", d: "Faturadan veri çıkarma ve muhasebeye kayıt.", u: "#", t: "Otomasyon" },
-  { n: "Emlak Değerleme Modeli", d: "Konum ve piyasa verisiyle fiyat tahmini.", u: "#", t: "Veri Analizi" },
-  { n: "Hukuki Belge Özetleyici", d: "Sözleşmeleri sade dile çeviren NLP çözümü.", u: "#", t: "NLP" },
-  { n: "Sağlık Randevu Asistanı", d: "Klinikler için akıllı randevu planlama.", u: "#", t: "Sağlık" },
-  { n: "Sosyal Medya İçerik Üretici", d: "Marka diline uygun otomatik gönderi üretimi.", u: "#", t: "İçerik" },
-  { n: "Çağrı Merkezi Analizi", d: "Konuşma duygu ve kalite analizi paneli.", u: "#", t: "Veri Analizi" },
-  { n: "Stok Tahmin Sistemi", d: "Talep tahmini ve otomatik sipariş önerisi.", u: "#", t: "Perakende" },
-  { n: "CV Tarama & Eşleştirme", d: "İK için aday değerlendirme ve sıralama.", u: "#", t: "İK" },
-  { n: "Görsel Ürün Etiketleme", d: "Katalog için otomatik görsel etiketleme.", u: "#", t: "Görüntü İşleme" },
-  { n: "Finansal Rapor Botu", d: "Aylık finansal özet ve yorum üretimi.", u: "#", t: "Finans" },
-  { n: "Eğitim Koçu Chatbot", d: "Öğrencilere 7/24 akıllı öğrenme desteği.", u: "#", t: "Eğitim" },
-  { n: "Sesli Sipariş Sistemi", d: "Telefonla AI üzerinden sipariş alma.", u: "#", t: "Ses" },
-  { n: "Müşteri Segmentasyon Paneli", d: "Davranışsal kümeleme ve hedefleme.", u: "#", t: "Veri Analizi" },
-  { n: "Otel Yorum Analizi", d: "Şikayet ve memnuniyet temalarını çıkarır.", u: "#", t: "NLP" },
-  { n: "Lojistik Rota Optimizasyonu", d: "Teslimat planlama ve maliyet düşürme.", u: "#", t: "Otomasyon" },
-  { n: "Marka İzleme Aracı", d: "Web ve sosyal medyada marka takibi.", u: "#", t: "İzleme" },
-  { n: "Akıllı E-posta Yanıtlayıcı", d: "Gelen kutusu için otomatik yanıt taslakları.", u: "#", t: "Otomasyon" },
-  { n: "Üretim Hata Tespiti", d: "Görüntüden otomatik kusur tespiti.", u: "#", t: "Görüntü İşleme" },
-  { n: "Anket Sonuç Özetleyici", d: "Açık uçlu yanıtların tematik analizi.", u: "#", t: "NLP" },
-  { n: "Dinamik Fiyatlandırma", d: "Talebe göre gerçek zamanlı fiyat.", u: "#", t: "E-ticaret" },
-  { n: "Belge Soru-Cevap (RAG)", d: "Şirket bilgisinden anlık, kaynaklı yanıt.", u: "#", t: "RAG" },
-  { n: "Toplantı Notu Çıkarıcı", d: "Ses kaydından özet ve görev listesi.", u: "#", t: "Verimlilik" },
-  { n: "Müşteri Kaybı Tahmini", d: "Churn (kayıp) riskini önceden öngörür.", u: "#", t: "Veri Analizi" },
-  { n: "Akıllı Form Doldurma", d: "Belgeden otomatik alan tanıma ve doldurma.", u: "#", t: "Otomasyon" },
-  { n: "Çok Dilli Çeviri Asistanı", d: "İş yazışmaları için anlık çeviri.", u: "#", t: "NLP" },
-  { n: "Reklam Metni Üretici", d: "A/B test için varyantlı reklam metni.", u: "#", t: "Pazarlama" },
-  { n: "Görsel Üretim Stüdyosu", d: "Ürün görseli ve banner üretimi.", u: "#", t: "Görüntü İşleme" },
-  { n: "Bordro Otomasyonu", d: "Maaş, izin ve puantaj hesaplama.", u: "#", t: "İK" },
-  { n: "Tedarikçi Risk Skoru", d: "Tedarik zinciri risk analizi.", u: "#", t: "Finans" },
-  { n: "Akıllı SSS Botu", d: "Site içi yardım merkezi asistanı.", u: "#", t: "Chatbot" },
-  { n: "Video Altyazı & Transkript", d: "Otomatik altyazı ve transkript üretimi.", u: "#", t: "Medya" },
-  { n: "Kişisel Finans Koçu", d: "Harcama analizi ve tasarruf önerisi.", u: "#", t: "Finans" },
-  { n: "Akıllı Belge Arşivi", d: "Otomatik sınıflandırma ve akıllı arama.", u: "#", t: "Otomasyon" },
+  { n: "fasheone.com", u: "https://fasheone.com/", tr: { t: "E-ticaret", d: "Moda e-ticaret için AI destekli kişiselleştirilmiş alışveriş deneyimi." }, en: { t: "E-commerce", d: "AI-powered personalized shopping experience for fashion e-commerce." } },
+  { n: "PodcastYap.com", u: "https://podcastyap.com", tr: { t: "Medya", d: "AI destekli ses düzenleme, transkripsiyon ve içerik önerili podcast platformu." }, en: { t: "Media", d: "Podcast platform with AI-powered audio editing, transcription and content suggestions." } },
+  { n: "Doc2Podcast", u: "https://doc2podcast.com", tr: { t: "AI Araç", d: "PDF dosyalarını doğal, akıcı bir podcast'e dönüştüren AI teknolojisi." }, en: { t: "AI Tool", d: "AI technology that turns PDF files into a natural, fluent podcast." } },
+  { n: "Uygulama Deposu", u: "https://uygulamadeposu.netlify.app/", tr: { t: "Platform", d: "100+ AI aracını keşfet ve yönet — kapsamlı AI araç platformu." }, en: { t: "Platform", d: "Discover and manage 100+ AI tools — a comprehensive AI tool platform." } },
+  { n: "Akıllı Müşteri Asistanı", u: "#", tr: { t: "Chatbot", d: "WhatsApp ve web'e entegre 7/24 destek botu." }, en: { t: "Chatbot", d: "24/7 support bot integrated with WhatsApp and the web." } },
+  { n: "Restoran Rezervasyon Botu", u: "#", tr: { t: "Otomasyon", d: "Sesli ve yazılı otomatik rezervasyon sistemi." }, en: { t: "Automation", d: "Automated voice and text reservation system." } },
+  { n: "Ürün Öneri Motoru", u: "#", tr: { t: "E-ticaret", d: "Kullanıcı davranışına göre kişiselleştirilmiş öneriler." }, en: { t: "E-commerce", d: "Personalized recommendations based on user behavior." } },
+  { n: "Otomatik Fatura İşleme", u: "#", tr: { t: "Otomasyon", d: "Faturadan veri çıkarma ve muhasebeye kayıt." }, en: { t: "Automation", d: "Data extraction from invoices and accounting entry." } },
+  { n: "Emlak Değerleme Modeli", u: "#", tr: { t: "Veri Analizi", d: "Konum ve piyasa verisiyle fiyat tahmini." }, en: { t: "Data Analytics", d: "Price prediction using location and market data." } },
+  { n: "Hukuki Belge Özetleyici", u: "#", tr: { t: "NLP", d: "Sözleşmeleri sade dile çeviren NLP çözümü." }, en: { t: "NLP", d: "NLP solution that translates contracts into plain language." } },
+  { n: "Sağlık Randevu Asistanı", u: "#", tr: { t: "Sağlık", d: "Klinikler için akıllı randevu planlama." }, en: { t: "Healthcare", d: "Smart appointment scheduling for clinics." } },
+  { n: "Sosyal Medya İçerik Üretici", u: "#", tr: { t: "İçerik", d: "Marka diline uygun otomatik gönderi üretimi." }, en: { t: "Content", d: "Automated post generation that fits your brand voice." } },
+  { n: "Çağrı Merkezi Analizi", u: "#", tr: { t: "Veri Analizi", d: "Konuşma duygu ve kalite analizi paneli." }, en: { t: "Data Analytics", d: "Conversation sentiment and quality analytics dashboard." } },
+  { n: "Stok Tahmin Sistemi", u: "#", tr: { t: "Perakende", d: "Talep tahmini ve otomatik sipariş önerisi." }, en: { t: "Retail", d: "Demand forecasting and automatic reorder suggestions." } },
+  { n: "CV Tarama & Eşleştirme", u: "#", tr: { t: "İK", d: "İK için aday değerlendirme ve sıralama." }, en: { t: "HR", d: "Candidate evaluation and ranking for HR." } },
+  { n: "Görsel Ürün Etiketleme", u: "#", tr: { t: "Görüntü İşleme", d: "Katalog için otomatik görsel etiketleme." }, en: { t: "Computer Vision", d: "Automatic image tagging for catalogs." } },
+  { n: "Finansal Rapor Botu", u: "#", tr: { t: "Finans", d: "Aylık finansal özet ve yorum üretimi." }, en: { t: "Finance", d: "Monthly financial summary and commentary generation." } },
+  { n: "Eğitim Koçu Chatbot", u: "#", tr: { t: "Eğitim", d: "Öğrencilere 7/24 akıllı öğrenme desteği." }, en: { t: "Education", d: "24/7 smart learning support for students." } },
+  { n: "Sesli Sipariş Sistemi", u: "#", tr: { t: "Ses", d: "Telefonla AI üzerinden sipariş alma." }, en: { t: "Voice", d: "Taking orders over the phone via AI." } },
+  { n: "Müşteri Segmentasyon Paneli", u: "#", tr: { t: "Veri Analizi", d: "Davranışsal kümeleme ve hedefleme." }, en: { t: "Data Analytics", d: "Behavioral clustering and targeting." } },
+  { n: "Otel Yorum Analizi", u: "#", tr: { t: "NLP", d: "Şikayet ve memnuniyet temalarını çıkarır." }, en: { t: "NLP", d: "Extracts complaint and satisfaction themes." } },
+  { n: "Lojistik Rota Optimizasyonu", u: "#", tr: { t: "Otomasyon", d: "Teslimat planlama ve maliyet düşürme." }, en: { t: "Automation", d: "Delivery planning and cost reduction." } },
+  { n: "Marka İzleme Aracı", u: "#", tr: { t: "İzleme", d: "Web ve sosyal medyada marka takibi." }, en: { t: "Monitoring", d: "Brand tracking across web and social media." } },
+  { n: "Akıllı E-posta Yanıtlayıcı", u: "#", tr: { t: "Otomasyon", d: "Gelen kutusu için otomatik yanıt taslakları." }, en: { t: "Automation", d: "Automatic reply drafts for your inbox." } },
+  { n: "Üretim Hata Tespiti", u: "#", tr: { t: "Görüntü İşleme", d: "Görüntüden otomatik kusur tespiti." }, en: { t: "Computer Vision", d: "Automatic defect detection from images." } },
+  { n: "Anket Sonuç Özetleyici", u: "#", tr: { t: "NLP", d: "Açık uçlu yanıtların tematik analizi." }, en: { t: "NLP", d: "Thematic analysis of open-ended responses." } },
+  { n: "Dinamik Fiyatlandırma", u: "#", tr: { t: "E-ticaret", d: "Talebe göre gerçek zamanlı fiyat." }, en: { t: "E-commerce", d: "Real-time pricing based on demand." } },
+  { n: "Belge Soru-Cevap (RAG)", u: "#", tr: { t: "RAG", d: "Şirket bilgisinden anlık, kaynaklı yanıt." }, en: { t: "RAG", d: "Instant, sourced answers from company knowledge." } },
+  { n: "Toplantı Notu Çıkarıcı", u: "#", tr: { t: "Verimlilik", d: "Ses kaydından özet ve görev listesi." }, en: { t: "Productivity", d: "Summary and task list from audio recordings." } },
+  { n: "Müşteri Kaybı Tahmini", u: "#", tr: { t: "Veri Analizi", d: "Churn (kayıp) riskini önceden öngörür." }, en: { t: "Data Analytics", d: "Predicts churn risk in advance." } },
+  { n: "Akıllı Form Doldurma", u: "#", tr: { t: "Otomasyon", d: "Belgeden otomatik alan tanıma ve doldurma." }, en: { t: "Automation", d: "Automatic field recognition and filling from documents." } },
+  { n: "Çok Dilli Çeviri Asistanı", u: "#", tr: { t: "NLP", d: "İş yazışmaları için anlık çeviri." }, en: { t: "NLP", d: "Instant translation for business correspondence." } },
+  { n: "Reklam Metni Üretici", u: "#", tr: { t: "Pazarlama", d: "A/B test için varyantlı reklam metni." }, en: { t: "Marketing", d: "Variant ad copy for A/B testing." } },
+  { n: "Görsel Üretim Stüdyosu", u: "#", tr: { t: "Görüntü İşleme", d: "Ürün görseli ve banner üretimi." }, en: { t: "Computer Vision", d: "Product image and banner generation." } },
+  { n: "Bordro Otomasyonu", u: "#", tr: { t: "İK", d: "Maaş, izin ve puantaj hesaplama." }, en: { t: "HR", d: "Payroll, leave and timesheet calculation." } },
+  { n: "Tedarikçi Risk Skoru", u: "#", tr: { t: "Finans", d: "Tedarik zinciri risk analizi." }, en: { t: "Finance", d: "Supply chain risk analysis." } },
+  { n: "Akıllı SSS Botu", u: "#", tr: { t: "Chatbot", d: "Site içi yardım merkezi asistanı." }, en: { t: "Chatbot", d: "On-site help center assistant." } },
+  { n: "Video Altyazı & Transkript", u: "#", tr: { t: "Medya", d: "Otomatik altyazı ve transkript üretimi." }, en: { t: "Media", d: "Automatic subtitle and transcript generation." } },
+  { n: "Kişisel Finans Koçu", u: "#", tr: { t: "Finans", d: "Harcama analizi ve tasarruf önerisi." }, en: { t: "Finance", d: "Spending analysis and savings suggestions." } },
+  { n: "Akıllı Belge Arşivi", u: "#", tr: { t: "Otomasyon", d: "Otomatik sınıflandırma ve akıllı arama." }, en: { t: "Automation", d: "Automatic classification and smart search." } },
 ];
 
 const SHOW = 12;
 
-const SOLUTIONS = [
-  { ic: "🤖", h: "Akıllı Otomasyon", p: "Teklif, fatura ve raporlama gibi tekrar eden işleri uçtan uca otomatikleştiririz." },
-  { ic: "💬", h: "Müşteri Asistanı", p: "Web ve WhatsApp'a entegre, markanızın dilini konuşan 7/24 destek asistanı." },
-  { ic: "📊", h: "Karar Panelleri", p: "Dağınık verinizi tek panele toplar, anlık ve okunabilir hale getiririz." },
-  { ic: "🧠", h: "Özel AI Agent'lar", p: "Şirket bilginizle eğitilmiş, görevi kendi tamamlayan dijital çalışanlar." },
-  { ic: "🔗", h: "Entegrasyon", p: "CRM, e-ticaret ve muhasebe araçlarınızı AI ile bağlarız." },
-  { ic: "🎯", h: "AI Danışmanlık", p: "Yol haritanızı bütçenize uygun şekilde birlikte çıkarırız." },
-];
+const ICONS = ["🤖", "💬", "📊", "🧠", "🔗", "🎯"];
 
-const STEPS = [
-  { b: "1", h: "Keşif", p: "İş akışınızı ve darboğazları haritalandırırız." },
-  { b: "2", h: "Tasarım", p: "Size özel çözüm mimarisini çıkarırız." },
-  { b: "3", h: "Kurulum", p: "İlk otomasyonu hızla canlıya alırız." },
-  { b: "4", h: "Ölçek", p: "Sonuçları ölçer, tüm şirkete yayarız." },
-];
+const CONTENT = {
+  TR: {
+    nav: { solutions: "Çözümler", projects: "Projeler", process: "Süreç", blog: "Blog", contact: "İletişim", admin: "Admin", cta: "Görüşme Ayarla" },
+    hero: {
+      pill: "✦ Terzi usulü yapay zeka ajansı",
+      h1a: "İşinizi büyüten", h1b: "akıllı asistanlar", h1c: "kuruyoruz",
+      sub: "Third Hand, şirketinize özel AI çözümleri ve otomasyonlarla tekrar eden işleri devralır; ekibinizi değer üreten işe odaklar.",
+      cta1: "Ücretsiz keşif görüşmesi →", cta2: "Çözümleri gör",
+    },
+    stats: [
+      { b: "%70", s: "zaman tasarrufu", up: "▲ otomasyonla" },
+      { b: "3 hafta", s: "ilk canlı sistem", up: "▲ hızlı kurulum" },
+      { b: "7/24", s: "çalışan AI gücü", up: "▲ kesintisiz" },
+    ],
+    solutions: {
+      eyebrow: "Çözümler", title: "Hazır kalıp değil, size özel sistemler",
+      sub: "İş akışınızı dinler, ölçer ve tam ihtiyacınıza göre kurarız.",
+      items: [
+        { h: "Akıllı Otomasyon", p: "Teklif, fatura ve raporlama gibi tekrar eden işleri uçtan uca otomatikleştiririz." },
+        { h: "Müşteri Asistanı", p: "Web ve WhatsApp'a entegre, markanızın dilini konuşan 7/24 destek asistanı." },
+        { h: "Karar Panelleri", p: "Dağınık verinizi tek panele toplar, anlık ve okunabilir hale getiririz." },
+        { h: "Özel AI Agent'lar", p: "Şirket bilginizle eğitilmiş, görevi kendi tamamlayan dijital çalışanlar." },
+        { h: "Entegrasyon", p: "CRM, e-ticaret ve muhasebe araçlarınızı AI ile bağlarız." },
+        { h: "AI Danışmanlık", p: "Yol haritanızı bütçenize uygun şekilde birlikte çıkarırız." },
+      ],
+    },
+    process: {
+      eyebrow: "Süreç", title: "Fikirden çalışan sisteme",
+      items: [
+        { b: "1", h: "Keşif", p: "İş akışınızı ve darboğazları haritalandırırız." },
+        { b: "2", h: "Tasarım", p: "Size özel çözüm mimarisini çıkarırız." },
+        { b: "3", h: "Kurulum", p: "İlk otomasyonu hızla canlıya alırız." },
+        { b: "4", h: "Ölçek", p: "Sonuçları ölçer, tüm şirkete yayarız." },
+      ],
+    },
+    projectsSec: {
+      eyebrow: "Projelerimiz", title: "Hayata geçirdiğimiz 40+ proje",
+      sub: "Farklı sektörlerde geliştirdiğimiz yapay zeka çözümlerinden bazıları.",
+      more: "Daha Fazla Gör ↓", visit: "Siteyi Ziyaret Et →", details: "Detaylar →",
+    },
+    final: { h2a: "Ekibinize", h2b: "üçüncü eli", h2c: "ekleyelim mi?", p: "30 dakikalık ücretsiz keşif görüşmesinde işiniz için somut bir AI fırsatı belirleyelim.", btn: "Görüşme ayarla →" },
+    footer: { left: "© 2026 Third Hand AI Agency · Levent / İstanbul" },
+  },
+  EN: {
+    nav: { solutions: "Solutions", projects: "Projects", process: "Process", blog: "Blog", contact: "Contact", admin: "Admin", cta: "Book a Call" },
+    hero: {
+      pill: "✦ Tailor-made AI agency",
+      h1a: "We build smart", h1b: "assistants", h1c: "that grow your business",
+      sub: "Third Hand takes over repetitive work with custom AI solutions and automations, so your team can focus on work that creates value.",
+      cta1: "Free discovery call →", cta2: "See solutions",
+    },
+    stats: [
+      { b: "70%", s: "time saved", up: "▲ with automation" },
+      { b: "3 weeks", s: "first live system", up: "▲ fast setup" },
+      { b: "24/7", s: "working AI power", up: "▲ non-stop" },
+    ],
+    solutions: {
+      eyebrow: "Solutions", title: "Not off-the-shelf — systems built for you",
+      sub: "We listen to your workflow, measure it and build exactly what you need.",
+      items: [
+        { h: "Smart Automation", p: "We automate repetitive tasks like quotes, invoicing and reporting end to end." },
+        { h: "Customer Assistant", p: "A 24/7 support assistant integrated with web and WhatsApp that speaks your brand's voice." },
+        { h: "Decision Dashboards", p: "We bring your scattered data into a single, instant, readable dashboard." },
+        { h: "Custom AI Agents", p: "Digital workers trained on your company knowledge that complete tasks on their own." },
+        { h: "Integration", p: "We connect your CRM, e-commerce and accounting tools with AI." },
+        { h: "AI Consulting", p: "We build your roadmap together, tailored to your budget." },
+      ],
+    },
+    process: {
+      eyebrow: "Process", title: "From idea to a working system",
+      items: [
+        { b: "1", h: "Discovery", p: "We map your workflow and bottlenecks." },
+        { b: "2", h: "Design", p: "We design a solution architecture just for you." },
+        { b: "3", h: "Setup", p: "We quickly take the first automation live." },
+        { b: "4", h: "Scale", p: "We measure results and roll out across the company." },
+      ],
+    },
+    projectsSec: {
+      eyebrow: "Our Projects", title: "40+ projects we have delivered",
+      sub: "A selection of the AI solutions we have built across different sectors.",
+      more: "Show More ↓", visit: "Visit Site →", details: "Details →",
+    },
+    final: { h2a: "Shall we add", h2b: "a third hand", h2c: "to your team?", p: "In a 30-minute free discovery call, let's identify a concrete AI opportunity for your business.", btn: "Book a call →" },
+    footer: { left: "© 2026 Third Hand AI Agency · Levent / Istanbul" },
+  },
+} as const;
 
 function initials(name: string) {
   return name
@@ -75,21 +155,15 @@ function initials(name: string) {
     .join("");
 }
 
-function ProjectCard({ p, index }: { p: Project; index: number }) {
+function ProjectCard({ p, index, lang, visit, details }: { p: Project; index: number; lang: "TR" | "EN"; visit: string; details: string }) {
   const isLink = p.u !== "#";
   const hue = (index * 53) % 360;
   const hue2 = (hue + 40) % 360;
+  const loc = lang === "TR" ? p.tr : p.en;
   return (
-    <a
-      className="pjt"
-      href={p.u}
-      {...(isLink ? { target: "_blank", rel: "noopener" } : {})}
-    >
+    <a className="pjt" href={p.u} {...(isLink ? { target: "_blank", rel: "noopener" } : {})}>
       <span className="pthumb">
-        <span
-          className="pph"
-          style={{ background: `linear-gradient(135deg,hsl(${hue},68%,55%),hsl(${hue2},70%,45%))` }}
-        >
+        <span className="pph" style={{ background: `linear-gradient(135deg,hsl(${hue},68%,55%),hsl(${hue2},70%,45%))` }}>
           {initials(p.n)}
         </span>
         {isLink && (
@@ -101,16 +175,18 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
           />
         )}
       </span>
-      <span className="ptag">{p.t}</span>
+      <span className="ptag">{loc.t}</span>
       <h4>{p.n}</h4>
-      <p>{p.d}</p>
-      <span className="go">{isLink ? "Siteyi Ziyaret Et →" : "Detaylar →"}</span>
+      <p>{loc.d}</p>
+      <span className="go">{isLink ? visit : details}</span>
     </a>
   );
 }
 
 export default function Home() {
+  const { language, setLanguage } = useLanguage();
   const [showAll, setShowAll] = useState(false);
+  const c = CONTENT[language];
   const visible = showAll ? PROJECTS : PROJECTS.slice(0, SHOW);
 
   return (
@@ -129,28 +205,33 @@ export default function Home() {
               <span style={{ color: "var(--muted)", fontWeight: 500, fontSize: 13 }}>AI</span>
             </div>
             <div className="nav-links">
-              <a href="#cozumler">Çözümler</a>
-              <a href="#projeler">Projeler</a>
-              <a href="#surec">Süreç</a>
-              <a href="#iletisim">İletişim</a>
+              <a href="#cozumler">{c.nav.solutions}</a>
+              <a href="#projeler">{c.nav.projects}</a>
+              <a href="#surec">{c.nav.process}</a>
+              <Link href="/blog">{c.nav.blog}</Link>
+              <a href="#iletisim">{c.nav.contact}</a>
             </div>
-            <a href="#iletisim" className="btn btn-pri">Görüşme Ayarla</a>
+            <div className="nav-right">
+              <Link href="/admin" className="nav-admin">{c.nav.admin}</Link>
+              <div className="lang-toggle" role="group" aria-label="Language">
+                <button className={language === "TR" ? "active" : ""} onClick={() => setLanguage("TR")}>TR</button>
+                <button className={language === "EN" ? "active" : ""} onClick={() => setLanguage("EN")}>EN</button>
+              </div>
+              <a href="#iletisim" className="btn btn-pri">{c.nav.cta}</a>
+            </div>
           </nav>
 
           <header className="hero">
-            <span className="pill glass">✦ Terzi usulü yapay zeka ajansı</span>
+            <span className="pill glass">{c.hero.pill}</span>
             <h1>
-              İşinizi büyüten
+              {c.hero.h1a}
               <br />
-              <span className="g">akıllı asistanlar</span> kuruyoruz
+              <span className="g">{c.hero.h1b}</span> {c.hero.h1c}
             </h1>
-            <p>
-              Third Hand, şirketinize özel AI çözümleri ve otomasyonlarla tekrar eden işleri
-              devralır; ekibinizi değer üreten işe odaklar.
-            </p>
+            <p>{c.hero.sub}</p>
             <div className="cta">
-              <a href="#iletisim" className="btn btn-pri">Ücretsiz keşif görüşmesi →</a>
-              <a href="#cozumler" className="btn btn-soft">Çözümleri gör</a>
+              <a href="#iletisim" className="btn btn-pri">{c.hero.cta1}</a>
+              <a href="#cozumler" className="btn btn-soft">{c.hero.cta2}</a>
             </div>
 
             <div className="hero-card glass">
@@ -160,36 +241,26 @@ export default function Home() {
                 <i />
               </div>
               <div className="body">
-                <div className="mini">
-                  <b>%70</b>
-                  <br />
-                  <span>zaman tasarrufu</span>
-                  <div className="up">▲ otomasyonla</div>
-                </div>
-                <div className="mini">
-                  <b>3 hafta</b>
-                  <br />
-                  <span>ilk canlı sistem</span>
-                  <div className="up">▲ hızlı kurulum</div>
-                </div>
-                <div className="mini">
-                  <b>7/24</b>
-                  <br />
-                  <span>çalışan AI gücü</span>
-                  <div className="up">▲ kesintisiz</div>
-                </div>
+                {c.stats.map((s) => (
+                  <div className="mini" key={s.b}>
+                    <b>{s.b}</b>
+                    <br />
+                    <span>{s.s}</span>
+                    <div className="up">{s.up}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </header>
 
           <section id="cozumler" className="center">
-            <span className="eyebrow">Çözümler</span>
-            <h2 className="sech">Hazır kalıp değil, size özel sistemler</h2>
-            <p className="secsub">İş akışınızı dinler, ölçer ve tam ihtiyacınıza göre kurarız.</p>
+            <span className="eyebrow">{c.solutions.eyebrow}</span>
+            <h2 className="sech">{c.solutions.title}</h2>
+            <p className="secsub">{c.solutions.sub}</p>
             <div className="cards">
-              {SOLUTIONS.map((s) => (
+              {c.solutions.items.map((s, i) => (
                 <div className="card glass" style={{ textAlign: "left" }} key={s.h}>
-                  <div className="ic">{s.ic}</div>
+                  <div className="ic">{ICONS[i]}</div>
                   <h3>{s.h}</h3>
                   <p>{s.p}</p>
                 </div>
@@ -198,10 +269,10 @@ export default function Home() {
           </section>
 
           <section id="surec" className="center">
-            <span className="eyebrow">Süreç</span>
-            <h2 className="sech">Fikirden çalışan sisteme</h2>
+            <span className="eyebrow">{c.process.eyebrow}</span>
+            <h2 className="sech">{c.process.title}</h2>
             <div className="steps">
-              {STEPS.map((s) => (
+              {c.process.items.map((s) => (
                 <div className="step glass" key={s.b}>
                   <div className="b">{s.b}</div>
                   <h4>{s.h}</h4>
@@ -212,20 +283,18 @@ export default function Home() {
           </section>
 
           <section id="projeler" className="center">
-            <span className="eyebrow">Projelerimiz</span>
-            <h2 className="sech">Hayata geçirdiğimiz 40+ proje</h2>
-            <p className="secsub">
-              Farklı sektörlerde geliştirdiğimiz yapay zeka çözümlerinden bazıları.
-            </p>
+            <span className="eyebrow">{c.projectsSec.eyebrow}</span>
+            <h2 className="sech">{c.projectsSec.title}</h2>
+            <p className="secsub">{c.projectsSec.sub}</p>
             <div className="pjt-grid">
               {visible.map((p, i) => (
-                <ProjectCard p={p} index={i} key={p.n} />
+                <ProjectCard p={p} index={i} lang={language} visit={c.projectsSec.visit} details={c.projectsSec.details} key={p.n} />
               ))}
             </div>
             {!showAll && PROJECTS.length > SHOW && (
               <div style={{ marginTop: 34 }}>
                 <button className="btn btn-soft" onClick={() => setShowAll(true)}>
-                  Daha Fazla Gör ↓
+                  {c.projectsSec.more}
                 </button>
               </div>
             )}
@@ -233,16 +302,14 @@ export default function Home() {
 
           <div className="final glass" id="iletisim">
             <h2>
-              Ekibinize <span className="g">üçüncü eli</span> ekleyelim mi?
+              {c.final.h2a} <span className="g">{c.final.h2b}</span> {c.final.h2c}
             </h2>
-            <p>
-              30 dakikalık ücretsiz keşif görüşmesinde işiniz için somut bir AI fırsatı belirleyelim.
-            </p>
-            <a href="mailto:merhaba@thirdhand.com.tr" className="btn btn-pri">Görüşme ayarla →</a>
+            <p>{c.final.p}</p>
+            <a href="mailto:merhaba@thirdhand.com.tr" className="btn btn-pri">{c.final.btn}</a>
           </div>
 
           <footer>
-            <div>© 2026 Third Hand AI Agency · Levent / İstanbul</div>
+            <div>{c.footer.left}</div>
             <div>merhaba@thirdhand.com.tr · +90 (212) 555 66 77</div>
           </footer>
         </div>

@@ -27,7 +27,14 @@
 .aurora-page .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
 .aurora-page .logo .m{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--p1),var(--p2));display:grid;place-items:center;color:#fff;font-size:13px}
 .aurora-page .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+.aurora-page .nav-links a{cursor:pointer}
 .aurora-page .nav-links a:hover{color:var(--ink)}
+.aurora-page .nav-right{display:flex;align-items:center;gap:14px}
+.aurora-page .nav-admin{font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.aurora-page .nav-admin:hover{color:var(--ink)}
+.aurora-page .lang-toggle{display:inline-flex;border:1px solid var(--line);border-radius:100px;overflow:hidden;background:rgba(255,255,255,.7)}
+.aurora-page .lang-toggle button{border:none;background:transparent;padding:7px 13px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.aurora-page .lang-toggle button.active{background:linear-gradient(135deg,var(--p1),#059669);color:#fff}
 .aurora-page .btn{display:inline-block;padding:12px 22px;border-radius:100px;font-weight:600;font-size:14px;transition:.25s;cursor:pointer;border:none;font-family:inherit}
 .aurora-page .btn-pri{background:linear-gradient(135deg,var(--p1),#059669);color:#fff;box-shadow:0 8px 24px rgba(16,185,129,.4)}
 .aurora-page .btn-pri:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(16,185,129,.5)}
