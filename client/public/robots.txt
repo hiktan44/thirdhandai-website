@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://thirdhandai.com/sitemap.xml
+Sitemap: https://thirdhand.com.tr/sitemap.xml
