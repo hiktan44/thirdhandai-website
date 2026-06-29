@@ -11,40 +11,41 @@ type Project = {
   en: { t: string; d: string };
 };
 
+// Sıra, kullanıcının verdiği listeyle birebir aynıdır.
 const PROJECTS: Project[] = [
+  { n: "Abhibe", u: "https://abhibe.com", tr: { t: "Hibe & Fon", d: "İşletmeler için AB ve devlet hibelerini, teşvikleri tespit edip başvuru sürecini kolaylaştıran platform." }, en: { t: "Grants & Funding", d: "Platform that finds EU and government grants/incentives for businesses and simplifies applications." } },
+  { n: "Hibe Destek", u: "https://hibedestek.com", tr: { t: "Hibe & Fon", d: "KOBİ'leri uygun hibe ve destek programlarıyla eşleştiren danışmanlık platformu." }, en: { t: "Grants & Funding", d: "Advisory platform matching SMEs with suitable grant and support programs." } },
+  { n: "SesYaz", u: "https://sesyaz.com", tr: { t: "Sesli AI", d: "Konuşmayı metne çeviren, web sitelerine gömülebilen yapay zeka destekli sesli asistan ve chatbot platformu." }, en: { t: "Voice AI", d: "AI voice assistant and chatbot platform that converts speech to text and embeds into websites." } },
   { n: "Fasheone", u: "https://fasheone.com/", tr: { t: "E-ticaret", d: "Moda e-ticaret için AI destekli kişiselleştirilmiş alışveriş ve stil önerisi platformu." }, en: { t: "E-commerce", d: "AI-powered personalized shopping and styling platform for fashion e-commerce." } },
   { n: "Fasheone Sanal Deneme", u: "https://virtual-try-on.fasheone.com/landing", tr: { t: "Sanal Deneme", d: "Kıyafetleri yapay zeka ile sanal olarak deneyip nasıl durduğunu gösteren virtual try-on deneyimi." }, en: { t: "Virtual Try-On", d: "AI virtual try-on that shows how clothes look on you before buying." } },
   { n: "Fasheone Shoes", u: "https://shoes.fasheone.com/", tr: { t: "Sanal Deneme", d: "Ayakkabılar için AI destekli sanal deneme ve online mağaza deneyimi." }, en: { t: "Virtual Try-On", d: "AI-powered virtual try-on and online store experience for shoes." } },
   { n: "Fasheone Lingerie", u: "https://lingeria.fasheone.com/", tr: { t: "Sanal Deneme", d: "İç giyim koleksiyonu için sanal deneme destekli alışveriş deneyimi." }, en: { t: "Virtual Try-On", d: "Virtual try-on shopping experience for the lingerie collection." } },
   { n: "Fasheone Style", u: "https://style.fasheone.com/login", tr: { t: "Stil Asistanı", d: "Kişiye özel kombin ve stil önerileri sunan yapay zeka moda danışmanı." }, en: { t: "Style Advisor", d: "AI fashion advisor offering personalized outfit and style recommendations." } },
-  { n: "SesYaz", u: "https://sesyaz.com", tr: { t: "Sesli AI", d: "Konuşmayı metne çeviren, web sitelerine gömülebilen yapay zeka destekli sesli asistan ve chatbot platformu." }, en: { t: "Voice AI", d: "AI voice assistant and chatbot platform that converts speech to text and embeds into websites." } },
-  { n: "VideoTrans", u: "https://videotrans.app/", tr: { t: "Video / NLP", d: "Videoları otomatik çeviren, çok dilli altyazı ve seslendirme üreten yapay zeka aracı." }, en: { t: "Video / NLP", d: "AI tool that auto-translates videos and generates multilingual subtitles and voice-over." } },
-  { n: "VideoOne", u: "https://videoone.com.tr", tr: { t: "Video", d: "AI destekli video prodüksiyon ve içerik üretim platformu." }, en: { t: "Video", d: "AI-powered video production and content creation platform." } },
-  { n: "Realtime Translator", u: "https://realtimetranslatorht.netlify.app", tr: { t: "NLP", d: "Konuşmayı gerçek zamanlı çeviren anlık çeviri uygulaması." }, en: { t: "NLP", d: "Real-time speech translation app for instant conversations." } },
-  { n: "Reklamix", u: "https://reklamix.app/", tr: { t: "Pazarlama", d: "Yapay zeka ile reklam metni ve görseli üreten dijital pazarlama aracı." }, en: { t: "Marketing", d: "Digital marketing tool that generates ad copy and creatives with AI." } },
-  { n: "Reklamo", u: "https://reklamo.app/", tr: { t: "Pazarlama", d: "AI destekli reklam ve kampanya oluşturma/yönetim uygulaması." }, en: { t: "Marketing", d: "AI-powered ad and campaign creation/management app." } },
-  { n: "Hikaye Oluşturucu", u: "https://hikayeolusturucu.netlify.app", tr: { t: "AI İçerik", d: "Yapay zeka ile özgün hikâye ve metin üreten içerik aracı." }, en: { t: "AI Content", d: "Content tool that generates original stories and text with AI." } },
-  { n: "Logo Anime", u: "https://logoanime.netlify.app", tr: { t: "Tasarım", d: "Statik logoları hareketlendiren, animasyonlu logo üreten tasarım aracı." }, en: { t: "Design", d: "Design tool that animates static logos into motion logos." } },
-  { n: "Abhibe", u: "https://abhibe.com", tr: { t: "Hibe & Fon", d: "İşletmeler için AB ve devlet hibelerini, teşvikleri tespit edip başvuru sürecini kolaylaştıran platform." }, en: { t: "Grants & Funding", d: "Platform that finds EU and government grants/incentives for businesses and simplifies applications." } },
-  { n: "Hibe Destek", u: "https://hibedestek.com", tr: { t: "Hibe & Fon", d: "KOBİ'leri uygun hibe ve destek programlarıyla eşleştiren danışmanlık platformu." }, en: { t: "Grants & Funding", d: "Advisory platform matching SMEs with suitable grant and support programs." } },
-  { n: "TradeOne", u: "https://tradeone.tr/tr", tr: { t: "Dış Ticaret", d: "İhracat ve dış ticaret için hedef pazar ve potansiyel müşteri bulma platformu." }, en: { t: "Foreign Trade", d: "Export and foreign trade platform for finding target markets and potential customers." } },
-  { n: "Sektör Ara", u: "https://sektorara.com", tr: { t: "B2B", d: "Sektörlere göre firma ve tedarikçi bulmayı sağlayan B2B keşif platformu." }, en: { t: "B2B", d: "B2B discovery platform for finding companies and suppliers by sector." } },
   { n: "Kumaş App", u: "https://kumas.app", tr: { t: "Tekstil", d: "Tekstil sektörü için kumaş arama, listeleme ve B2B ticaret uygulaması." }, en: { t: "Textile", d: "Fabric search, listing and B2B trade app for the textile industry." } },
+  { n: "Sektör Ara", u: "https://sektorara.com", tr: { t: "B2B", d: "Sektörlere göre firma ve tedarikçi bulmayı sağlayan B2B keşif platformu." }, en: { t: "B2B", d: "B2B discovery platform for finding companies and suppliers by sector." } },
+  { n: "Soru Merkezi", u: "https://sorumerkezi.com", tr: { t: "Destek", d: "Yapay zeka destekli soru-cevap ve yardım/destek merkezi platformu." }, en: { t: "Support", d: "AI-powered Q&A and help/support center platform." } },
+  { n: "Akıllı Buzdolabı", u: "https://akillibuzdolabi.seymata.com/", tr: { t: "AI Uygulama", d: "Buzdolabındaki ürünlere göre tarif öneren ve stok takibi yapan akıllı asistan." }, en: { t: "AI App", d: "Smart assistant that suggests recipes from fridge contents and tracks stock." } },
+  { n: "Seymata Uygulaması", u: "https://a88s0s0wsg8okco8cgoo8og8.seymata.com/", tr: { t: "AI Uygulama", d: "Seymata altyapısında geliştirilmiş özel yapay zeka web uygulaması." }, en: { t: "AI App", d: "Custom AI web application built on the Seymata platform." } },
+  { n: "Reklamix", u: "https://reklamix.app/", tr: { t: "Pazarlama", d: "Yapay zeka ile reklam metni ve görseli üreten dijital pazarlama aracı." }, en: { t: "Marketing", d: "Digital marketing tool that generates ad copy and creatives with AI." } },
+  { n: "Tan Akademi", u: "https://tanakademi.com", tr: { t: "Eğitim", d: "Online eğitim ve kurs platformu; uzaktan öğrenme deneyimi." }, en: { t: "Education", d: "Online education and course platform with a remote learning experience." } },
+  { n: "İSG Asistanı", u: "https://isgo81479wi4menvmz1ur48s.seymata.com/", tr: { t: "İSG", d: "İş sağlığı ve güvenliği süreçleri için Seymata altyapısında geliştirilmiş kurumsal asistan uygulaması." }, en: { t: "OHS", d: "Corporate occupational health & safety assistant built on the Seymata platform." } },
+  { n: "Reklamo", u: "https://reklamo.app/", tr: { t: "Pazarlama", d: "AI destekli reklam ve kampanya oluşturma/yönetim uygulaması." }, en: { t: "Marketing", d: "AI-powered ad and campaign creation/management app." } },
+  { n: "TradeOne", u: "https://tradeone.tr/tr", tr: { t: "Dış Ticaret", d: "İhracat ve dış ticaret için hedef pazar ve potansiyel müşteri bulma platformu." }, en: { t: "Foreign Trade", d: "Export and foreign trade platform for finding target markets and potential customers." } },
   { n: "Verdi Jeans", u: "https://verdijeans.com", tr: { t: "E-ticaret", d: "Denim/jean markası için kurumsal e-ticaret ve ürün vitrini sitesi." }, en: { t: "E-commerce", d: "Corporate e-commerce and product showcase site for a denim brand." } },
+  { n: "VideoOne", u: "https://videoone.com.tr", tr: { t: "Video", d: "AI destekli video prodüksiyon ve içerik üretim platformu." }, en: { t: "Video", d: "AI-powered video production and content creation platform." } },
+  { n: "VideoTrans", u: "https://videotrans.app/", tr: { t: "Video / NLP", d: "Videoları otomatik çeviren, çok dilli altyazı ve seslendirme üreten yapay zeka aracı." }, en: { t: "Video / NLP", d: "AI tool that auto-translates videos and generates multilingual subtitles and voice-over." } },
+  { n: "WaPlus", u: "https://waplus.seymata.com/", tr: { t: "WhatsApp", d: "WhatsApp üzerinden otomatik mesajlaşma, pazarlama ve müşteri yönetimi aracı." }, en: { t: "WhatsApp", d: "Automated messaging, marketing and customer management tool over WhatsApp." } },
+  { n: "Seymata", u: "https://seymata.com", tr: { t: "Platform", d: "Yapay zeka uygulamalarını hızlıca geliştirip yayına alan no-code/low-code geliştirme platformu." }, en: { t: "Platform", d: "No-code/low-code platform to quickly build and ship AI applications." } },
+  { n: "Zaman Makinesi", u: "https://zamanmakinesi.app/", tr: { t: "AI Uygulama", d: "Yapay zeka ile fotoğraf ve içerikleri farklı dönem/çağ temalarına dönüştüren görsel uygulaması." }, en: { t: "AI App", d: "Visual app that transforms photos and content into different era/period themes with AI." } },
+  { n: "Tarım ve Teknoloji Derneği", u: "https://tarimveteknolojidernegi.netlify.app", tr: { t: "Dernek", d: "Tarım ve teknoloji alanında faaliyet gösteren derneğin kurumsal tanıtım sitesi." }, en: { t: "Association", d: "Corporate site for an association working in agriculture and technology." } },
   { n: "Product Analiz", u: "https://productanaliz.netlify.app", tr: { t: "E-ticaret / Analiz", d: "E-ticaret ürünlerini analiz eden, fiyat ve rekabet içgörüsü sunan araç." }, en: { t: "E-commerce / Analytics", d: "Tool that analyzes e-commerce products and surfaces price and competition insights." } },
+  { n: "SporToto Optimizasyon", u: "https://sportoto-optimizasyon.netlify.app", tr: { t: "Analiz", d: "Spor Toto kuponlarını veriyle optimize eden tahmin ve analiz aracı." }, en: { t: "Analytics", d: "Prediction and analytics tool that optimizes Spor Toto coupons with data." } },
+  { n: "Strateji Danışmanlık", u: "https://stratejidanismanlik.netlify.app", tr: { t: "Kurumsal", d: "İşletmelere strateji ve yönetim danışmanlığı sunan kurumsal tanıtım sitesi." }, en: { t: "Corporate", d: "Corporate site offering strategy and management consulting to businesses." } },
   { n: "Hızlı Fatura", u: "https://hizlifatura.netlify.app", tr: { t: "Otomasyon", d: "KOBİ'ler için hızlı fatura oluşturma ve takip uygulaması." }, en: { t: "Automation", d: "Fast invoicing and tracking app for SMEs." } },
   { n: "API Doküman", u: "https://apidocuman.netlify.app", tr: { t: "Geliştirici", d: "API'ler için otomatik dokümantasyon oluşturan geliştirici aracı." }, en: { t: "Developer", d: "Developer tool that auto-generates documentation for APIs." } },
-  { n: "Strateji Danışmanlık", u: "https://stratejidanismanlik.netlify.app", tr: { t: "Kurumsal", d: "İşletmelere strateji ve yönetim danışmanlığı sunan kurumsal tanıtım sitesi." }, en: { t: "Corporate", d: "Corporate site offering strategy and management consulting to businesses." } },
-  { n: "Tan Akademi", u: "https://tanakademi.com", tr: { t: "Eğitim", d: "Online eğitim ve kurs platformu; uzaktan öğrenme deneyimi." }, en: { t: "Education", d: "Online education and course platform with a remote learning experience." } },
-  { n: "Tarım ve Teknoloji Derneği", u: "https://tarimveteknolojidernegi.netlify.app", tr: { t: "Dernek", d: "Tarım ve teknoloji alanında faaliyet gösteren derneğin kurumsal tanıtım sitesi." }, en: { t: "Association", d: "Corporate site for an association working in agriculture and technology." } },
-  { n: "SporToto Optimizasyon", u: "https://sportoto-optimizasyon.netlify.app", tr: { t: "Analiz", d: "Spor Toto kuponlarını veriyle optimize eden tahmin ve analiz aracı." }, en: { t: "Analytics", d: "Prediction and analytics tool that optimizes Spor Toto coupons with data." } },
-  { n: "WaPlus", u: "https://waplus.seymata.com/", tr: { t: "WhatsApp", d: "WhatsApp üzerinden otomatik mesajlaşma, pazarlama ve müşteri yönetimi aracı." }, en: { t: "WhatsApp", d: "Automated messaging, marketing and customer management tool over WhatsApp." } },
-  { n: "Akıllı Buzdolabı", u: "https://akillibuzdolabi.seymata.com/", tr: { t: "AI Uygulama", d: "Buzdolabındaki ürünlere göre tarif öneren ve stok takibi yapan akıllı asistan." }, en: { t: "AI App", d: "Smart assistant that suggests recipes from fridge contents and tracks stock." } },
-  { n: "Zaman Makinesi", u: "https://zamanmakinesi.app/", tr: { t: "AI Uygulama", d: "Yapay zeka ile fotoğraf ve içerikleri farklı dönem/çağ temalarına dönüştüren görsel uygulaması." }, en: { t: "AI App", d: "Visual app that transforms photos and content into different era/period themes with AI." } },
-  { n: "Soru Merkezi", u: "https://sorumerkezi.com", tr: { t: "Destek", d: "Yapay zeka destekli soru-cevap ve yardım/destek merkezi platformu." }, en: { t: "Support", d: "AI-powered Q&A and help/support center platform." } },
-  { n: "Seymata", u: "https://seymata.com", tr: { t: "Platform", d: "Yapay zeka uygulamalarını hızlıca geliştirip yayına alan no-code/low-code geliştirme platformu." }, en: { t: "Platform", d: "No-code/low-code platform to quickly build and ship AI applications." } },
-  { n: "İSG Asistanı", u: "https://isgo81479wi4menvmz1ur48s.seymata.com/", tr: { t: "Kurumsal", d: "Seymata altyapısında geliştirilmiş kurumsal web uygulaması." }, en: { t: "Corporate", d: "Corporate web application built on the Seymata platform." } },
-  { n: "Seymata Uygulaması", u: "https://a88s0s0wsg8okco8cgoo8og8.seymata.com/", tr: { t: "AI Uygulama", d: "Seymata altyapısında geliştirilmiş özel yapay zeka web uygulaması." }, en: { t: "AI App", d: "Custom AI web application built on the Seymata platform." } },
+  { n: "Hikaye Oluşturucu", u: "https://hikayeolusturucu.netlify.app", tr: { t: "AI İçerik", d: "Yapay zeka ile özgün hikâye ve metin üreten içerik aracı." }, en: { t: "AI Content", d: "Content tool that generates original stories and text with AI." } },
+  { n: "Logo Anime", u: "https://logoanime.netlify.app", tr: { t: "Tasarım", d: "Statik logoları hareketlendiren, animasyonlu logo üreten tasarım aracı." }, en: { t: "Design", d: "Design tool that animates static logos into motion logos." } },
+  { n: "Realtime Translator", u: "https://realtimetranslatorht.netlify.app", tr: { t: "NLP", d: "Konuşmayı gerçek zamanlı çeviren anlık çeviri uygulaması." }, en: { t: "NLP", d: "Real-time speech translation app for instant conversations." } },
 ];
 
 const SHOW = 12;
@@ -175,23 +176,38 @@ function initials(name: string) {
     .join("");
 }
 
+// Bir URL için sayfanın hero (üst) ekran görüntüsünü üreten servisler.
+// Sırayla denenir; biri başarısız olursa diğerine geçilir, hepsi olmazsa
+// renkli baş-harf placeholder'ı görünür.
+function shotProviders(url: string): string[] {
+  return [
+    `https://image.thum.io/get/width/800/crop/600/noanimate/${url}`,
+    `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url&meta=false&waitUntil=networkidle2`,
+    `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=600`,
+  ];
+}
+
 function ProjectCard({ p, index, lang, visit, details }: { p: Project; index: number; lang: "TR" | "EN"; visit: string; details: string }) {
   const isLink = p.u !== "#";
   const hue = (index * 53) % 360;
   const hue2 = (hue + 40) % 360;
   const loc = lang === "TR" ? p.tr : p.en;
+  const providers = isLink ? shotProviders(p.u) : [];
+  const [shotIdx, setShotIdx] = useState(0);
+  const shot = providers[shotIdx];
   return (
     <a className="pjt" href={p.u} {...(isLink ? { target: "_blank", rel: "noopener" } : {})}>
       <span className="pthumb">
         <span className="pph" style={{ background: `linear-gradient(135deg,hsl(${hue},68%,55%),hsl(${hue2},70%,45%))` }}>
           {initials(p.n)}
         </span>
-        {isLink && (
+        {shot && (
           <img
+            key={shot}
             loading="lazy"
             alt={p.n}
-            src={`https://s.wordpress.com/mshots/v1/${encodeURIComponent(p.u)}?w=600&h=380`}
-            onError={(e) => e.currentTarget.remove()}
+            src={shot}
+            onError={() => setShotIdx((i) => i + 1)}
           />
         )}
       </span>
