@@ -180,7 +180,8 @@ function initials(name: string) {
 // renkli baş-harf placeholder'ı görünür.
 function shotProviders(url: string): string[] {
   return [
-    `https://image.thum.io/get/width/800/crop/600/noanimate/${url}`,
+    // wait/8 → JS ile geç yüklenen (SPA) sayfalar render olduktan sonra ekran görüntüsü alınır
+    `https://image.thum.io/get/width/800/crop/600/wait/8/noanimate/${url}`,
     `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url&meta=false&waitUntil=networkidle2`,
     `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=600`,
   ];
