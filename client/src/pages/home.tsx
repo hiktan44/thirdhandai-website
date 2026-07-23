@@ -145,15 +145,19 @@ function initials(name: string) {
     .join("");
 }
 
-// Bir URL için sayfanın hero (üst) ekran görüntüsünü üreten servisler.
+// Bir URL için sayfanın ekran görüntüsünü üreten ÜCRETSİZ servisler.
 // Sırayla denenir; biri başarısız olursa diğerine geçilir, hepsi olmazsa
 // renkli baş-harf placeholder'ı görünür.
+// Not: thum.io artık ücretli hesap istiyor ("Image not authorized") ve hata
+// yerine placeholder döndürdüğü için zinciri bozuyordu — bu yüzden kaldırıldı.
 function shotProviders(url: string): string[] {
+  const u = encodeURIComponent(url);
   return [
-    // wait/8 → JS ile geç yüklenen (SPA) sayfalar render olduktan sonra ekran görüntüsü alınır
-    `https://image.thum.io/get/width/800/crop/600/wait/8/noanimate/${url}`,
-    `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url&meta=false&waitUntil=networkidle2`,
-    `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=600`,
+    // WordPress mShots: ücretsiz, güvenilir; ilk isteklerde üretim sürerken
+    // gri bir yükleniyor görseli, sonra gerçek ekran görüntüsü döner.
+    `https://s.wordpress.com/mshots/v1/${u}?w=800&h=600`,
+    // Microlink ücretsiz katman: yedek ekran görüntüsü servisi.
+    `https://api.microlink.io/?url=${u}&screenshot=true&embed=screenshot.url&meta=false&waitUntil=networkidle2`,
   ];
 }
 
