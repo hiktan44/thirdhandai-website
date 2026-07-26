@@ -891,7 +891,7 @@ export default function AdminDashboard() {
                   <Input
                     id="image"
                     name="image"
-                    type="url"
+                    type="text"
                     value={projectImageUrl || editingProject?.image || ''}
                     onChange={(e) => setProjectImageUrl(e.target.value)}
                     placeholder="Resim URL'si veya dosya yükleyin"
@@ -997,7 +997,7 @@ export default function AdminDashboard() {
                   <Input
                     id="thumbnail"
                     name="thumbnail"
-                    type="url"
+                    type="text"
                     value={videoThumbnailUrl || editingVideo?.thumbnail || ''}
                     onChange={(e) => setVideoThumbnailUrl(e.target.value)}
                     placeholder="Thumbnail URL'si veya dosya yükleyin"
