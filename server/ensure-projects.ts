@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import { db, pool } from "./db";
 import { projects } from "@shared/schema";
 import { PROJECTS_SEED } from "@shared/projects-seed";
@@ -57,30 +56,11 @@ export async function ensureProjectsSeeded() {
       existing.length > 0 && existing.every((p) => DEMO_TITLES.has(p.title));
 
     if (!isEmpty && !isDemoOnly) {
-      // Gerçek veri var. Seed listesi sıralama için kaynak kabul edilir:
-      //  - Seed'de olup DB'de olmayan projeler eklenir.
-      //  - Var olan projelerin orderIndex'i seed sırasına hizalanır (ör. yeni
-      //    "-ist" ürünlerinin öne alınması). İçerik (başlık/açıklama/görsel)
-      //    korunur; sadece sıra güncellenir.
-      const byLink = new Map(existing.map((p) => [p.link, p]));
-      const seedRows = realProjectRows(); // index = hedef orderIndex
-      let inserted = 0;
-      let reordered = 0;
-      for (const row of seedRows) {
-        const cur = byLink.get(row.link);
-        if (!cur) {
-          await db.insert(projects).values(row);
-          inserted++;
-        } else if ((cur.orderIndex ?? -1) !== row.orderIndex) {
-          await db
-            .update(projects)
-            .set({ orderIndex: row.orderIndex })
-            .where(eq(projects.id, cur.id));
-          reordered++;
-        }
-      }
+      // Gerçek/kullanıcı tarafından yönetilen veri var — HİÇBİR ŞEYE DOKUNMA.
+      // Sıralama, başlık, silme/ekleme gibi admin panelde yapılan düzenlemeler
+      // korunur; açılışta seed'e göre yeniden düzenleme YAPILMAZ.
       console.log(
-        `🔄 [projects] senkron: +${inserted} yeni, ${reordered} sıralama güncellendi (seed sırasına hizalandı).`,
+        "ℹ️  [projects] Kullanıcı verisi mevcut — admin düzenlemeleri korunuyor, dokunulmadı.",
       );
       return;
     }
