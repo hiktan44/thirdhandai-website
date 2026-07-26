@@ -10,24 +10,11 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configure multer for file uploads
-const storage_multer = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '../client/public/uploads');
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ 
-  storage: storage_multer,
+// Görselleri belleğe alıp base64 data-URI olarak veritabanına yazıyoruz.
+// Diske yazmak Coolify gibi konteynerlerde kalıcı değildi (her deploy'da
+// siliniyordu); data-URI ise proje kaydının image alanında DB'de kalıcı durur.
+const upload = multer({
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
@@ -114,10 +101,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
       }
-      
-      // Return the URL path to access the uploaded file
-      const fileUrl = `/uploads/${req.file.filename}`;
-      res.json({ url: fileUrl, filename: req.file.filename });
+
+      // Görseli base64 data-URI olarak döndür — proje/video kaydının image
+      // alanına yazılır ve DB'de kalıcı olur (diske bağımlılık yok).
+      const dataUri = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+      res.json({ url: dataUri });
     } catch (error) {
       res.status(500).json({ message: "File upload failed" });
     }
