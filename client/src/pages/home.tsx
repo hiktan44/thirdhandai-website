@@ -57,7 +57,7 @@ const CONTENT = {
       ],
     },
     projectsSec: {
-      eyebrow: "Projelerimiz", title: "Hayata geçirdiğimiz 30+ proje",
+      eyebrow: "Projelerimiz", title: "Hayata geçirdiğimiz 40+ proje",
       sub: "Farklı sektörlerde geliştirdiğimiz yapay zeka çözümlerinden bazıları.",
       more: "Daha Fazla Gör ↓", visit: "Siteyi Ziyaret Et →", details: "Detaylar →",
     },
@@ -112,7 +112,7 @@ const CONTENT = {
       ],
     },
     projectsSec: {
-      eyebrow: "Our Projects", title: "30+ projects we have delivered",
+      eyebrow: "Our Projects", title: "40+ projects we have delivered",
       sub: "A selection of the AI solutions we have built across different sectors.",
       more: "Show More ↓", visit: "Visit Site →", details: "Details →",
     },
