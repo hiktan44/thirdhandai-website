@@ -1,8 +1,8 @@
 // Blog yazısı: Yapay zekâ sohbet botlarıyla konuşurken dikkat edilmesi gerekenler.
-// Görseller: client/public/blog/ai-sohbet/ (fotoğraflar .webp, infografikler .svg)
+// Görseller: client/public/images/blog/ai-sohbet/ (fotoğraflar .webp, infografikler .svg)
 import type { BlogPost } from "../blog-posts";
 
-const IMG = "/blog/ai-sohbet";
+const IMG = "/images/blog/ai-sohbet";
 
 export const aiSohbetRehberi: BlogPost = {
   slug: "yapay-zeka-ile-sohbet-rehberi",
