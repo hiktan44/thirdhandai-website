@@ -185,6 +185,27 @@
 .aurora-page .article-body figure{margin:26px 0}
 .aurora-page .article-body .blog-img{width:100%;border-radius:16px;display:block;box-shadow:0 12px 34px rgba(80,70,160,.14)}
 .aurora-page .article-body figcaption{margin-top:9px;font-size:13.5px;color:var(--muted);text-align:center;font-style:italic}
+/* Blog yazısı içi bileşenler (ipucu, içerik kutusu, hazır kalıp, CTA, kaynaklar) */
+.aurora-page .article-body ol{margin:0 0 18px;padding-left:24px}
+.aurora-page .article-body ul{list-style:disc}
+.aurora-page .article-body ol{list-style:decimal}
+.aurora-page .article-body li::marker{color:var(--p1);font-weight:700}
+.aurora-page .article-body a{color:var(--p1d);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.aurora-page .article-body .blog-diagram{box-shadow:0 8px 26px rgba(var(--accent-rgb),.12);border:1px solid var(--line);background:#fff7ed}
+.aurora-page .article-body a.diagram-link{display:block;text-decoration:none;cursor:zoom-in}
+.aurora-page .article-body .post-note{background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:18px;padding:20px 24px;margin:24px 0}
+.aurora-page .article-body .post-note strong{display:block;font-size:17px;margin-bottom:8px}
+.aurora-page .article-body .post-note ol{margin:0}
+.aurora-page .article-body .post-tip{background:#fff1e6;border-left:5px solid var(--p1);border-radius:14px;padding:16px 20px;margin:22px 0;font-size:16px}
+.aurora-page .article-body .post-prompt{position:relative;background:#fff;border:1.5px dashed rgba(var(--accent-rgb),.45);border-radius:16px;padding:18px 20px 16px;margin:16px 0;font-size:15.5px;line-height:1.65;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#2c3242}
+.aurora-page .article-body .post-prompt span{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--p1);margin-bottom:6px}
+.aurora-page .article-body .post-cta{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border-radius:20px;padding:24px 26px;margin:34px 0 10px}
+.aurora-page .article-body .post-cta strong{color:#fff;font-size:20px;display:block;margin-bottom:6px}
+.aurora-page .article-body .post-cta p{margin:0}
+.aurora-page .article-body .post-cta a{color:#fff}
+.aurora-page .article-body .post-sources{font-size:14.5px;color:var(--muted)}
+.aurora-page .article-body .post-sources a{font-weight:500}
+@media(max-width:560px){.aurora-page .article-body{font-size:16px}.aurora-page .article-body .post-prompt{font-size:14.5px;padding:16px}.aurora-page .article-body h2{font-size:22px}}
 .aurora-page .article-tags{display:flex;flex-wrap:wrap;gap:9px;margin:30px 0 10px;padding-top:22px;border-top:1px solid var(--line)}
 .aurora-page .tag-chip{font-size:12.5px;font-weight:600;color:var(--p1);background:rgba(var(--accent-rgb),.09);padding:6px 12px;border-radius:100px}
 

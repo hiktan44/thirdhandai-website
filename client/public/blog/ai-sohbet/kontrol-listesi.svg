@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" role="img" aria-labelledby="t d">
+  <title id="t">Cevabı kullanmadan önce sorulacak 5 soru</title>
+  <desc id="d">Beş maddelik kontrol listesi: önemli bir karar mı, kaynağı var mı ve açılıyor mu, bilgi güncel mi, bana sadece hak mı veriyor, sayılar tutuyor mu.</desc>
+  <style>
+    text{font-family:'Plus Jakarta Sans','Inter','Segoe UI',Helvetica,Arial,sans-serif;fill:#1a1f2e}
+    .h{font-size:34px;font-weight:800}
+    .sub{font-size:19px;fill:#5a6377}
+    .q{font-size:23px;font-weight:800}
+    .a{font-size:19px;fill:#5a6377}
+    .n{font-size:22px;font-weight:800;fill:#fff}
+  </style>
+  <rect width="1000" height="700" rx="28" fill="#fff7ed"/>
+  <text x="500" y="62" text-anchor="middle" class="h">Cevabı kullanmadan önce 5 soru</text>
+  <text x="500" y="96" text-anchor="middle" class="sub">Telefonunuza kaydedin; her önemli cevapta 30 saniyenizi alır.</text>
+
+  <g>
+    <rect x="40" y="124" width="920" height="98" rx="18" fill="#fff" stroke="#fed7aa" stroke-width="2.5"/>
+    <circle cx="92" cy="173" r="26" fill="#ea580c"/><text x="92" y="181" text-anchor="middle" class="n">1</text>
+    <text x="140" y="164" class="q">Bu bilgiye göre önemli bir karar mı vereceğim?</text>
+    <text x="140" y="196" class="a">Sağlık, hukuk, para, iş kararıysa mutlaka uzmana ya da resmî kaynağa danışın.</text>
+  </g>
+  <g>
+    <rect x="40" y="236" width="920" height="98" rx="18" fill="#fff" stroke="#fed7aa" stroke-width="2.5"/>
+    <circle cx="92" cy="285" r="26" fill="#ea580c"/><text x="92" y="293" text-anchor="middle" class="n">2</text>
+    <text x="140" y="276" class="q">Kaynak gösterdi mi, o kaynak gerçekten var mı?</text>
+    <text x="140" y="308" class="a">Linke tıklayın; açılıyor mu, söylenen şey orada gerçekten yazıyor mu?</text>
+  </g>
+  <g>
+    <rect x="40" y="348" width="920" height="98" rx="18" fill="#fff" stroke="#fed7aa" stroke-width="2.5"/>
+    <circle cx="92" cy="397" r="26" fill="#ea580c"/><text x="92" y="405" text-anchor="middle" class="n">3</text>
+    <text x="140" y="388" class="q">Bilgi güncel mi?</text>
+    <text x="140" y="420" class="a">Fiyat, kur, yasa, faiz, ürün özelliği… Bunlar hızla değişir, tarihini kontrol edin.</text>
+  </g>
+  <g>
+    <rect x="40" y="460" width="920" height="98" rx="18" fill="#fff" stroke="#fed7aa" stroke-width="2.5"/>
+    <circle cx="92" cy="509" r="26" fill="#ea580c"/><text x="92" y="517" text-anchor="middle" class="n">4</text>
+    <text x="140" y="500" class="q">Bana sadece hak mı veriyor?</text>
+    <text x="140" y="532" class="a">“Bu fikrin zayıf yönleri neler?” diye sorun; karşı görüşü de isteyin.</text>
+  </g>
+  <g>
+    <rect x="40" y="572" width="920" height="98" rx="18" fill="#fff" stroke="#fed7aa" stroke-width="2.5"/>
+    <circle cx="92" cy="621" r="26" fill="#ea580c"/><text x="92" y="629" text-anchor="middle" class="n">5</text>
+    <text x="140" y="612" class="q">Sayılar ve hesaplar tutuyor mu?</text>
+    <text x="140" y="644" class="a">Toplamları, yüzdeleri, tarihleri bir hesap makinesiyle kendiniz kontrol edin.</text>
+  </g>
+</svg>

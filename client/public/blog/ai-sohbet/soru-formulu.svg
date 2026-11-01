@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" role="img" aria-labelledby="t d">
+  <title id="t">İyi bir sorunun 4 parçası: Rol, Görev, Bağlam, Format</title>
+  <desc id="d">Dört kutu: Rol (kim gibi düşünsün), Görev (ne yapsın), Bağlam (durum ne), Format (nasıl görünsün). Altında bu dört parçanın birleştiği örnek bir soru.</desc>
+  <style>
+    text{font-family:'Plus Jakarta Sans','Inter','Segoe UI',Helvetica,Arial,sans-serif;fill:#1a1f2e}
+    .h{font-size:34px;font-weight:800}
+    .n{font-size:22px;font-weight:800;fill:#fff}
+    .k{font-size:25px;font-weight:800}
+    .q{font-size:18px;fill:#5a6377;font-weight:600}
+    .e{font-size:18px;fill:#c2410c;font-style:italic}
+    .p{font-size:21px;font-weight:500}
+    .plus{font-size:34px;font-weight:800;fill:#fb923c}
+  </style>
+  <rect width="1000" height="660" rx="28" fill="#fff7ed"/>
+  <text x="500" y="62" text-anchor="middle" class="h">İyi bir sorunun 4 parçası</text>
+
+  <!-- Kutu 1 -->
+  <rect x="34" y="100" width="210" height="250" rx="20" fill="#fff" stroke="#fed7aa" stroke-width="3"/>
+  <circle cx="74" cy="140" r="22" fill="#ea580c"/><text x="74" y="148" text-anchor="middle" class="n">1</text>
+  <text x="56" y="205" class="k">Rol</text>
+  <text x="56" y="238" class="q">Kim gibi düşünsün?</text>
+  <text x="56" y="290" class="e">“Deneyimli bir</text>
+  <text x="56" y="315" class="e">muhasebeci gibi…”</text>
+  <text x="259" y="236" text-anchor="middle" class="plus">+</text>
+
+  <!-- Kutu 2 -->
+  <rect x="274" y="100" width="210" height="250" rx="20" fill="#fff" stroke="#fed7aa" stroke-width="3"/>
+  <circle cx="314" cy="140" r="22" fill="#ea580c"/><text x="314" y="148" text-anchor="middle" class="n">2</text>
+  <text x="296" y="205" class="k">Görev</text>
+  <text x="296" y="238" class="q">Ne yapsın?</text>
+  <text x="296" y="290" class="e">“…kira geliri</text>
+  <text x="296" y="315" class="e">beyanını anlat…”</text>
+  <text x="499" y="236" text-anchor="middle" class="plus">+</text>
+
+  <!-- Kutu 3 -->
+  <rect x="514" y="100" width="210" height="250" rx="20" fill="#fff" stroke="#fed7aa" stroke-width="3"/>
+  <circle cx="554" cy="140" r="22" fill="#ea580c"/><text x="554" y="148" text-anchor="middle" class="n">3</text>
+  <text x="536" y="205" class="k">Bağlam</text>
+  <text x="536" y="238" class="q">Durum ne?</text>
+  <text x="536" y="290" class="e">“…ilk kez beyan-</text>
+  <text x="536" y="315" class="e">name vereceğim…”</text>
+  <text x="739" y="236" text-anchor="middle" class="plus">+</text>
+
+  <!-- Kutu 4 -->
+  <rect x="754" y="100" width="210" height="250" rx="20" fill="#fff" stroke="#fed7aa" stroke-width="3"/>
+  <circle cx="794" cy="140" r="22" fill="#ea580c"/><text x="794" y="148" text-anchor="middle" class="n">4</text>
+  <text x="776" y="205" class="k">Format</text>
+  <text x="776" y="238" class="q">Nasıl görünsün?</text>
+  <text x="776" y="290" class="e">“…5 maddede,</text>
+  <text x="776" y="315" class="e">sade bir dille.”</text>
+
+  <!-- Ok -->
+  <path d="M500 368 L500 408" stroke="#fb923c" stroke-width="4" stroke-linecap="round"/>
+  <path d="M488 398 L500 412 L512 398" fill="none" stroke="#fb923c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Birleşik soru -->
+  <rect x="34" y="426" width="930" height="196" rx="22" fill="#ea580c"/>
+  <text x="66" y="468" style="font-size:18px;font-weight:800;fill:#fed7aa;letter-spacing:.06em">BİRLEŞTİRİLMİŞ SORU</text>
+  <text x="66" y="510" class="p" style="fill:#fff">“Deneyimli bir muhasebeci gibi davran. İlk kez kira geliri</text>
+  <text x="66" y="542" class="p" style="fill:#fff">beyannamesi vereceğim. Bana süreci 5 maddede, teknik terim</text>
+  <text x="66" y="574" class="p" style="fill:#fff">kullanmadan anlat. Emin olmadığın yerleri ayrıca belirt.”</text>
+</svg>

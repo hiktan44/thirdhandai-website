@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" role="img" aria-labelledby="t d">
+  <title id="t">Yapay zekâ sohbetine ne yazılır, ne yazılmaz</title>
+  <desc id="d">Solda asla yazılmaması gerekenler: kimlik numarası, kart ve şifre bilgileri, isimli sağlık belgeleri, müşteri ve çalışan verileri, şirket sırları, başkalarının bilgileri. Sağda rahatça yazılabilecekler: genel sorular, kişisel bilgiden arındırılmış metinler, takma adlar, herkese açık bilgiler, kendi taslaklarınız, örnek veriler.</desc>
+  <style>
+    text{font-family:'Plus Jakarta Sans','Inter','Segoe UI',Helvetica,Arial,sans-serif;fill:#1a1f2e}
+    .h{font-size:32px;font-weight:800}
+    .lbl{font-size:24px;font-weight:800}
+    .i{font-size:20.5px;font-weight:500}
+    .ft{font-size:21px;font-weight:700;fill:#fff}
+  </style>
+  <rect width="1000" height="680" rx="28" fill="#fff7ed"/>
+  <text x="500" y="60" text-anchor="middle" class="h">Sohbet kutusuna ne yazılır, ne yazılmaz?</text>
+
+  <!-- Sol -->
+  <rect x="34" y="96" width="456" height="440" rx="22" fill="#fff" stroke="#fecaca" stroke-width="3"/>
+  <rect x="34" y="96" width="456" height="66" rx="22" fill="#fee2e2"/>
+  <rect x="34" y="140" width="456" height="22" fill="#fee2e2"/>
+  <text x="66" y="139" class="lbl" style="fill:#b91c1c">✕  Asla yazmayın</text>
+  <g class="i">
+    <circle cx="70" cy="206" r="6" fill="#ef4444"/><text x="88" y="213" class="i">TC kimlik, pasaport numarası</text>
+    <circle cx="70" cy="262" r="6" fill="#ef4444"/><text x="88" y="269" class="i">Kart bilgisi, IBAN, şifre, kod</text>
+    <circle cx="70" cy="318" r="6" fill="#ef4444"/><text x="88" y="325" class="i">İsimli sağlık raporu ve tahliller</text>
+    <circle cx="70" cy="374" r="6" fill="#ef4444"/><text x="88" y="381" class="i">Müşteri ve çalışan kişisel verileri</text>
+    <circle cx="70" cy="430" r="6" fill="#ef4444"/><text x="88" y="437" class="i">Şirket sırları, sözleşmeler, kodlar</text>
+    <circle cx="70" cy="486" r="6" fill="#ef4444"/><text x="88" y="493" class="i">Başkalarının fotoğraf ve bilgileri</text>
+  </g>
+
+  <!-- Sağ -->
+  <rect x="510" y="96" width="456" height="440" rx="22" fill="#fff" stroke="#bbf7d0" stroke-width="3"/>
+  <rect x="510" y="96" width="456" height="66" rx="22" fill="#dcfce7"/>
+  <rect x="510" y="140" width="456" height="22" fill="#dcfce7"/>
+  <text x="542" y="139" class="lbl" style="fill:#15803d">✓  Rahatça yazabilirsiniz</text>
+  <circle cx="546" cy="206" r="6" fill="#22c55e"/><text x="564" y="213" class="i">Genel sorular, fikirler, merak</text>
+  <circle cx="546" cy="262" r="6" fill="#22c55e"/><text x="564" y="269" class="i">İsimleri silinmiş metinler</text>
+  <circle cx="546" cy="318" r="6" fill="#22c55e"/><text x="564" y="325" class="i">“Ahmet Bey” yerine “Müşteri A”</text>
+  <circle cx="546" cy="374" r="6" fill="#22c55e"/><text x="564" y="381" class="i">Zaten herkese açık bilgiler</text>
+  <circle cx="546" cy="430" r="6" fill="#22c55e"/><text x="564" y="437" class="i">Kendi yazı ve sunum taslaklarınız</text>
+  <circle cx="546" cy="486" r="6" fill="#22c55e"/><text x="564" y="493" class="i">Örnek / uydurma sayılarla tablolar</text>
+
+  <!-- Altın kural -->
+  <rect x="34" y="560" width="932" height="88" rx="20" fill="#ea580c"/>
+  <text x="500" y="598" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fed7aa;letter-spacing:.08em">ALTIN KURAL</text>
+  <text x="500" y="630" text-anchor="middle" class="ft">Bir yabancının okumasını istemeyeceğiniz hiçbir şeyi yazmayın.</text>
+</svg>

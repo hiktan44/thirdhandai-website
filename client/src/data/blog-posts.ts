@@ -13,10 +13,13 @@ export type BlogPost = {
   content: string; // HTML
 };
 
+import { aiSohbetRehberi } from "./posts/ai-sohbet-rehberi";
+
 const img = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=80`;
 
 export const BLOG_POSTS: BlogPost[] = [
+  aiSohbetRehberi,
   {
     slug: "yapay-zeka-ajanlari-2026",
     title: "Yapay Zeka Ajanları (AI Agents): 2026'nın En Büyük Trendi",
