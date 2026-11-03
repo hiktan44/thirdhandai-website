@@ -13,3 +13,6 @@ client/public/uploads/*
 .env
 .env.local
 .env.*.local
+
+# curl çerez dosyaları — oturum bilgisi içerebilir
+cookies.txt
