@@ -3,6 +3,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { ensureProjectsSeeded } from "./ensure-projects";
+import { ensureAdminUser } from "./admin-auth";
 import session from "express-session";
 import MemoryStore from "memorystore";
 
@@ -68,6 +69,9 @@ app.use((req, res, next) => {
 
 (async () => {
   const server = await registerRoutes(app);
+
+  // Yönetici kaydını Coolify'daki ADMIN_USERNAME / ADMIN_PASSWORD ile eşitle.
+  await ensureAdminUser();
 
   // Açılışta ön sayfa projelerini veritabanına yükle (boşsa ya da yalnızca
   // eski demo projeleri varsa). Böylece admin panel projeleri elle komut

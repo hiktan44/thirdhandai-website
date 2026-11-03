@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { authenticateAdmin } from "./admin-auth";
 import { insertContactMessageSchema, insertUserSchema, insertProjectSchema, insertVideoSchema, insertAiModelSchema, insertBlogPostSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
@@ -65,9 +66,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      const user = await storage.getUserByUsername(username);
-      
-      if (user && user.password === password) {
+      const user = await authenticateAdmin(username, password);
+
+      if (user) {
         req.session.user = {
           id: user.id,
           username: user.username,

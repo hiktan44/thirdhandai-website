@@ -1,4 +1,5 @@
 import { db } from "../server/db";
+import { hashPassword } from "../server/password";
 import { users, projects, videos, aiModels, whatsappSettings, blogPosts } from "../shared/schema";
 
 async function seed() {
@@ -10,7 +11,7 @@ async function seed() {
     const adminUsername = process.env.ADMIN_USERNAME || "admin";
     const adminPassword = process.env.ADMIN_PASSWORD || "changeme";
     await db.insert(users).values([
-      { username: adminUsername, password: adminPassword },
+      { username: adminUsername, password: hashPassword(adminPassword) },
     ]);
     console.log(`✅ Admin user created (username: ${adminUsername})`);
 

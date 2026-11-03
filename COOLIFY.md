@@ -27,8 +27,8 @@ Uygulama → **Environment Variables** kısmına ekle:
 | `SESSION_SECRET` | uzun rastgele bir metin (oturum güvenliği) |
 | `NODE_ENV` | `production` |
 | `PORT` | `5001` |
-| `ADMIN_USERNAME` | `hikmettanriverdi` |
-| `ADMIN_PASSWORD` | `Tanriverdi4462!` |
+| `ADMIN_USERNAME` | yönetici kullanıcı adı |
+| `ADMIN_PASSWORD` | güçlü bir şifre — **repoya yazma**, yalnızca Coolify'da tut |
 | `WHATSAPP_PHONE` | `90538961294444` |
 | `WHATSAPP_MESSAGE` | karşılama mesajın |
 | `WHATSAPP_ENABLED` | `true` |
@@ -53,7 +53,9 @@ Uygulamaya **thirdhand.com.tr** (veya istediğin alan adı) domainini bağla
 ---
 
 ## Sonuç
-- **Admin paneli:** `/(alanadı)/admin` → `hikmettanriverdi` / `Tanriverdi4462!`
+- **Admin paneli:** `/(alanadı)/admin` → Coolify'daki `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
+  Şifreyi değiştirmek için Coolify'da `ADMIN_PASSWORD`'ü güncelle ve **Redeploy** et;
+  sunucu açılışta yönetici kaydını bu değerle eşitler (şifre veritabanında özet olarak tutulur).
 - İletişim formu mesajları veritabanına düşer, admin panelde görünür.
 - Projeler/videolar/sıralama admin panelden yönetilebilir (backend artık canlı).
 - Her `main` push'unda Coolify otomatik yeniden derleyip deploy eder.
