@@ -75,11 +75,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await authenticateAdmin(username, password);
 
       if (user) {
-        req.session.user = {
-          id: user.id,
-          username: user.username,
-        };
-        res.json({ success: true, message: "Giriş başarılı!" });
+        // Oturum sabitlemeye (session fixation) karşı girişte yeni oturum kimliği.
+        req.session.regenerate((err) => {
+          if (err) {
+            return res.status(500).json({ success: false, message: "Sunucu hatası." });
+          }
+          req.session.user = {
+            id: user.id,
+            username: user.username,
+          };
+          res.json({ success: true, message: "Giriş başarılı!" });
+        });
       } else {
         res.status(401).json({ success: false, message: "Kullanıcı adı veya şifre hatalı!" });
       }

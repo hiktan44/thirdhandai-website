@@ -6,8 +6,17 @@ import { ensureProjectsSeeded } from "./ensure-projects";
 import { ensureAdminUser } from "./admin-auth";
 import session from "express-session";
 import MemoryStore from "memorystore";
+import { randomBytes } from "crypto";
 
 const MemoryStoreSession = MemoryStore(session);
+
+// SESSION_SECRET tanımlı değilse herkesin bildiği sabit bir değer yerine her
+// açılışta rastgele bir sır üretilir. Oturumlar zaten bellekte (MemoryStore)
+// tutulduğu için yeniden başlatmada düşüyordu; davranış değişmez.
+const sessionSecret = process.env.SESSION_SECRET || randomBytes(32).toString("hex");
+if (!process.env.SESSION_SECRET) {
+  console.warn("⚠️  [session] SESSION_SECRET tanımlı değil; geçici rastgele sır kullanılıyor.");
+}
 
 const app = express();
 // Coolify/Netlify gibi bir reverse proxy arkasında çalışırken, güvenli (secure)
@@ -23,7 +32,7 @@ app.use(
     store: new MemoryStoreSession({
       checkPeriod: 86400000, // prune expired entries every 24h
     }),
-    secret: process.env.SESSION_SECRET || "your-secret-key-here",
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
