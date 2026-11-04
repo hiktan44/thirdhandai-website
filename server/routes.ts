@@ -2,11 +2,13 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { authenticateAdmin } from "./admin-auth";
+import { adminLoginLimiter, contactLimiter } from "./rate-limit";
 import { insertContactMessageSchema, insertUserSchema, insertProjectSchema, insertVideoSchema, insertAiModelSchema, insertBlogPostSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import { z } from "zod";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +32,15 @@ const upload = multer({
   }
 });
 
+// İletişim formu için üst uzunluk sınırları (alan şeması sınırsız metindi;
+// tek istekte büyük veri yazılıp veritabanı doldurulabiliyordu).
+const contactMessageInput = insertContactMessageSchema.extend({
+  name: z.string().min(1).max(200),
+  email: z.string().min(1).max(320),
+  subject: z.string().min(1).max(300),
+  message: z.string().min(1).max(10000),
+});
+
 // Extend session to include user data
 declare module "express-session" {
   interface SessionData {
@@ -42,9 +53,9 @@ declare module "express-session" {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
-  app.post("/api/contact", async (req, res) => {
+  app.post("/api/contact", contactLimiter, async (req, res) => {
     try {
-      const validatedData = insertContactMessageSchema.parse(req.body);
+      const validatedData = contactMessageInput.parse(req.body);
       const message = await storage.createContactMessage(validatedData);
       res.json({ success: true, message: "Mesajınız başarıyla gönderildi!" });
     } catch (error) {
@@ -69,7 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin login
-  app.post("/api/admin/login", async (req, res) => {
+  app.post("/api/admin/login", adminLoginLimiter, async (req, res) => {
     try {
       const { username, password } = req.body;
       const user = await authenticateAdmin(username, password);
