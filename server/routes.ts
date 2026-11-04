@@ -53,7 +53,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get contact messages (admin only)
+  // Bu uç oturum kontrolü olmadan herkese tüm iletişim mesajlarını
+  // (ad, e-posta, mesaj) döndürüyordu. Panel /api/admin/messages kullanır.
   app.get("/api/contact-messages", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
     try {
       const messages = await storage.getContactMessages();
       res.json(messages);
@@ -360,10 +366,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Blog Posts API - Public routes
+  // Herkese açık uçlar yalnızca yayındaki yazıları döndürür. Eskiden
+  // ?published=true verilmeyince yalnızca TASLAKLAR dönüyordu; taslaklar
+  // panelde /api/admin/blog-posts ile görülür.
   app.get("/api/blog-posts", async (req, res) => {
     try {
-      const published = req.query.published === "true";
-      const posts = await storage.getBlogPosts(published);
+      const posts = await storage.getBlogPosts(true);
       res.json(posts);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch blog posts" });
@@ -373,7 +381,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/blog-posts/:slug", async (req, res) => {
     try {
       const post = await storage.getBlogPostBySlug(req.params.slug);
-      if (post) {
+      if (post && post.published) {
         res.json(post);
       } else {
         res.status(404).json({ message: "Blog post not found" });
