@@ -11,7 +11,7 @@ async function seed() {
     const adminUsername = process.env.ADMIN_USERNAME || "admin";
     const adminPassword = process.env.ADMIN_PASSWORD || "changeme";
     await db.insert(users).values([
-      { username: adminUsername, password: hashPassword(adminPassword) },
+      { username: adminUsername, password: await hashPassword(adminPassword) },
     ]);
     console.log(`✅ Admin user created (username: ${adminUsername})`);
 

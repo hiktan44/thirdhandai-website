@@ -27,13 +27,13 @@ export async function authenticateAdmin(
       (await storage.getUserByUsername(admin.username)) ??
       (await storage.createUser({
         username: admin.username,
-        password: hashPassword(admin.password),
+        password: await hashPassword(admin.password),
       }))
     );
   }
 
   const user = await storage.getUserByUsername(username);
-  return user && verifyPassword(password, user.password) ? user : null;
+  return user && (await verifyPassword(password, user.password)) ? user : null;
 }
 
 // Sunucu açılışında çağrılır: yönetici kaydını Coolify'daki şifreyle eşitler
@@ -42,7 +42,7 @@ export async function ensureAdminUser() {
   try {
     for (const user of await storage.getUsers()) {
       if (!isHashed(user.password)) {
-        await storage.updateUserPassword(user.id, hashPassword(user.password));
+        await storage.updateUserPassword(user.id, await hashPassword(user.password));
         console.log(`🔐 [admin] "${user.username}" şifresi özete çevrildi.`);
       }
     }
@@ -59,11 +59,11 @@ export async function ensureAdminUser() {
     if (!existing) {
       await storage.createUser({
         username: admin.username,
-        password: hashPassword(admin.password),
+        password: await hashPassword(admin.password),
       });
       console.log(`✅ [admin] "${admin.username}" yönetici kaydı oluşturuldu.`);
-    } else if (!verifyPassword(admin.password, existing.password)) {
-      await storage.updateUserPassword(existing.id, hashPassword(admin.password));
+    } else if (!(await verifyPassword(admin.password, existing.password))) {
+      await storage.updateUserPassword(existing.id, await hashPassword(admin.password));
       console.log(`✅ [admin] "${admin.username}" şifresi Coolify'daki değerle eşitlendi.`);
     }
   } catch (error) {
