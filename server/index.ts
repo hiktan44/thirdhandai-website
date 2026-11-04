@@ -7,6 +7,7 @@ import { ensureAdminUser } from "./admin-auth";
 import session from "express-session";
 import MemoryStore from "memorystore";
 import { randomBytes } from "crypto";
+import { securityHeaders } from "./security-headers";
 
 const MemoryStoreSession = MemoryStore(session);
 
@@ -23,6 +24,8 @@ const app = express();
 // oturum çerezinin gönderilebilmesi için proxy'ye güvenmemiz gerekir. Bu ayar
 // olmadan HTTPS proxy + HTTP container durumunda oturum tutmaz ("Yetkisiz Erişim").
 app.set("trust proxy", 1);
+app.disable("x-powered-by");
+app.use(securityHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
