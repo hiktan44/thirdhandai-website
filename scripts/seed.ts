@@ -9,11 +9,17 @@ async function seed() {
     // 1. Admin kullanıcısı oluştur (bilgiler ortam değişkeninden gelir — koda gömülü şifre yok)
     console.log("👤 Creating admin user...");
     const adminUsername = process.env.ADMIN_USERNAME || "admin";
-    const adminPassword = process.env.ADMIN_PASSWORD || "changeme";
-    await db.insert(users).values([
-      { username: adminUsername, password: await hashPassword(adminPassword) },
-    ]);
-    console.log(`✅ Admin user created (username: ${adminUsername})`);
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    // ADMIN_PASSWORD yoksa herkesin tahmin edebileceği varsayılan bir şifreyle
+    // (eskiden "changeme") yönetici oluşturma; atla ve uyar.
+    if (adminPassword) {
+      await db.insert(users).values([
+        { username: adminUsername, password: await hashPassword(adminPassword) },
+      ]);
+      console.log(`✅ Admin user created (username: ${adminUsername})`);
+    } else {
+      console.warn("⚠️  ADMIN_PASSWORD tanımlı değil; yönetici kullanıcısı oluşturulmadı.");
+    }
 
     // 2. Örnek projeler
     console.log("📁 Creating sample projects...");

@@ -2,11 +2,13 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { authenticateAdmin } from "./admin-auth";
+import { adminLoginLimiter, contactLimiter } from "./rate-limit";
 import { insertContactMessageSchema, insertUserSchema, insertProjectSchema, insertVideoSchema, insertAiModelSchema, insertBlogPostSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import { z } from "zod";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +32,15 @@ const upload = multer({
   }
 });
 
+// İletişim formu için üst uzunluk sınırları (alan şeması sınırsız metindi;
+// tek istekte büyük veri yazılıp veritabanı doldurulabiliyordu).
+const contactMessageInput = insertContactMessageSchema.extend({
+  name: z.string().min(1).max(200),
+  email: z.string().min(1).max(320),
+  subject: z.string().min(1).max(300),
+  message: z.string().min(1).max(10000),
+});
+
 // Extend session to include user data
 declare module "express-session" {
   interface SessionData {
@@ -42,9 +53,9 @@ declare module "express-session" {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
-  app.post("/api/contact", async (req, res) => {
+  app.post("/api/contact", contactLimiter, async (req, res) => {
     try {
-      const validatedData = insertContactMessageSchema.parse(req.body);
+      const validatedData = contactMessageInput.parse(req.body);
       const message = await storage.createContactMessage(validatedData);
       res.json({ success: true, message: "Mesajınız başarıyla gönderildi!" });
     } catch (error) {
@@ -53,7 +64,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get contact messages (admin only)
+  // Bu uç oturum kontrolü olmadan herkese tüm iletişim mesajlarını
+  // (ad, e-posta, mesaj) döndürüyordu. Panel /api/admin/messages kullanır.
   app.get("/api/contact-messages", async (req, res) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
     try {
       const messages = await storage.getContactMessages();
       res.json(messages);
@@ -63,17 +80,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin login
-  app.post("/api/admin/login", async (req, res) => {
+  app.post("/api/admin/login", adminLoginLimiter, async (req, res) => {
     try {
       const { username, password } = req.body;
       const user = await authenticateAdmin(username, password);
 
       if (user) {
-        req.session.user = {
-          id: user.id,
-          username: user.username,
-        };
-        res.json({ success: true, message: "Giriş başarılı!" });
+        // Oturum sabitlemeye (session fixation) karşı girişte yeni oturum kimliği.
+        req.session.regenerate((err) => {
+          if (err) {
+            return res.status(500).json({ success: false, message: "Sunucu hatası." });
+          }
+          req.session.user = {
+            id: user.id,
+            username: user.username,
+          };
+          res.json({ success: true, message: "Giriş başarılı!" });
+        });
       } else {
         res.status(401).json({ success: false, message: "Kullanıcı adı veya şifre hatalı!" });
       }
@@ -360,10 +383,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Blog Posts API - Public routes
+  // Herkese açık uçlar yalnızca yayındaki yazıları döndürür. Eskiden
+  // ?published=true verilmeyince yalnızca TASLAKLAR dönüyordu; taslaklar
+  // panelde /api/admin/blog-posts ile görülür.
   app.get("/api/blog-posts", async (req, res) => {
     try {
-      const published = req.query.published === "true";
-      const posts = await storage.getBlogPosts(published);
+      const posts = await storage.getBlogPosts(true);
       res.json(posts);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch blog posts" });
@@ -373,7 +398,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/blog-posts/:slug", async (req, res) => {
     try {
       const post = await storage.getBlogPostBySlug(req.params.slug);
-      if (post) {
+      if (post && post.published) {
         res.json(post);
       } else {
         res.status(404).json({ message: "Blog post not found" });

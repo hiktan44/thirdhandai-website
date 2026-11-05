@@ -16,13 +16,13 @@ Netlify Dashboard'da şu environment variables'ları ekleyin:
 
 ### 1. Database Connection
 ```
-DATABASE_URL=postgresql://neondb_owner:npg_XQvSnDpZ01Yw@ep-ancient-dust-agibrniy-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require
+DATABASE_URL=postgresql://KULLANICI:SIFRE@HOST/VERITABANI?sslmode=require
 ```
 
 ### 2. Admin Credentials (Production'da değiştirin!)
 ```
 ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin123
+ADMIN_PASSWORD=<güçlü-bir-şifre — yalnızca panelde tutun, repoya yazmayın>
 ```
 
 ### 3. Session Secret (Production'da değiştirin!)
@@ -52,7 +52,7 @@ npm run db:push
 ## 📊 Veritabanı İçeriği
 
 ### ✅ Kurulmuş Veriler:
-- **Admin User**: username: `admin`, password: `admin123`
+- **Admin User**: username: `admin`, password: `ADMIN_PASSWORD` ortam değişkenindeki değer
 - **Projeler**: 3 örnek proje
 - **Videolar**: 2 örnek video
 - **AI Modelleri**: 3 model kartı
