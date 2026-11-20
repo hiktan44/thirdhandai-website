@@ -1,9 +1,13 @@
 import pg from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "@shared/schema";
-import { resolvePgSslConfig } from "./db-ssl";
+import { buildPgPoolConfig } from "./db-ssl";
 
-export { resolvePgSslConfig } from "./db-ssl";
+export {
+  buildPgPoolConfig,
+  resolvePgSslConfig,
+  stripPgSslQueryParams,
+} from "./db-ssl";
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -13,15 +17,10 @@ if (!process.env.DATABASE_URL) {
 
 // Standart node-postgres sürücüsü: hem Coolify/yerel Postgres hem de Neon
 // (standart bağlantı dizesiyle) ile çalışır. SSL etkinleştiğinde TLS sertifika
-// doğrulaması (rejectUnauthorized: true) açık kalır; özel CA için PGSSLROOTCERT
+// doğrulaması (rejectUnauthorized: true) açık kalır ve URL sorgu parametrelerinin
+// özel CA / doğrulama ayarlarını ezmesi engellenir; özel CA için PGSSLROOTCERT
 // kullanılabilir.
-const url = process.env.DATABASE_URL;
-const ssl = resolvePgSslConfig(url);
-
-export const pool = new pg.Pool({
-  connectionString: url,
-  ssl,
-});
+export const pool = new pg.Pool(buildPgPoolConfig(process.env.DATABASE_URL));
 
 pool.on("error", (err) => {
   console.error("[db] Unexpected idle PostgreSQL client error:", err);

@@ -1,4 +1,4 @@
-import { randomBytes, scrypt, timingSafeEqual } from "crypto";
+import { createHash, randomBytes, scrypt, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 
 // Şifreler veritabanında "scrypt:<tuz>:<özet>" biçiminde tutulur; düz metin
@@ -38,4 +38,17 @@ export async function verifyPassword(password: string, stored: string): Promise<
   const [, salt, hash] = stored.split(":");
   if (!salt || !hash) return false;
   return safeEqual((await scryptAsync(password, salt, 64)).toString("hex"), hash);
+}
+
+/**
+ * Veritabanında saklanan şifre özetinden (salt + scrypt çıktısı) türetilen,
+ * sır niteliği taşımayan oturum bağlama parmak izi. ADMIN_PASSWORD rotasyonu
+ * veya şifre değişikliğinde DB'deki özet yenilendiği için mevcut kalıcı
+ * PostgreSQL oturumları anında geçersiz olur.
+ */
+export function passwordVersion(storedPassword: string): string {
+  return createHash("sha256")
+    .update("thirdhand-admin-session-v1:")
+    .update(storedPassword)
+    .digest("hex");
 }

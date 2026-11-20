@@ -6,13 +6,20 @@ import { pathToFileURL } from "node:url";
 import { build } from "esbuild";
 import express from "express";
 import session from "express-session";
+import pg from "pg";
 
 let tmpDir;
 let server;
 let url;
 let resolvePgSslConfig;
+let buildPgPoolConfig;
+let stripPgSslQueryParams;
 let resolveSessionSecret;
 let hashPassword;
+let ensureAdminUser;
+let createAdminGuard;
+let isApiPath;
+let isSensitiveApiPath;
 let detectImageMime;
 let isSafeUrl;
 let parsePositiveInt;
@@ -23,6 +30,7 @@ let messageReads;
 let createdProjects;
 let createdBlogs;
 let savedWhatsapp;
+let apiLogs;
 
 const PASSWORD = "TestAdminPassword!2026#Strong";
 const SAMPLE_MESSAGE = {
@@ -161,9 +169,12 @@ before(async () => {
     `
       export { registerRoutes } from ${JSON.stringify(path.resolve("server/routes.ts"))};
       export { securityHeaders } from ${JSON.stringify(path.resolve("server/security-headers.ts"))};
-      export { resolvePgSslConfig } from ${JSON.stringify(path.resolve("server/db-ssl.ts"))};
+      export { resolvePgSslConfig, buildPgPoolConfig, stripPgSslQueryParams } from ${JSON.stringify(path.resolve("server/db-ssl.ts"))};
       export { resolveSessionSecret } from ${JSON.stringify(path.resolve("server/session-config.ts"))};
       export { hashPassword } from ${JSON.stringify(path.resolve("server/password.ts"))};
+      export { ensureAdminUser } from ${JSON.stringify(path.resolve("server/admin-auth.ts"))};
+      export { createAdminGuard } from ${JSON.stringify(path.resolve("server/admin-guard.ts"))};
+      export { isApiPath, isSensitiveApiPath, createApiRequestLogger } from ${JSON.stringify(path.resolve("server/request-logger.ts"))};
       export { detectImageMime, isSafeUrl, parsePositiveInt } from ${JSON.stringify(path.resolve("server/validation.ts"))};
     `,
     "utf8",
@@ -200,8 +211,14 @@ before(async () => {
 
   const mod = await import(pathToFileURL(bundleOut).href);
   resolvePgSslConfig = mod.resolvePgSslConfig;
+  buildPgPoolConfig = mod.buildPgPoolConfig;
+  stripPgSslQueryParams = mod.stripPgSslQueryParams;
   resolveSessionSecret = mod.resolveSessionSecret;
   hashPassword = mod.hashPassword;
+  ensureAdminUser = mod.ensureAdminUser;
+  createAdminGuard = mod.createAdminGuard;
+  isApiPath = mod.isApiPath;
+  isSensitiveApiPath = mod.isSensitiveApiPath;
   detectImageMime = mod.detectImageMime;
   isSafeUrl = mod.isSafeUrl;
   parsePositiveInt = mod.parsePositiveInt;
@@ -216,6 +233,12 @@ before(async () => {
       resave: false,
       saveUninitialized: false,
       cookie: { httpOnly: true, sameSite: "lax" },
+    }),
+  );
+  apiLogs = [];
+  app.use(
+    mod.createApiRequestLogger((line) => {
+      apiLogs.push(line);
     }),
   );
 
@@ -256,6 +279,7 @@ beforeEach(async () => {
   createdProjects = [];
   createdBlogs = [];
   savedWhatsapp = undefined;
+  apiLogs = [];
 });
 
 after(async () => {
@@ -278,6 +302,7 @@ async function login(username = account.username, password = PASSWORD, extraHead
     body: JSON.stringify({ username, password }),
   });
   assert.equal(res.status, 200);
+  await res.text();
   const setCookie = res.headers.get("set-cookie");
   assert.ok(setCookie, "login must issue set-cookie");
   return setCookie.split(";")[0];
@@ -363,6 +388,11 @@ test("resolvePgSslConfig: enforces rejectUnauthorized=true for Neon, sslmode, PG
     ["sslmode=require", "postgres://u:p@db:5432/app?sslmode=require", {}],
     ["sslmode=verify-ca", "postgres://u:p@db:5432/app?sslmode=verify-ca", {}],
     ["sslmode=verify-full", "postgres://u:p@db:5432/app?sslmode=verify-full", {}],
+    ["sslmode=prefer", "postgres://u:p@db:5432/app?sslmode=prefer", {}],
+    ["sslmode=no-verify", "postgres://u:p@db:5432/app?sslmode=no-verify", {}],
+    ["ssl=no-verify", "postgres://u:p@db:5432/app?ssl=no-verify", {}],
+    ["ssl=true", "postgres://u:p@db:5432/app?ssl=true", {}],
+    ["PGSSLMODE=no-verify", "postgres://u:p@db:5432/app", { PGSSLMODE: "no-verify" }],
     ["neon.tech", "postgres://u:p@ep-example.us-east-2.aws.neon.tech/neondb", {}],
   ]) {
     const ssl = resolvePgSslConfig(connUrl, env);
@@ -380,6 +410,84 @@ test("resolvePgSslConfig: enforces rejectUnauthorized=true for Neon, sslmode, PG
   assert.deepEqual(
     resolvePgSslConfig("postgres://u:p@db:5432/app", { PGSSLROOTCERT: caPath }),
     { rejectUnauthorized: true, ca: inlinePem },
+  );
+});
+
+test("buildPgPoolConfig + pg ConnectionParameters: preserves rejectUnauthorized=true and ca across sslmode/uselibpqcompat", async () => {
+  const inlinePem = "-----BEGIN CERTIFICATE-----\nTEST-CA\n-----END CERTIFICATE-----";
+  const caPath = path.join(tmpDir, "pool-ca.pem");
+  await writeFile(caPath, inlinePem, "utf8");
+
+  // (1) COOLIFY.md setup: ?sslmode=require|verify-ca|verify-full + PGSSLROOTCERT must keep ca and rejectUnauthorized: true
+  for (const mode of ["require", "verify-ca", "verify-full"]) {
+    const cfgInline = buildPgPoolConfig(
+      `postgres://u:p@db.example:5432/app?sslmode=${mode}&application_name=thirdhand`,
+      { PGSSLROOTCERT: inlinePem },
+    );
+    const cpInline = new pg.Client(cfgInline).connectionParameters;
+    assert.deepEqual(
+      cpInline.ssl,
+      { rejectUnauthorized: true, ca: inlinePem },
+      `ConnectionParameters dropped ca/rejectUnauthorized for sslmode=${mode}`,
+    );
+    assert.equal(cpInline.application_name, "thirdhand");
+
+    const cfgFile = buildPgPoolConfig(
+      `postgres://u:p@db.example:5432/app?sslmode=${mode}`,
+      { PGSSLROOTCERT: caPath },
+    );
+    const cpFile = new pg.Client(cfgFile).connectionParameters;
+    assert.deepEqual(cpFile.ssl, { rejectUnauthorized: true, ca: inlinePem });
+  }
+
+  // (2) ?sslmode=no-verify, ?ssl=no-verify, ?sslmode=prefer, and ?uselibpqcompat=true&sslmode=require
+  // must NEVER downgrade to rejectUnauthorized: false or bypass checkServerIdentity
+  for (const [label, connUrl, env] of [
+    ["sslmode=no-verify", "postgres://u:p@db:5432/app?sslmode=no-verify", {}],
+    ["sslmode=no-verify + PGSSL=true", "postgres://u:p@db:5432/app?sslmode=no-verify", { PGSSL: "true" }],
+    ["ssl=no-verify + PGSSL=true", "postgres://u:p@db:5432/app?ssl=no-verify", { PGSSL: "true" }],
+    ["sslmode=prefer", "postgres://u:p@db:5432/app?sslmode=prefer", {}],
+    ["uselibpqcompat+require", "postgres://u:p@db:5432/app?uselibpqcompat=true&sslmode=require", {}],
+    ["uselibpqcompat+require+PGSSL", "postgres://u:p@db:5432/app?uselibpqcompat=true&sslmode=require", { PGSSL: "true" }],
+  ]) {
+    const cp = new pg.Client(buildPgPoolConfig(connUrl, env)).connectionParameters;
+    assert.deepEqual(cp.ssl, { rejectUnauthorized: true }, `Failed for ${label}`);
+    assert.equal(cp.ssl.checkServerIdentity, undefined);
+  }
+
+  // (3) ?sslnegotiation=direct + PGSSLROOTCERT keeps both sslnegotiation and ca
+  const cpDirect = new pg.Client(
+    buildPgPoolConfig("postgres://u:p@db:5432/app?sslnegotiation=direct&sslmode=require", {
+      PGSSLROOTCERT: inlinePem,
+    }),
+  ).connectionParameters;
+  assert.deepEqual(cpDirect.ssl, { rejectUnauthorized: true, ca: inlinePem });
+  assert.equal(cpDirect.sslnegotiation, "direct");
+
+  // (4) Plain Coolify internal Postgres stays non-TLS, even if process.env.PGSSLMODE=no-verify
+  const prevPgSslMode = process.env.PGSSLMODE;
+  process.env.PGSSLMODE = "no-verify";
+  try {
+    const cpPlain = new pg.Client(
+      buildPgPoolConfig("postgres://u:p@thirdhandai-db:5432/app", {}),
+    ).connectionParameters;
+    assert.equal(cpPlain.ssl, false);
+
+    const cpFromEnv = new pg.Client(
+      buildPgPoolConfig("postgres://u:p@thirdhandai-db:5432/app", process.env),
+    ).connectionParameters;
+    assert.deepEqual(cpFromEnv.ssl, { rejectUnauthorized: true });
+  } finally {
+    if (prevPgSslMode === undefined) delete process.env.PGSSLMODE;
+    else process.env.PGSSLMODE = prevPgSslMode;
+  }
+
+  // (5) stripPgSslQueryParams removes all SSL params while preserving non-SSL params
+  assert.equal(
+    stripPgSslQueryParams(
+      "postgres://u:p@db:5432/app?sslmode=require&ssl=no-verify&uselibpqcompat=true&sslrootcert=/a&sslcert=/b&sslkey=/c&application_name=web",
+    ),
+    "postgres://u:p@db:5432/app?application_name=web",
   );
 });
 
@@ -452,6 +560,148 @@ test("logout destroys session and clears session cookie", async () => {
 
   const afterLogout = await fetch(`${url}/api/user`, { headers: { cookie } });
   assert.equal(afterLogout.status, 401);
+});
+
+test("ADMIN_PASSWORD rotation immediately invalidates existing persistent sessions", async () => {
+  process.env.ADMIN_USERNAME = account.username;
+  process.env.ADMIN_PASSWORD = PASSWORD;
+  await ensureAdminUser();
+
+  const oldCookie = await login(account.username, PASSWORD);
+
+  // /api/user returns only { id, username } without exposing passwordVersion
+  const userRes = await fetch(`${url}/api/user`, { headers: { cookie: oldCookie } });
+  assert.equal(userRes.status, 200);
+  const userBody = await userRes.json();
+  assert.deepEqual(userBody, { id: account.id, username: account.username });
+
+  const beforeRotate = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: oldCookie },
+  });
+  assert.equal(beforeRotate.status, 200);
+
+  // Simulate Coolify ADMIN_PASSWORD rotation + redeploy (session store persists!)
+  const newPassword = "RotatedAdminPassword!2026#EvenStronger";
+  process.env.ADMIN_PASSWORD = newPassword;
+  await ensureAdminUser();
+
+  // Existing session cookie must immediately fail with 401
+  for (const route of ["/api/admin/messages", "/api/contact-messages", "/api/user"]) {
+    const res = await fetch(`${url}${route}`, { headers: { cookie: oldCookie } });
+    assert.equal(res.status, 401, `Old session unexpectedly worked on ${route}`);
+  }
+
+  // Fresh login with rotated password succeeds while old cookie remains invalid
+  const newCookie = await login(account.username, newPassword);
+  const afterNewLogin = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: newCookie },
+  });
+  assert.equal(afterNewLogin.status, 200);
+
+  const oldCookieStillRejected = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: oldCookie },
+  });
+  assert.equal(oldCookieStillRejected.status, 401);
+
+  // Even if startup ensureAdminUser() failed during a transient DB outage after rotation,
+  // the first admin request once DB recovers syncs and rejects the old session with 401
+  const thirdPassword = "ThirdAdminPassword!2026#PostOutage";
+  process.env.ADMIN_PASSWORD = thirdPassword;
+  lookupError = true;
+  await ensureAdminUser(); // fails transiently during boot without crashing
+  lookupError = false;
+  const afterTransientBootFailure = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: newCookie },
+  });
+  assert.equal(afterTransientBootFailure.status, 401);
+
+  // Direct DB password rotation (non-env mode) also immediately invalidates sessions
+  delete process.env.ADMIN_USERNAME;
+  delete process.env.ADMIN_PASSWORD;
+  const postRecoveryCookie = await login(account.username, thirdPassword);
+  const okPostRecovery = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: postRecoveryCookie },
+  });
+  assert.equal(okPostRecovery.status, 200);
+
+  account.password = await hashPassword("AnotherDbPassword!2026");
+  const afterDbRotate = await fetch(`${url}/api/admin/messages`, {
+    headers: { cookie: postRecoveryCookie },
+  });
+  assert.equal(afterDbRotate.status, 401);
+
+  // Legacy session missing passwordVersion fails closed with 401
+  const guard = createAdminGuard(async () => account, () => null);
+  let legacyStatus = 0;
+  let nextCalled = false;
+  await guard(
+    { session: { user: { id: account.id, username: account.username } } },
+    {
+      status(code) {
+        legacyStatus = code;
+        return { json() {} };
+      },
+    },
+    () => {
+      nextCalled = true;
+    },
+  );
+  assert.equal(legacyStatus, 401);
+  assert.equal(nextCalled, false);
+});
+
+test("sensitive API response-body log redaction holds for mixed-case Express routes", async () => {
+  assert.equal(isApiPath("/api/projects"), true);
+  assert.equal(isApiPath("/API/Admin/messages"), true);
+  assert.equal(isApiPath("/assets/app.js"), false);
+
+  for (const sensitivePath of [
+    "/api/admin/messages",
+    "/api/Admin/messages",
+    "/API/ADMIN/MESSAGES",
+    "/api/Contact-Messages",
+    "/api/User",
+    "/API/USER/",
+  ]) {
+    assert.equal(
+      isSensitiveApiPath(sensitivePath),
+      true,
+      `Expected sensitive path to be redacted: ${sensitivePath}`,
+    );
+  }
+  assert.equal(isSensitiveApiPath("/api/Projects"), false);
+
+  const cookie = await login();
+  await new Promise((resolve) => setImmediate(resolve));
+  apiLogs = [];
+
+  for (const mixedCaseRoute of [
+    "/api/Admin/messages",
+    "/api/Contact-Messages",
+    "/api/User",
+    "/API/ADMIN/blog-posts",
+  ]) {
+    const res = await fetch(`${url}${mixedCaseRoute}`, { headers: { cookie } });
+    assert.equal(res.status, 200, `Expected Express to route ${mixedCaseRoute}`);
+    await res.json();
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.equal(apiLogs.length, 4);
+  for (const line of apiLogs) {
+    assert.ok(!line.includes("::"), `Response body leaked in log line: ${line}`);
+    assert.ok(!line.includes(SAMPLE_MESSAGE.email), `Email leaked in log line: ${line}`);
+    assert.ok(!line.includes(DRAFT_POST.titleTr), `Draft leaked in log line: ${line}`);
+  }
+
+  // Non-sensitive public API route still logs normally
+  apiLogs = [];
+  const pubRes = await fetch(`${url}/api/Projects`);
+  assert.equal(pubRes.status, 200);
+  assert.deepEqual(await pubRes.json(), []);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(apiLogs.length, 1);
+  assert.match(apiLogs[0], /GET \/api\/Projects 200 .* :: \[\]/);
 });
 
 // --- 4. Draft blog post protection tests ---
@@ -544,6 +794,30 @@ test("admin mutations reject javascript: URLs and non-numeric IDs", async () => 
   });
   assert.equal(xssProj.status, 400);
 
+  const backslashProj = await fetch(`${url}/api/admin/projects`, {
+    method: "POST",
+    headers: { cookie, "content-type": "application/json" },
+    body: JSON.stringify({
+      title: "Bad Backslash",
+      description: "Desc",
+      category: "AI",
+      link: "/\\evil.example",
+    }),
+  });
+  assert.equal(backslashProj.status, 400);
+
+  const ctrlCharProj = await fetch(`${url}/api/admin/projects`, {
+    method: "POST",
+    headers: { cookie, "content-type": "application/json" },
+    body: JSON.stringify({
+      title: "Bad Control Char",
+      description: "Desc",
+      category: "AI",
+      image: "/\t/evil.example",
+    }),
+  });
+  assert.equal(ctrlCharProj.status, 400);
+
   const okProj = await fetch(`${url}/api/admin/projects`, {
     method: "POST",
     headers: { cookie, "content-type": "application/json" },
@@ -601,6 +875,17 @@ test("validation helpers unit checks", () => {
   assert.equal(isSafeUrl("https://thirdhand.com.tr"), true);
   assert.equal(isSafeUrl("/images/blog/a.webp"), true);
   assert.equal(isSafeUrl("//evil.example/x"), false);
+  assert.equal(isSafeUrl("/\\evil.example"), false);
+  assert.equal(isSafeUrl("/\\\\evil.example/x"), false);
+  assert.equal(isSafeUrl("\\\\evil.example/x"), false);
+  assert.equal(isSafeUrl("/\t/evil.example"), false);
+  assert.equal(isSafeUrl("/\n/evil.example"), false);
+  assert.equal(isSafeUrl("/\r/evil.example"), false);
+  assert.equal(isSafeUrl("/images/a\u0000.png"), false);
+  assert.equal(isSafeUrl("/images/a\u001f.png"), false);
+  assert.equal(isSafeUrl("/images/a\u007f.png"), false);
+  assert.equal(isSafeUrl("\r\n/images/a.png"), false);
+  assert.equal(isSafeUrl("https://thirdhand.com.tr/path\r\nHeader: 1"), false);
   assert.equal(isSafeUrl("javascript:alert(1)"), false);
   assert.equal(isSafeUrl("data:text/html,<script>alert(1)</script>", { allowDataImage: true }), false);
   assert.equal(isSafeUrl("data:image/svg+xml;base64,PHN2Zz4=", { allowDataImage: true }), false);

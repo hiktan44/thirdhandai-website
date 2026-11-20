@@ -9,21 +9,10 @@ import connectPgSimple from "connect-pg-simple";
 import { pool } from "./db";
 import { resolveSessionSecret } from "./session-config";
 import { securityHeaders } from "./security-headers";
+import { createApiRequestLogger } from "./request-logger";
 
 const sessionSecret = resolveSessionSecret(process.env, (msg) => log(msg, "security"));
 const PgStore = connectPgSimple(session);
-
-const SENSITIVE_API_LOG_PREFIXES = [
-  "/api/admin",
-  "/api/contact-messages",
-  "/api/user",
-];
-
-function isSensitiveApiPath(reqPath: string): boolean {
-  return SENSITIVE_API_LOG_PREFIXES.some(
-    (prefix) => reqPath === prefix || reqPath.startsWith(`${prefix}/`),
-  );
-}
 
 const app = express();
 // Coolify gibi bir reverse proxy arkasında çalışırken, güvenli (secure)
@@ -56,38 +45,7 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  const reqPath = req.path;
-  const skipBodyLog = isSensitiveApiPath(reqPath);
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  if (!skipBodyLog) {
-    const originalResJson = res.json;
-    res.json = function (bodyJson, ...args) {
-      capturedJsonResponse = bodyJson;
-      return originalResJson.apply(res, [bodyJson, ...args]);
-    };
-  }
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (reqPath.startsWith("/api")) {
-      let logLine = `${req.method} ${reqPath} ${res.statusCode} in ${duration}ms`;
-      if (!skipBodyLog && capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
-  });
-
-  next();
-});
+app.use(createApiRequestLogger(log));
 
 (async () => {
   const server = await registerRoutes(app);

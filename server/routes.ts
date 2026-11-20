@@ -1,8 +1,13 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { authenticateAdmin, getConfiguredAdminUsername } from "./admin-auth";
+import {
+  authenticateAdmin,
+  ensureAdminSynced,
+  getConfiguredAdminUsername,
+} from "./admin-auth";
 import { createAdminGuard } from "./admin-guard";
+import { passwordVersion } from "./password";
 import { adminLoginLimiter, contactLimiter } from "./rate-limit";
 import {
   ALLOWED_IMAGE_EXTENSIONS,
@@ -95,6 +100,7 @@ declare module "express-session" {
     user?: {
       id: number;
       username: string;
+      passwordVersion: string;
     };
   }
 }
@@ -103,6 +109,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const requireAdmin = createAdminGuard(
     (id) => storage.getUser(id),
     getConfiguredAdminUsername,
+    ensureAdminSynced,
   );
 
   // Contact form submission
@@ -143,6 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           req.session.user = {
             id: user.id,
             username: user.username,
+            passwordVersion: passwordVersion(user.password),
           };
           req.session.save((saveErr) => {
             if (saveErr) {
@@ -161,7 +169,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get current user
   app.get("/api/user", requireAdmin, (req, res) => {
-    res.json(req.session.user);
+    const { id, username } = req.session.user!;
+    res.json({ id, username });
   });
 
   // File upload endpoint

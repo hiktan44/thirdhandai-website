@@ -70,14 +70,23 @@ export function parsePositiveInt(raw: string): number | null {
 const SAFE_DATA_IMAGE_RE =
   /^data:image\/(?:jpeg|png|gif|webp);base64,[A-Za-z0-9+/=]+$/;
 
+const ASCII_CONTROL_CHARS_RE = /[\u0000-\u001f\u007f]/;
+
 export function isSafeUrl(
   value: string,
   options: { allowDataImage?: boolean; allowHash?: boolean } = {},
 ): boolean {
+  if (ASCII_CONTROL_CHARS_RE.test(value)) return false;
   const trimmed = value.trim();
   if (trimmed === "") return true;
   if (options.allowHash && trimmed === "#") return true;
-  if (trimmed.startsWith("/") && !trimmed.startsWith("//")) return true;
+  if (
+    trimmed.startsWith("/") &&
+    !trimmed.startsWith("//") &&
+    !trimmed.startsWith("/\\")
+  ) {
+    return true;
+  }
   if (options.allowDataImage && SAFE_DATA_IMAGE_RE.test(trimmed)) return true;
 
   try {
