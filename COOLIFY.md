@@ -24,7 +24,7 @@ Uygulama → **Environment Variables** kısmına ekle:
 | Anahtar | Değer |
 |--------|-------|
 | `DATABASE_URL` | 1. adımdaki Postgres bağlantı dizesi |
-| `SESSION_SECRET` | uzun rastgele bir metin (oturum güvenliği) |
+| `SESSION_SECRET` | en az 32 bayt uzunluğunda rastgele sır (`openssl rand -hex 32`) — üretimde zorunlu |
 | `NODE_ENV` | `production` |
 | `PORT` | `5001` |
 | `ADMIN_USERNAME` | yönetici kullanıcı adı |
@@ -34,8 +34,10 @@ Uygulama → **Environment Variables** kısmına ekle:
 | `WHATSAPP_ENABLED` | `true` |
 
 > Coolify'ın kendi Postgres'i genelde SSL istemez; Neon gibi harici bir DB
-> kullanırsan bağlantı dizesinde `?sslmode=require` olsun (kod bunu otomatik
-> algılar).
+> kullanırsan bağlantı dizesinde `?sslmode=require` olsun (kod TLS sertifika
+> doğrulamasını `rejectUnauthorized: true` ile otomatik etkinleştirir). Özel
+> bir CA sertifikası gereken kurulumlarda PEM içeriğini veya dosya yolunu
+> `PGSSLROOTCERT` ortam değişkeniyle verebilirsin.
 
 ## 4) İlk deploy + veritabanı şeması
 1. **Deploy** et. Build biter, uygulama ayağa kalkar.

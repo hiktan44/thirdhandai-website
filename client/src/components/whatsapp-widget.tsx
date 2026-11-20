@@ -64,7 +64,7 @@ export default function WhatsAppWidget() {
     // Kaynağı belli olsun diye mesajın başına site etiketini ekle
     const message = encodeURIComponent(`${SOURCE_TAG} ${baseMessage}`);
     const phoneNumber = settings.phoneNumber.replace(/\D/g, "");
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank", "noopener,noreferrer");
   };
 
   return (

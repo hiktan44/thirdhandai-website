@@ -12,6 +12,10 @@ function envAdmin() {
   return username && password ? { username, password } : null;
 }
 
+export function getConfiguredAdminUsername(): string | null {
+  return envAdmin()?.username ?? null;
+}
+
 export async function authenticateAdmin(
   username: unknown,
   password: unknown,

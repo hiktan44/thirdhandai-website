@@ -174,7 +174,7 @@
     const message = encodeURIComponent(settings.welcomeMessage || 
       (isEnglish ? 'Hello, can you help me?' : 'Merhaba, yardımcı olabilir misiniz?'));
     const phoneNumber = settings.phoneNumber.replace(/\D/g, '');
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
   }
   
   // Event Listeners

@@ -11,13 +11,15 @@ RUN npm ci
 
 # Kaynağı kopyala ve derle (frontend + server bundle)
 COPY . .
-RUN npm run build
+RUN npm run build && chown -R node:node /app
 
 ENV NODE_ENV=production
 # Sunucu PORT ortam değişkenini kullanır; Coolify bunu otomatik verir (varsayılan 5001).
 ENV PORT=5001
 EXPOSE 5001
 
+USER node
+
 # Uygulamayı başlat. Veritabanı şemasını ilk kurulumda bir kez oluşturmak için
 # Coolify terminalinden `npm run db:setup` çalıştırın (db:push + seed).
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/index.js"]

@@ -167,12 +167,13 @@ server/
 
 ## 🚀 Deployment
 
-### Netlify Environment Variables
+### Coolify Environment Variables
 
-Aşağıdaki environment variable'ları Netlify dashboard'unda ayarlamanız gerekir:
+Aşağıdaki environment variable'ları Coolify panelinde ayarlamanız gerekir:
 
 ```env
 DATABASE_URL=postgresql://user:password@host/database
+SESSION_SECRET=<openssl rand -hex 32>
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your-secure-password
 ```

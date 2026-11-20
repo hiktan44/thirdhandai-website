@@ -5,22 +5,28 @@ import { setupVite, serveStatic, log } from "./vite";
 import { ensureProjectsSeeded } from "./ensure-projects";
 import { ensureAdminUser } from "./admin-auth";
 import session from "express-session";
-import MemoryStore from "memorystore";
-import { randomBytes } from "crypto";
+import connectPgSimple from "connect-pg-simple";
+import { pool } from "./db";
+import { resolveSessionSecret } from "./session-config";
 import { securityHeaders } from "./security-headers";
 
-const MemoryStoreSession = MemoryStore(session);
+const sessionSecret = resolveSessionSecret(process.env, (msg) => log(msg, "security"));
+const PgStore = connectPgSimple(session);
 
-// SESSION_SECRET tanımlı değilse herkesin bildiği sabit bir değer yerine her
-// açılışta rastgele bir sır üretilir. Oturumlar zaten bellekte (MemoryStore)
-// tutulduğu için yeniden başlatmada düşüyordu; davranış değişmez.
-const sessionSecret = process.env.SESSION_SECRET || randomBytes(32).toString("hex");
-if (!process.env.SESSION_SECRET) {
-  console.warn("⚠️  [session] SESSION_SECRET tanımlı değil; geçici rastgele sır kullanılıyor.");
+const SENSITIVE_API_LOG_PREFIXES = [
+  "/api/admin",
+  "/api/contact-messages",
+  "/api/user",
+];
+
+function isSensitiveApiPath(reqPath: string): boolean {
+  return SENSITIVE_API_LOG_PREFIXES.some(
+    (prefix) => reqPath === prefix || reqPath.startsWith(`${prefix}/`),
+  );
 }
 
 const app = express();
-// Coolify/Netlify gibi bir reverse proxy arkasında çalışırken, güvenli (secure)
+// Coolify gibi bir reverse proxy arkasında çalışırken, güvenli (secure)
 // oturum çerezinin gönderilebilmesi için proxy'ye güvenmemiz gerekir. Bu ayar
 // olmadan HTTPS proxy + HTTP container durumunda oturum tutmaz ("Yetkisiz Erişim").
 app.set("trust proxy", 1);
@@ -29,11 +35,12 @@ app.use(securityHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Session configuration
+// Session configuration (kalıcı PostgreSQL oturum deposu)
 app.use(
   session({
-    store: new MemoryStoreSession({
-      checkPeriod: 86400000, // prune expired entries every 24h
+    store: new PgStore({
+      pool,
+      createTableIfMissing: true,
     }),
     secret: sessionSecret,
     resave: false,
@@ -51,20 +58,23 @@ app.use(
 
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
+  const reqPath = req.path;
+  const skipBodyLog = isSensitiveApiPath(reqPath);
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
+  if (!skipBodyLog) {
+    const originalResJson = res.json;
+    res.json = function (bodyJson, ...args) {
+      capturedJsonResponse = bodyJson;
+      return originalResJson.apply(res, [bodyJson, ...args]);
+    };
+  }
 
   res.on("finish", () => {
     const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
+    if (reqPath.startsWith("/api")) {
+      let logLine = `${req.method} ${reqPath} ${res.statusCode} in ${duration}ms`;
+      if (!skipBodyLog && capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
@@ -91,11 +101,23 @@ app.use((req, res, next) => {
   await ensureProjectsSeeded();
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
+    const status =
+      typeof err?.status === "number"
+        ? err.status
+        : typeof err?.statusCode === "number"
+          ? err.statusCode
+          : 500;
+    const isServerError = status >= 500;
+    if (isServerError) {
+      console.error("[error]", err);
+    }
+    if (res.headersSent) {
+      return;
+    }
+    const message = isServerError
+      ? "Internal Server Error"
+      : err?.message || "Bad Request";
     res.status(status).json({ message });
-    throw err;
   });
 
   // importantly only setup vite in development and after
