@@ -411,10 +411,56 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const STORAGE_KEY = 'thirdhand.lang';
 
-const getInitialLanguage = (): Language => {
-  if (typeof window === 'undefined') return 'TR';
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-  return saved === 'EN' || saved === 'TR' ? saved : 'TR';
+const getSavedLanguage = (): Language | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    return saved === 'EN' || saved === 'TR' ? saved : null;
+  } catch {
+    return null;
+  }
+};
+
+// Browser language: any non-Turkish browser gets English so a foreign visitor
+// never lands on the Turkish site by default.
+const getBrowserLanguage = (): Language => {
+  if (typeof navigator === 'undefined') return 'TR';
+  const langs = navigator.languages?.length ? navigator.languages : [navigator.language];
+  const primary = (langs.find(Boolean) || '').toLowerCase();
+  if (!primary) return 'TR';
+  return primary.startsWith('tr') ? 'TR' : 'EN';
+};
+
+const getInitialLanguage = (): Language => getSavedLanguage() ?? getBrowserLanguage();
+
+// Visitor country from IP (cached for the session). null when unavailable.
+const IP_CACHE_KEY = 'thirdhand.ipCountry';
+const detectCountry = async (): Promise<string | null> => {
+  try {
+    const cached = window.sessionStorage.getItem(IP_CACHE_KEY);
+    if (cached) return cached;
+  } catch {
+    /* ignore */
+  }
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 2500);
+  try {
+    const res = await fetch('https://ipwho.is/', { signal: controller.signal, cache: 'no-store' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const code = String(data?.country_code || '').toUpperCase();
+    if (!/^[A-Z]{2}$/.test(code)) return null;
+    try {
+      window.sessionStorage.setItem(IP_CACHE_KEY, code);
+    } catch {
+      /* ignore */
+    }
+    return code;
+  } catch {
+    return null;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -426,6 +472,20 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       window.localStorage.setItem(STORAGE_KEY, lang);
     }
   };
+
+  // No saved choice: refine the browser-language guess with the visitor's
+  // country (Turkey → TR, anywhere else → EN). A manual choice always wins.
+  React.useEffect(() => {
+    if (getSavedLanguage()) return;
+    let active = true;
+    detectCountry().then((country) => {
+      if (!active || !country || getSavedLanguage()) return;
+      setLanguageState(country === 'TR' ? 'TR' : 'EN');
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     document.documentElement.lang = language === 'TR' ? 'tr' : 'en';
