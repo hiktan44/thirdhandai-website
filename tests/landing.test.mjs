@@ -85,7 +85,19 @@ test("landing.html: form ve liste sitenin kendi adreslerine bağlı, gömülü g
   assert.doesNotMatch(html, /data:image\/webp;base64/);
   // Yönetim panelinde tanımlı proje görseli önceliklidir; ekran görüntüsü yedektir.
   assert.match(html, /esc\(p\.image\|\|shot\)/);
-  // EN bağlantıları eski sayfada İngilizceyi seçili hale getirir.
-  assert.equal((html.match(/localStorage\.setItem\('thirdhand\.lang','EN'\)/g) || []).length, 2);
+  // Dil: kayıtlı tercih, tarayıcı dili ve IP'den ülke; düğmeyle değiştirilebilir.
+  assert.match(html, /id="langbtn"/);
+  assert.match(html, /https:\/\/ipwho\.is\//);
+  assert.match(html, /"thirdhand\.lang"/);
+  // Yasal sayfalar ve alt bilgi bağlantıları.
+  for (const page of ["kvkk", "gizlilik", "cerez"]) {
+    assert.match(html, new RegExp(`data-p="${page}"`));
+    assert.match(html, new RegExp(`href="#/${page}"`));
+  }
+  // Kartlar kaydırdıkça yüklenir; yeni eklenen uygulamalar gömülü listede de var.
+  assert.match(html, /id="more-s"/);
+  for (const link of ["https://ligmatik.com", "https://rankrota.com", "https://translateiptv.com"]) {
+    assert.ok(html.includes(link), link);
+  }
   assert.ok(html.length < 300_000, "ana sayfa dosyası hafif kalmalı");
 });
