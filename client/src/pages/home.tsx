@@ -64,7 +64,7 @@ const CONTENT = {
     final: { h2a: "Ekibinize", h2b: "üçüncü eli", h2c: "ekleyelim mi?", p: "30 dakikalık ücretsiz keşif görüşmesinde işiniz için somut bir AI fırsatı belirleyelim.", btn: "Görüşme ayarla →" },
     contact: {
       eyebrow: "İletişim", title: "Projenizi konuşalım", sub: "Sorularınız için formu doldurun, en kısa sürede dönüş yapalım.",
-      info: { addr: "Adres", addrVal: "Levent / İstanbul", phone: "Telefon", phoneVal: "+90 (212) 555 66 77", email: "E-posta", emailVal: "merhaba@thirdhand.com.tr", hours: "Çalışma Saatleri", hoursVal: "Pzt - Cuma: 09:00 - 18:00" },
+      info: { addr: "Adres", addrVal: "Levent / İstanbul", phone: "Telefon", phoneVal: "+90 (212) 555 66 77", email: "E-posta", emailVal: "info@thirdhand.com.tr", hours: "Çalışma Saatleri", hoursVal: "Pzt - Cuma: 09:00 - 18:00" },
       name: "İsim", namePh: "Adınız Soyadınız",
       mail: "E-posta", mailPh: "email@ornek.com",
       subject: "Konu", subjectPh: "Mesaj konusu",
@@ -119,7 +119,7 @@ const CONTENT = {
     final: { h2a: "Shall we add", h2b: "a third hand", h2c: "to your team?", p: "In a 30-minute free discovery call, let's identify a concrete AI opportunity for your business.", btn: "Book a call →" },
     contact: {
       eyebrow: "Contact", title: "Let's talk about your project", sub: "Fill in the form with your questions and we'll get back to you shortly.",
-      info: { addr: "Address", addrVal: "Levent / Istanbul", phone: "Phone", phoneVal: "+90 (212) 555 66 77", email: "Email", emailVal: "merhaba@thirdhand.com.tr", hours: "Working Hours", hoursVal: "Mon - Fri: 09:00 - 18:00" },
+      info: { addr: "Address", addrVal: "Levent / Istanbul", phone: "Phone", phoneVal: "+90 (212) 555 66 77", email: "Email", emailVal: "info@thirdhand.com.tr", hours: "Working Hours", hoursVal: "Mon - Fri: 09:00 - 18:00" },
       name: "Name", namePh: "Your full name",
       mail: "Email", mailPh: "email@example.com",
       subject: "Subject", subjectPh: "Message subject",
@@ -459,12 +459,12 @@ export default function Home() {
               {c.final.h2a} <span className="g">{c.final.h2b}</span> {c.final.h2c}
             </h2>
             <p>{c.final.p}</p>
-            <a href="mailto:merhaba@thirdhand.com.tr" className="btn btn-pri">{c.final.btn}</a>
+            <a href="mailto:info@thirdhand.com.tr" className="btn btn-pri">{c.final.btn}</a>
           </div>
 
           <footer>
             <div>{c.footer.left}</div>
-            <div>merhaba@thirdhand.com.tr · +90 (212) 555 66 77</div>
+            <div>info@thirdhand.com.tr · +90 (212) 555 66 77</div>
           </footer>
         </div>
       </div>

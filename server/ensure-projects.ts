@@ -46,6 +46,7 @@ async function ensureEnColumns() {
 type AddedProject = {
   key: string; // benzersiz, bir kez uygulanır
   afterLink?: string; // bu bağlantılı projenin hemen arkasına yerleşir; yoksa sona
+  position?: number; // verilirse tam bu sıraya yerleşir (0 = en başa); afterLink'ten önceliklidir
   row: {
     title: string;
     titleEn: string | null;
@@ -71,6 +72,52 @@ export const ADDED_PROJECTS: AddedProject[] = [
       link: "https://turkiyeekonomisi.netlify.app",
       category: "Ekonomi / Veri",
       categoryEn: "Economy / Data",
+    },
+  },
+  // Listenin en başına eklenenler (sırayla 0, 1, 2).
+  {
+    key: "proje:ligmatik",
+    position: 0,
+    row: {
+      title: "Ligmatik",
+      titleEn: "Ligmatik",
+      description:
+        "Amatör lig ve turnuvaları tek yerden yönetin: fikstür, canlı skor, puan durumu, gol krallığı ve ceza tabloları maç olayları girildikçe kendiliğinden güncellenir. Halı saha tesisleri, şirket ve okul ligleri ile e-spor organizatörleri için; 70 branşı destekler ve paylaşıma hazır görseller üretir.",
+      descriptionEn:
+        "Run amateur leagues and tournaments from one place: fixtures, live scores, standings, top scorers and discipline tables update themselves as match events are entered. For five-a-side venues, company and school leagues and e-sports organizers; supports 70 sports and produces share-ready visuals.",
+      link: "https://ligmatik.com",
+      category: "Spor / Lig Yönetimi",
+      categoryEn: "Sports / League Management",
+    },
+  },
+  {
+    key: "proje:rankrota",
+    position: 1,
+    row: {
+      title: "RankRota",
+      titleEn: "RankRota",
+      description:
+        "Alıcılar sorduğunda önerilen marka siz olun. RankRota ürününüze dayalı, doğrulanmış rehber yazılar yayınlar, bağlamsal editoryal backlink kurar ve markanızın Google, ChatGPT, Claude, Gemini ve Perplexity'deki görünürlüğünü her hafta izler.",
+      descriptionEn:
+        "Be the brand that gets recommended when buyers ask. RankRota publishes fact-checked guides grounded in your product, builds contextual editorial backlinks and tracks your brand's visibility on Google, ChatGPT, Claude, Gemini and Perplexity every week.",
+      link: "https://rankrota.com",
+      category: "Pazarlama / SEO",
+      categoryEn: "Marketing / SEO",
+    },
+  },
+  {
+    key: "proje:iptvht",
+    position: 2,
+    row: {
+      title: "IPTVHT",
+      titleEn: "IPTVHT",
+      description:
+        "IPTV ile dünya televizyonlarını canlı izleyin, yayını kendi dilinizde dinleyin.",
+      descriptionEn:
+        "Watch world television live over IPTV and listen to the broadcast in your own language.",
+      link: "https://translateiptv.com",
+      category: "Canlı Çeviri / TV",
+      categoryEn: "Live Translation / TV",
     },
   },
 ];
@@ -124,7 +171,12 @@ async function ensureAddedProjects() {
         ? rows.find((r) => normalizeLink(r.link) === normalizeLink(item.afterLink))
         : undefined;
       const maxOrder = rows.reduce((m, r) => Math.max(m, r.order_index), -1);
-      const position = anchor ? anchor.order_index + 1 : maxOrder + 1;
+      const position =
+        typeof item.position === "number"
+          ? Math.max(0, Math.min(item.position, maxOrder + 1))
+          : anchor
+            ? anchor.order_index + 1
+            : maxOrder + 1;
 
       // Araya yerleştirmek için arkadaki projeleri bir sıra kaydır.
       await client.query(

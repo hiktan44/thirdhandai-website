@@ -92,7 +92,7 @@ export default function BlogDetailPage() {
 
           <footer>
             <div>© 2026 Third Hand AI Agency · Levent / İstanbul</div>
-            <div>merhaba@thirdhand.com.tr · +90 (212) 555 66 77</div>
+            <div>info@thirdhand.com.tr · +90 (212) 555 66 77</div>
           </footer>
         </div>
       </div>

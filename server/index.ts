@@ -10,6 +10,7 @@ import { pool } from "./db";
 import { resolveSessionSecret } from "./session-config";
 import { securityHeaders } from "./security-headers";
 import { createApiRequestLogger } from "./request-logger";
+import { registerLanding } from "./landing";
 
 const sessionSecret = resolveSessionSecret(process.env, (msg) => log(msg, "security"));
 const PgStore = connectPgSimple(session);
@@ -77,6 +78,9 @@ app.use(createApiRequestLogger(log));
       : err?.message || "Bad Request";
     res.status(status).json({ message });
   });
+
+  // Yeni ana sayfa: "/" isteğini React uygulamasından önce karşılar.
+  registerLanding(app);
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
