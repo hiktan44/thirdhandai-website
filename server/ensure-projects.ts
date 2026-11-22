@@ -73,6 +73,21 @@ export const ADDED_PROJECTS: AddedProject[] = [
       categoryEn: "Economy / Data",
     },
   },
+  {
+    key: "proje:iptvht",
+    afterLink: "https://turkiyeekonomisi.netlify.app",
+    row: {
+      title: "IPTVHT",
+      titleEn: "IPTVHT",
+      description:
+        "Dünyanın televizyonları, kendi dilinizde: IPTV aboneliğinizi (Xtream veya M3U) ekleyin, canlı TV, film, dizi, spor ve çocuk kanallarını tek yerden izleyin. Yabancı bir haber, maç ya da belgeselde orijinal ses kısılır, yapay zekâ anlık çeviriyle kendi dilinizde konuşur ve altyazı akar.",
+      descriptionEn:
+        "The world's television, in your own language: add your IPTV subscription (Xtream or M3U) and watch live TV, movies, series, sports and kids channels in one place. On a foreign news broadcast, match or documentary, the original audio is lowered while AI live translation speaks in your language and subtitles flow.",
+      link: "https://tv.seymata.com",
+      category: "Yayın / AI Çeviri",
+      categoryEn: "Streaming / AI Translation",
+    },
+  },
 ];
 
 // Bağlantıları karşılaştırmak için sadeleştirir (protokol, www, sondaki / ve
