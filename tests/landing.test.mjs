@@ -83,5 +83,9 @@ test("landing.html: form ve liste sitenin kendi adreslerine bağlı, gömülü g
   assert.match(html, /href="\/admin"/);
   assert.match(html, /href="\/blog"/);
   assert.doesNotMatch(html, /data:image\/webp;base64/);
+  // Yönetim panelinde tanımlı proje görseli önceliklidir; ekran görüntüsü yedektir.
+  assert.match(html, /esc\(p\.image\|\|shot\)/);
+  // EN bağlantıları eski sayfada İngilizceyi seçili hale getirir.
+  assert.equal((html.match(/localStorage\.setItem\('thirdhand\.lang','EN'\)/g) || []).length, 2);
   assert.ok(html.length < 300_000, "ana sayfa dosyası hafif kalmalı");
 });
