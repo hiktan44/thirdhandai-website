@@ -23,6 +23,8 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
+  if (url.pathname === '/site-visit-preference.js' ||
+      url.pathname.startsWith('/.well-known/site-visits/')) return;
   if (url.origin !== self.location.origin) return; // skip cross-origin (fonts, mshots, etc.)
   if (url.pathname.startsWith("/api/")) return;     // never cache API
 
