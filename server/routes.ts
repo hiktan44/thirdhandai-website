@@ -108,7 +108,7 @@ declare module "express-session" {
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/site-visit-context", (req, res) => {
     res.set("Cache-Control", "private, no-store").vary("Cookie");
-    res.sendStatus(req.session?.user ? 409 : 204);
+    res.status(req.session && !req.session.user ? 204 : 409).end();
   });
 
   const requireAdmin = createAdminGuard(
